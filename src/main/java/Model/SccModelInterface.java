@@ -11,9 +11,9 @@ public interface SccModelInterface {
   
 	void off();
   
-    void setSpeed(int speed);
+	void setSpeed(double speed);
   
-	int getSpeed();
+	double getSpeed();
   
 	void registerObserver(BeatObserver o);
   
@@ -22,5 +22,7 @@ public interface SccModelInterface {
 	void registerObserver(BPMObserver o);
   
 	void removeObserver(BPMObserver o);
+
+	
 
 }
