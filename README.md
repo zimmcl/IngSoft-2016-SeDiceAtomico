@@ -9,6 +9,6 @@
 
 |     NOMBRE       |    DNI    | CONTACTO |
 | :--------------: | :-------: |:--------:| 
-| Armango, Gaspar  |           |          |
+| Armando, Gaspar  | 38333248  | gasparmando@hotmail.com  |
 | Ceballo, Matías  |           |          |
 | Zimmel, Ezequiel | 33382573  | ezequielzimmel@gmail.com |
