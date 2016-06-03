@@ -12,7 +12,7 @@ public class SccTestDrive {
 		model.initialize();
 		model.on();
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			model.pause();
 
 			//model.setSpeed(10);
@@ -21,14 +21,14 @@ public class SccTestDrive {
 			e.printStackTrace();
 		}
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 			model.resume();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(10000);
 			model.off();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

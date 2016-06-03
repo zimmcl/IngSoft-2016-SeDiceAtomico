@@ -11,9 +11,13 @@ public interface SccModelInterface {
   
 	void off();
   
-	void setSpeed(double speed);
+	void setSpeed(int speed);
   
 	double getSpeed();
+	
+	//void increaseSpeed();
+	
+	//void decreaseSpeed();
   
 	void registerObserver(BeatObserver o);
   
