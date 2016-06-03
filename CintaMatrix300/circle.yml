@@ -1,0 +1,8 @@
+general:
+  artifacts:
+    - "./**/reports/**/*.*" # relative to the build directory
+    - "./**/lib/**/*.*" # relative to the build directory
+test:
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/build/**/*.*" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;    

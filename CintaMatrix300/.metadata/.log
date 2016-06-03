@@ -1,0 +1,96 @@
+!SESSION 2016-06-03 00:46:57.871 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_92
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_ES
+Framework arguments:  -product org.eclipse.epp.package.java.product -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product -data C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.ui 2 0 2016-06-03 00:47:23.562
+!MESSAGE The 'org.eclipse.ui.startup' extension from 'com.objectaid.uml' does not provide a 'class' attribute.
+This usage is deprecated and a 'class' attribute should be provided.
+The release after Mars (4.5) will no longer support the deprecated usage!
+
+!ENTRY org.eclipse.egit.ui 4 0 2016-06-03 00:54:04.338
+!MESSAGE Invalid project description.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:168)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:52)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:268)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:252)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createExistingProject(ProjectUtils.java:179)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.access$0(ProjectUtils.java:142)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils$1.run(ProjectUtils.java:97)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2225)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createProjects(ProjectUtils.java:134)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createProjects(ProjectUtils.java:60)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard.importProjects(GitImportWizard.java:253)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard.access$2(GitImportWizard.java:235)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard$4.run(GitImportWizard.java:205)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)
+Contains: OK
+Contains: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico overlaps the workspace location: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2016-06-03 00:54:04.342
+!MESSAGE Invalid project description.
+!SUBENTRY 2 unknown 0 0 2016-06-03 00:54:04.342
+!MESSAGE OK
+!SUBENTRY 2 org.eclipse.core.resources 4 77 2016-06-03 00:54:04.342
+!MESSAGE C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico overlaps the workspace location: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico
+
+!ENTRY org.eclipse.egit.ui 4 0 2016-06-03 00:54:19.323
+!MESSAGE Invalid project description.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:168)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:52)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:268)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:252)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createExistingProject(ProjectUtils.java:179)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.access$0(ProjectUtils.java:142)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils$1.run(ProjectUtils.java:97)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2225)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createProjects(ProjectUtils.java:134)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createProjects(ProjectUtils.java:60)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard.importProjects(GitImportWizard.java:253)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard.access$2(GitImportWizard.java:235)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard$4.run(GitImportWizard.java:205)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)
+Contains: OK
+Contains: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico overlaps the workspace location: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2016-06-03 00:54:19.323
+!MESSAGE Invalid project description.
+!SUBENTRY 2 unknown 0 0 2016-06-03 00:54:19.324
+!MESSAGE OK
+!SUBENTRY 2 org.eclipse.core.resources 4 77 2016-06-03 00:54:19.324
+!MESSAGE C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico overlaps the workspace location: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico
+
+!ENTRY org.eclipse.egit.ui 4 0 2016-06-03 00:54:35.905
+!MESSAGE Invalid project description.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:168)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:52)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:268)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:252)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createExistingProject(ProjectUtils.java:179)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.access$0(ProjectUtils.java:142)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils$1.run(ProjectUtils.java:97)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2225)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createProjects(ProjectUtils.java:134)
+	at org.eclipse.egit.ui.internal.clone.ProjectUtils.createProjects(ProjectUtils.java:60)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard.importProjects(GitImportWizard.java:253)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard.access$2(GitImportWizard.java:235)
+	at org.eclipse.egit.ui.internal.clone.GitImportWizard$4.run(GitImportWizard.java:205)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)
+Contains: OK
+Contains: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico overlaps the workspace location: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2016-06-03 00:54:35.906
+!MESSAGE Invalid project description.
+!SUBENTRY 2 unknown 0 0 2016-06-03 00:54:35.906
+!MESSAGE OK
+!SUBENTRY 2 org.eclipse.core.resources 4 77 2016-06-03 00:54:35.906
+!MESSAGE C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico overlaps the workspace location: C:\Users\Ezequiel\Desktop\IngSoft-2016-SeDiceAtomico

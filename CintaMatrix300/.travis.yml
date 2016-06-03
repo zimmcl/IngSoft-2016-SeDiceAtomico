@@ -1,0 +1,10 @@
+language: java
+
+before_install:
+ - chmod +x gradlew
+
+after_success:
+  - ./gradlew jacocoTestReport
+  - pip install --user codecov
+  - codecov 
+ 
