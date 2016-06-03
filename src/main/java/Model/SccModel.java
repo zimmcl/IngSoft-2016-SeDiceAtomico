@@ -4,6 +4,8 @@ import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
 public class SccModel implements SccModelInterface {
+	
+	//IMPLEMENTAR MODELO
 
 	@Override
 	public void initialize() {

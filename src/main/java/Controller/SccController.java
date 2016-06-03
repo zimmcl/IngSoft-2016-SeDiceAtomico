@@ -12,7 +12,7 @@ public class SccController implements ControllerInterface {
 
 	public SccController(SccModelInterface model){
 		
-		//IMPREMENTAR MODELO
+		//IMPREMENTAR CONTROLADOR
 	}
 	
 	@Override
