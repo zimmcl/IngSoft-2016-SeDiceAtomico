@@ -1,11 +1,15 @@
 package main.java.Model;
 
+import java.util.ArrayList;
+
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
 public class SccModel implements SccModelInterface {
 	
 	//IMPLEMENTAR MODELO
+	ArrayList beatObservers = new ArrayList();
+	ArrayList bpmObservers = new ArrayList();
 
 	@Override
 	public void initialize() {
@@ -39,26 +43,43 @@ public class SccModel implements SccModelInterface {
 
 	@Override
 	public void registerObserver(BeatObserver o) {
-		// TODO Auto-generated method stub
+		beatObservers.add(o);
 
 	}
 
 	@Override
 	public void removeObserver(BeatObserver o) {
-		// TODO Auto-generated method stub
-
+		int i = beatObservers.indexOf(o);
+		if (i >= 0) {
+			beatObservers.remove(i);
+		}
+	}
+	
+	public void notifyBeatObservers() {
+		for(int i = 0; i < beatObservers.size(); i++) {
+			BeatObserver observer = (BeatObserver)beatObservers.get(i);
+			observer.updateBeat();
+		}
 	}
 
 	@Override
 	public void registerObserver(BPMObserver o) {
-		// TODO Auto-generated method stub
-
+		bpmObservers.add(o);
 	}
 
 	@Override
 	public void removeObserver(BPMObserver o) {
-		// TODO Auto-generated method stub
-
+		int i = bpmObservers.indexOf(o);
+		if (i >= 0) {
+			bpmObservers.remove(i);
+		}
+	}
+	
+	public void notifyBPMObservers() {
+		for(int i = 0; i < bpmObservers.size(); i++) {
+			BPMObserver observer = (BPMObserver)bpmObservers.get(i);
+			observer.updateBPM();
+		}
 	}
 
 }
