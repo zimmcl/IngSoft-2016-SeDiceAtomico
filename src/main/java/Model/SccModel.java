@@ -27,8 +27,7 @@ public class SccModel implements SccModelInterface, Runnable {
 	
 	public SccModel(){
 		initialize();
-		regulador = new Regulador(this);
-		reg = new Thread(regulador);
+		
 	}
 	
 
@@ -45,18 +44,17 @@ public class SccModel implements SccModelInterface, Runnable {
 		currentSpeed=1;
 		thread = new Thread(this);
 		thread.start();
-		reg.start();
+		regulador = new Regulador(this);
+		reg = new Thread(regulador);
 		setSpeed(40);
+		reg.start();
+		
 	}
 
 	@Override
 	public void off() {
 		setSpeed(0);
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		
 		currentTime += getTiempo(dateInicial);
 		System.out.println("Tiempo Total: " + currentTime +" ms. Metros Recorridos: "+ getMetros());
 		/*Guardar archivo en registro
