@@ -18,7 +18,7 @@ public class Regulador implements Runnable {
 				Thread.sleep(100);
 				if(model.getSpeed()>model.getTargetSpeed())
 					model.modifyCurrentSpeed(-1);
-				else
+				else if(model.getSpeed()<model.getTargetSpeed())
 					model.modifyCurrentSpeed(1);
 				model.notifyBPMObservers();
 			} catch (InterruptedException e) {
