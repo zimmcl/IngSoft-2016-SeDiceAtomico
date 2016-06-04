@@ -1,5 +1,7 @@
 package main.java.TestDrive;
 
+import java.util.Date;
+
 import main.java.Model.SccModel;
 
 public class SccTestDrive {
@@ -8,33 +10,41 @@ public class SccTestDrive {
 		// TODO Auto-generated method stub
 		
 		SccModel model = new SccModel();
+		Printer pr = new Printer (model);
+		Thread tpr = new Thread(pr);
+		tpr.start();
 		
-		model.initialize();
 		model.on();
-		try {
-			Thread.sleep(5000);
-			model.pause();
-
-			//model.setSpeed(10);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			Thread.sleep(5000);
-			model.resume();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		try {
 			Thread.sleep(10000);
-			model.off();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		model.setSpeed(120);
+		
+		model.pause();
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		model.resume();
+		
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		model.off();
+		
 	}
-
+		
+		
+		
+		
 }

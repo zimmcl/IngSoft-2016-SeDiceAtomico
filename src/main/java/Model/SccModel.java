@@ -2,7 +2,6 @@ package main.java.Model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Observer;
 import java.util.concurrent.TimeUnit;
 
 
@@ -24,6 +23,10 @@ public class SccModel implements SccModelInterface, Runnable {
 	double metros;
 	double currentTime;
 	
+	public SccModel(){
+		initialize();
+	}
+	
 
 	@Override
 	public void initialize() {
@@ -35,7 +38,7 @@ public class SccModel implements SccModelInterface, Runnable {
 	@Override
 	public void on() {
 		dateInicial = new Date();
-		currentSpeed=5;
+		currentSpeed=1;
 		thread = new Thread(this);
 		thread.start();
 		setSpeed(40);
@@ -47,20 +50,16 @@ public class SccModel implements SccModelInterface, Runnable {
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		currentTime += getTiempo(dateInicial);
-		System.out.println("Tiempo: " + currentTime +" ms");
+		System.out.println("Tiempo Total: " + currentTime +" ms. Metros Recorridos: "+ getMetros());
 		/*Guardar archivo en registro
 		-
 		-
 		*/
 		initialize();
 		
-		
-		
-
 	}
 	
 	public void pause() {
@@ -69,7 +68,6 @@ public class SccModel implements SccModelInterface, Runnable {
 		try {
 			thread.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		currentTime += getTiempo(dateInicial);
@@ -79,17 +77,23 @@ public class SccModel implements SccModelInterface, Runnable {
 	public void resume(){
 		dateInicial = new Date();
 		currentSpeed=5;
-		setSpeed(lastSpeed);
+		
 		
 		thread = new Thread(this);
 		thread.start();
+		setSpeed(lastSpeed);
 		
 	}
 
 	@Override
 	public void setSpeed(int speed) {
 		targetSpeed = speed;
-		
+		 
+		adjustSpeed();		
+			
+		}
+	
+	public void adjustSpeed(){
 		while(currentSpeed!=targetSpeed){
 			try {
 				Thread.sleep(100);
@@ -99,60 +103,51 @@ public class SccModel implements SccModelInterface, Runnable {
 					currentSpeed++;
 				notifyBPMObservers();
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				
 			}
-			
-			
-		}
+	}
 	
 		
 	}
 
 	@Override
-	public double getSpeed() {
-		// TODO Auto-generated method stub
+	public int getSpeed() {
 		return currentSpeed;
 	}
 	
 	public String CaloriasConsumidas(){
 		
-		Date dateFinal = new Date();
+		
 		return null;
-		
-		
-		
+				
 	}
 
 
 	@Override
 	public void run(){
-		boolean interrupted=false;
+		int n=0;
+		boolean detener=false;
 		
-		while(!interrupted){
-			
+		while(!detener){			
 				try {
 					if(getSpeed()>=1){
-						int time = (60000/currentSpeed);
-						 
-						System.out.println(time);
+						int time = (6000/currentSpeed);						 
 						TimeUnit.MILLISECONDS.sleep(( time ));
-						metros++;
-						System.out.println(60*time);
-
-						notifyBeatObservers();
-						
+						n++;
+						metros+=0.1;
+						if(n>=10){
+							
+							notifyBeatObservers();
+							n=0;							
+						}						
 					}
 					else{
-						interrupted = true;
-
-					}
-						
+						detener = true;
+					}						
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
-				
-			}	
-		
+				}				
+			}			
 	}
 	
 	
@@ -180,7 +175,7 @@ public class SccModel implements SccModelInterface, Runnable {
 			observer.updateBeat();
 		}
 		///-----------------------------------------------
-		System.out.println("Sonido. Metros: "+(int) metros);
+		System.out.println("Sonido.");
 	}
 
 	@Override
@@ -200,9 +195,7 @@ public class SccModel implements SccModelInterface, Runnable {
 		for(int i = 0; i < bpmObservers.size(); i++) {
 			BPMObserver observer = (BPMObserver)bpmObservers.get(i);
 			observer.updateBPM();
-			
 		}
-		System.out.println("Speed: " + currentSpeed);
 	}
 	
 	private int getTiempo(Date time){
@@ -210,19 +203,22 @@ public class SccModel implements SccModelInterface, Runnable {
 		return (int) (timeFinal.getTime() - time.getTime());
 	}
 	
-	public void increaseSpeed(){
+	public double getMetros(){
+		return metros;
+	}
+	//public void increaseSpeed(){
 	//	if(currentSpeed==targetSpeed){
 	//		setSpeed(targetSpeed+1);
 	//	}
 		
-	}
+	//}
 	
-	public void decreaseSpeed(){
+	//public void decreaseSpeed(){
 	//	if(currentSpeed==targetSpeed){
 	//		setSpeed(targetSpeed-1);
 	//	}
 		
-	}
+	//}
 	
 	
 
