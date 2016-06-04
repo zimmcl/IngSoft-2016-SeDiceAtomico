@@ -8,19 +8,23 @@ public interface SccModelInterface {
 	void initialize();
 	  
 	void on();
+  	void off();
+	
+	void pause();
+	void resume();
   
-	void off();
-  
-    void setSpeed(int speed);
-  
-	int getSpeed();
+	void setSpeed(int speed);
+  	int getSpeed();
+	
+	//void increaseSpeed();
+	
+	//void decreaseSpeed();
   
 	void registerObserver(BeatObserver o);
-  
-	void removeObserver(BeatObserver o);
-  
-	void registerObserver(BPMObserver o);
-  
-	void removeObserver(BPMObserver o);
+  	void removeObserver(BeatObserver o);
+  	void registerObserver(BPMObserver o);
+  	void removeObserver(BPMObserver o);
+
+	
 
 }
