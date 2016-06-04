@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-
+import main.java.Class.Regulador;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -19,12 +19,16 @@ public class SccModel implements SccModelInterface, Runnable {
 	int currentSpeed; 							//Velocidad Actual de la cinta		
 	int lastSpeed;
 	Thread thread;
+	Thread reg;
 	Date dateInicial;
 	double metros;
 	double currentTime;
+	Regulador regulador;
 	
 	public SccModel(){
 		initialize();
+		regulador = new Regulador(this);
+		reg = new Thread(regulador);
 	}
 	
 
@@ -41,6 +45,7 @@ public class SccModel implements SccModelInterface, Runnable {
 		currentSpeed=1;
 		thread = new Thread(this);
 		thread.start();
+		reg.start();
 		setSpeed(40);
 	}
 
@@ -76,43 +81,32 @@ public class SccModel implements SccModelInterface, Runnable {
 	}
 	public void resume(){
 		dateInicial = new Date();
-		currentSpeed=5;
+		currentSpeed=1;
 		
 		
-		thread = new Thread(this);
+		//thread = new Thread(this);
 		thread.start();
+		reg.start();
 		setSpeed(lastSpeed);
 		
 	}
 
 	@Override
 	public void setSpeed(int speed) {
-		targetSpeed = speed;
-		 
-		adjustSpeed();		
+		targetSpeed = speed;	
 			
 		}
-	
-	public void adjustSpeed(){
-		while(currentSpeed!=targetSpeed){
-			try {
-				Thread.sleep(100);
-				if(currentSpeed>targetSpeed)
-					currentSpeed--;
-				else
-					currentSpeed++;
-				notifyBPMObservers();
-			} catch (InterruptedException e) {
-				
-			}
+	public void modifyCurrentSpeed(int n){
+		currentSpeed = currentSpeed +n;
 	}
 	
-		
-	}
 
 	@Override
 	public int getSpeed() {
 		return currentSpeed;
+	}
+	public int getTargetSpeed(){
+		return targetSpeed;
 	}
 	
 	public String CaloriasConsumidas(){
