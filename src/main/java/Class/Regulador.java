@@ -4,13 +4,14 @@ import main.java.Model.SccModel;
 
 public class Regulador implements Runnable {
 	SccModel model;
+	Thread tr;
 	
 	public Regulador(SccModel model){
 		this.model = model;
+		tr = new Thread(this);
+		tr.start();		
 	}
-		
-		
-
+	
 	@Override
 	public void run(){
 		while(model.getSpeed()>=1){
@@ -24,12 +25,6 @@ public class Regulador implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		
-			
 		}
-		
-		
-
 	}
-
 }

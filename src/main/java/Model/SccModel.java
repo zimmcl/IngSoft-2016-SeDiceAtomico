@@ -19,7 +19,6 @@ public class SccModel implements SccModelInterface, Runnable {
 	int currentSpeed; 							//Velocidad Actual de la cinta		
 	int lastSpeed;
 	Thread thread;
-	Thread reg;
 	Date dateInicial;
 	double metros;
 	double currentTime;
@@ -44,10 +43,9 @@ public class SccModel implements SccModelInterface, Runnable {
 		currentSpeed=1;
 		thread = new Thread(this);
 		thread.start();
-		regulador = new Regulador(this);
-		reg = new Thread(regulador);
 		setSpeed(40);
-		reg.start();
+		regulador = new Regulador(this);
+		
 		
 	}
 
@@ -61,7 +59,7 @@ public class SccModel implements SccModelInterface, Runnable {
 		-
 		-
 		*/
-		initialize();
+		
 		
 	}
 	
@@ -84,7 +82,7 @@ public class SccModel implements SccModelInterface, Runnable {
 		
 		//thread = new Thread(this);
 		thread.start();
-		reg.start();
+		regulador = new Regulador(this);
 		setSpeed(lastSpeed);
 		
 	}
@@ -211,9 +209,4 @@ public class SccModel implements SccModelInterface, Runnable {
 	//	}
 		
 	//}
-	
-	
-
-	
-
 }
