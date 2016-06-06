@@ -25,8 +25,7 @@ public class SccModel implements SccModelInterface, Runnable {
 	Regulador regulador;
 	
 	public SccModel(){
-		initialize();
-		
+		initialize();		
 	}
 	
 
@@ -121,11 +120,12 @@ public class SccModel implements SccModelInterface, Runnable {
 		while(!detener){			
 				try {
 					if(getSpeed()>=1){
-						int time = (6000/currentSpeed);						 
-						TimeUnit.MILLISECONDS.sleep(( time ));
+						double time = (600/(double)currentSpeed);
+						//System.out.println(time+" "+n);
+						TimeUnit.MILLISECONDS.sleep(( (long) time ));
 						n++;
-						metros+=0.1;
-						if(n>=10){
+						metros+=0.01;
+						if(n>=100){
 							
 							notifyBeatObservers();
 							n=0;							
@@ -194,7 +194,11 @@ public class SccModel implements SccModelInterface, Runnable {
 	}
 	
 	public double getMetros(){
-		return metros;
+		
+		double n = 100*metros;
+		n = (int) n;
+		n = n/100;
+		return n;
 	}
 	//public void increaseSpeed(){
 	//	if(currentSpeed==targetSpeed){
