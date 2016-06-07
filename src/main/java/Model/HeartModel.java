@@ -6,8 +6,14 @@ import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
 public class HeartModel implements HeartModelInterface, Runnable {
-	ArrayList beatObservers = new ArrayList();
-	ArrayList bpmObservers = new ArrayList();
+	
+	//Modifico la clase para que se pueda instanciar una única vez
+	private static HeartModel Instancia;
+	//Llevará la cuenta de los intentos de instanciación
+	private static int intentos=0;
+	//
+	ArrayList<BeatObserver>beatObservers = new ArrayList<BeatObserver>();
+	ArrayList<BPMObserver> bpmObservers = new ArrayList<BPMObserver>();
 	int time = 1000;
     int bpm = 90;
 	Random random = new Random(System.currentTimeMillis());
@@ -40,8 +46,13 @@ public class HeartModel implements HeartModelInterface, Runnable {
 			} catch (Exception e) {}
 		}
 	}
+	/*
+	 * Método modificado:
+	 * Devuelve el número de intentos de instanciación.
+	 */
 	public int getHeartRate() {
-		return 60000/time;
+		return intentos;
+		//return 60000/time;
 	}
 
 	public void registerObserver(BeatObserver o) {
@@ -78,5 +89,19 @@ public class HeartModel implements HeartModelInterface, Runnable {
 			BPMObserver observer = (BPMObserver)bpmObservers.get(i);
 			observer.updateBPM();
 		}
+	}
+	
+	/*
+	 *Método creado:
+	 *Devuelve la única instancia HeartModel.
+	 *Si no existe la crea.
+	 *Si ya existe suma 1 a intentos.
+	 */
+	public static HeartModel getInstancia(){
+		if(Instancia==null){
+			Instancia= new HeartModel();
+			intentos+=1;
+		}else intentos+=1;
+		return Instancia;
 	}
 }

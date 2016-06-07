@@ -1,6 +1,7 @@
 package main.java.Controller;
 
 import main.java.Adapter.HeartAdapter;
+import main.java.Model.HeartModel;
 import main.java.Model.HeartModelInterface;
 import main.java.View.DJView;
 
@@ -21,7 +22,11 @@ public class HeartController implements ControllerInterface {
  
 	public void stop() {}
     
-	public void increaseBPM() {}
+	//Incrementa en 1 los intentos de instanciación
+	public void increaseBPM() {
+	@SuppressWarnings("unused")
+	HeartModel HeartUnico = HeartModel.getInstancia();
+		}
     
 	public void decreaseBPM() {}
   
