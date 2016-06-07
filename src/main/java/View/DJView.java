@@ -36,7 +36,11 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 		model.registerObserver((BPMObserver)this);
     }
     
-    public void createView() {
+    public DJView() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void createView() {
 		// Create all Swing components here
         viewPanel = new JPanel(new GridLayout(1, 2));
         viewFrame = new JFrame("View");
