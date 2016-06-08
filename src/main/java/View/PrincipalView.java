@@ -1,6 +1,7 @@
 package main.java.View;
 
 import java.awt.Color;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,16 +23,14 @@ import main.java.Model.HeartModelInterface;
 public class PrincipalView extends JFrame implements ActionListener {
 	
 	private JLabel imagen;           	 
-    private JLabel texto;        	 
+    private JLabel texto; 
+    private JLabel texto1;
     private JButton botonHeart;          
     private JButton botonBeat;
     private JButton botonScc;
     private JButton botonCintaM;
     private JButton botonTodos;
     private JButton boton3Vistas;
-    private JMenu menu;
-    private JMenuBar menuBar;
-    private JMenuItem menuItem;
     private JPanel panelSuperior;
     private JPanel panelInferior;
        
@@ -53,15 +52,13 @@ public class PrincipalView extends JFrame implements ActionListener {
 	private void inicializarComponentes() {
         // creamos los componentes
         imagen = new JLabel();
+        texto1 = new JLabel("v1.0.0");
         botonHeart = new JButton();
         botonBeat = new JButton();
         botonScc = new JButton();
         botonCintaM = new JButton();
         botonTodos = new JButton();
         boton3Vistas = new JButton();
-        menu = new JMenu("OPCIONES");
-        menuBar = new JMenuBar();
-        menuItem = new JMenuItem("Acerca de...");
         panelSuperior = new JPanel();
         panelInferior = new JPanel();
         texto = new JLabel("MANTENGA EL CURSOR SOBRE CADA OPCIÓN PARA MÁS INFORMACIÓN");
@@ -130,8 +127,7 @@ public class PrincipalView extends JFrame implements ActionListener {
         texto.setHorizontalAlignment(NORMAL);
         imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Se_dice_Atomico.jpg")));
         panelSuperior.add(imagen);
-        menuItem.addActionListener(this);
-        this.setJMenuBar(menuBar);
+
         this.add(texto);
         this.add(botonHeart);
         this.add(botonBeat);
@@ -139,11 +135,10 @@ public class PrincipalView extends JFrame implements ActionListener {
         this.add(botonCintaM);
         this.add(boton3Vistas);
         this.add(botonTodos);
-        menu.add(menuItem);
-        //menuBar.add(menu);
-        this.add(menuBar);
         this.add(panelSuperior).setBackground(Color.WHITE);
         this.add(panelInferior).setBackground(Color.cyan);
+        texto1.setBounds(0, 450, 20, 450);
+        panelInferior.add(texto1);
          
     }
 
