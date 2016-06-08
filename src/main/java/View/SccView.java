@@ -18,6 +18,11 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	ControllerInterface controller;
 	JLabel vel;
 	
+	JMenuItem on;
+    JMenuItem off;
+    Button pausa;
+	
+	
 	   protected ImageIcon images[];
 	   protected int totalImages = 2,
 	                 currentImage = 0,
@@ -158,7 +163,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	      {
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
-	    	    	    model.setPause();  
+	    	    	    System.out.println("Pausau");
+	    	    		  //model.setPause();  
 	    	    	  }
 	    	    	});
 	      
@@ -278,5 +284,29 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	            animationTimer.restart();
 	   }
 	
+	   public void enableStopMenuItem() {
+	    	off.setEnabled(true);
+		}
 
+		public void disableStopMenuItem() {
+	    	off.setEnabled(false);
+		}
+
+		public void enableStartMenuItem() {
+	    	on.setEnabled(true);
+		}
+
+		public void disableStartMenuItem() {
+	    	on.setEnabled(false);
+		}
+
+		public void disablePauseButtonItem() {
+	    	pausa.setEnabled(false);
+		}
+		
+		public void enablePauseButtonItem() {
+	    	pausa.setEnabled(true);
+		}
+		
+		
 }
