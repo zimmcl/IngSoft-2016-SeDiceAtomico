@@ -6,8 +6,13 @@ import main.java.Model.HeartModel;
 
 public class HeartTestDrive {
 
-    public static void main (String[] args) {
-		HeartModel heartModel = new HeartModel();
-        ControllerInterface model = new HeartController(heartModel);
+	@SuppressWarnings("unused")
+	public static void main (String[] args) {
+	//HeartModel heartModel = new HeartModel();
+    //ControllerInterface model = new HeartController(heartModel);
+    	
+    /*Se modifico la creación del HeartModel*/
+    HeartModel HeartUnico = HeartModel.getInstancia();
+	ControllerInterface model = new HeartController(HeartUnico);
     }
 }
