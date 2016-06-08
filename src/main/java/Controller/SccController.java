@@ -1,5 +1,6 @@
 package main.java.Controller;
 
+import main.java.Adapter.SccAdapter;
 import main.java.Model.SccModelInterface;
 import main.java.View.DJView;
 import main.java.View.SccView;
@@ -11,20 +12,26 @@ public class SccController implements ControllerInterface {
 	SccView sccview;
 
 	public SccController(SccModelInterface model){
-		
-		//IMPREMENTAR CONTROLADOR
+		this.model = model;
+		djview = new DJView(this,new SccAdapter(model));
+        djview.createView();
+        djview.createControls();
+		djview.disableStopMenuItem();
+		djview.enableStartMenuItem();
+		model.initialize();
 	}
 	
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-
+		model.on();
+		
 	}
 
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
-
+		model.off();
 	}
 
 	@Override
