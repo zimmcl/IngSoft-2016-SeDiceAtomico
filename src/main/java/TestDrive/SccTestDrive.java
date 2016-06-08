@@ -9,7 +9,7 @@ public class SccTestDrive {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SccModel sccModel = new SccModel();
-        ControllerInterface model = new SccController(sccModel); 
+        ControllerInterface model = new SccController(sccModel, 1 ); 
 		
 	}
 		
