@@ -1,24 +1,23 @@
 package main.java.View;
 
 import java.awt.Color;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
+import main.java.Controller.BeatController;
+import main.java.Controller.ControllerInterface;
 import main.java.Controller.HeartController;
+import main.java.Controller.SccController;
+import main.java.Model.BeatModel;
+import main.java.Model.BeatModelInterface;
 import main.java.Model.HeartModel;
-import main.java.Model.HeartModelInterface; 
+import main.java.Model.HeartModelInterface;
+import main.java.Model.SccModel;
+import main.java.Model.SccModelInterface; 
 
 public class PrincipalView extends JFrame implements ActionListener {
 	
@@ -46,7 +45,7 @@ public class PrincipalView extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);                       // centramos la ventana en la pantalla
         this.setLayout(null);                                   // no usamos ningun layout, solo asi podremos dar posiciones a los componentes
         this.setResizable(false);                               // hacemos que la ventana no sea redimiensionable
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // hacemos que cuando se cierre la ventana termina todo proceso
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);    // hacemos que cuando se cierre la ventana termina todo proceso
     }
 	
 	private void inicializarComponentes() {
@@ -144,16 +143,18 @@ public class PrincipalView extends JFrame implements ActionListener {
 
     private void botonHeartActionPerformed(java.awt.event.ActionEvent evt) {
             
-    //HeartModelInterface modelo = HeartModel.getInstancia();
-    //HeartController controlador = new HeartController((HeartModel) modelo);    
+    HeartModelInterface modelo = HeartModel.getInstancia();
+    HeartController controlador = new HeartController((HeartModel) modelo);    
     }
     
     private void botonBeatActionPerformed(java.awt.event.ActionEvent evt){
-    	
+    BeatModelInterface modelo = new BeatModel();
+    ControllerInterface controlador = new BeatController(modelo);	
     }
     
     private void botonSccActionPerformed(java.awt.event.ActionEvent evt){
-    	
+    SccModelInterface modelo = new SccModel();
+    ControllerInterface controlador = new SccController(modelo);	
     }
     
     private void botonCintaMActionPerformed(java.awt.event.ActionEvent evt){
