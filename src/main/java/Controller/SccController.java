@@ -41,8 +41,10 @@ public SccController(SccModelInterface model, int i){
 	public void start() {
 		// TODO Auto-generated method stub
 		model.on();
-		djview.disableStartMenuItem();
-		djview.enableStopMenuItem();
+		sccview.disableStartMenuItem();
+		sccview.enableStopMenuItem();
+		//djview.disableStartMenuItem();
+		//djview.enableStopMenuItem();
 
 	}
 
@@ -50,8 +52,10 @@ public SccController(SccModelInterface model, int i){
 	public void stop() {
 		// TODO Auto-generated method stub
 		model.off();
-		djview.disableStopMenuItem();
-		djview.enableStartMenuItem();
+		sccview.disableStopMenuItem();
+		sccview.enableStartMenuItem();
+		//djview.disableStopMenuItem();
+		//djview.enableStartMenuItem();
 	}
 
 	public void increaseBPM() {

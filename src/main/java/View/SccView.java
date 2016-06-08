@@ -14,22 +14,36 @@ import main.java.Observer.BeatObserver;
 
 public class SccView extends JPanel implements BPMObserver, BeatObserver, ActionListener {
 	
+	/**
+	 * Declaración de las variables locales
+	 *
+	 **/
+	
 	SccModelInterface model;
 	ControllerInterface controller;
 	JLabel vel;
-	
+    JPanel animacion;		//Panel de la animacion
+    JPanel botones;			//Panel de los botones
+    JPanel velocidad;		//Panel donde se muestra la velocidad
+	Button incrementa;
+    Button decrementa;
+    Button pausa;
+
+    JMenuBar barraMenu;
 	JMenuItem on;
     JMenuItem off;
-    Button pausa;
+    TextField campo;
+    
+	protected ImageIcon images[];		//Arreglo donde se almacenan las imagenes para la animacion
+	protected int totalImages = 2,		//Cantidad de imagenes a usar en la animacion
+	              currentImage = 0,		//Indice de la imagen actual (inicia en 0 por defecto)
+	              animationDelay = 50; 	//Retraso entre cuadro y cuadro, en milisegundos
+	   protected Timer animationTimer;	//Timer que se encarga de alternar entre los cuadros de la animacion
 	
-	
-	   protected ImageIcon images[];
-	   protected int totalImages = 2,
-	                 currentImage = 0,
-	                 animationDelay = 0; // 50 millisecond delay
-	   protected Timer animationTimer;
-	
-	
+	/** 
+	 * Constructor de la clase. Al ejecutarse, registra a los observadores
+	 * 
+	 * **/
 	
 	public SccView(ControllerInterface controller, SccModelInterface model){
 		this.controller = controller;
@@ -38,36 +52,21 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		model.registerObserver((BPMObserver)this);
 		
 		setSize( getPreferredSize() );
-		 
-	      images = new ImageIcon[ totalImages ];
+	    images = new ImageIcon[ totalImages ];
 	 
-	      for ( int i = 0; i < 2; ++i ) 
-	         images[ i ] =
-	            new ImageIcon( "E:/tio" + i + ".jpg" );
-	      inicializa();
-	      startAnimation();
+	    for ( int i = 0; i < 2; ++i ) 
+	         images[ i ] = new ImageIcon( "E:/tio" + i + ".jpg" );
+	    inicializa();
+	    startAnimation();
 	}
-
-	@Override
-	public void updateBeat() {
-		// TODO Auto-generated method stub
-		
-		System.out.print("Se cumplieron:" + 1+ " m");
-	}
-
-	@Override
-	public void updateBPM() {
-		// TODO Auto-generated method stub
-
-		animationDelay = model.getSpeed();
-		vel.setText("Velocidad: "+animationDelay);
-	}
-
 	
+/**
+ * Método a llamarse desde el constructor. Se encarga de generar la ventana en si, y de establecer los comportamientos
+ * al producirse los eventos
+ * 
+ * **/
 	public void inicializa()
 	   {
-		   
-	     //SccView anim = new SccView();
 	      Button incrementa = new Button (">>");
 	      Button decrementa = new Button ("<<");
 	      Button pausa = new Button("||");
@@ -79,11 +78,11 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      
 	      
 	      
-	     JMenu archivo= new JMenu("Archivo");
+	      JMenu archivo= new JMenu("Archivo");
 	      JMenu edicion = new JMenu("Edicion");
 	      JMenuItem salir = new JMenuItem("Salir");
-	      JMenuItem on = new JMenuItem("On");
-	      JMenuItem off= new JMenuItem("Off");
+	      on = new JMenuItem("On");
+	      off= new JMenuItem("Off");
 	      
 	      archivo.add(salir);
 	      archivo.add(on);
@@ -132,29 +131,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  }
 	    	    	});	      
 	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
-	      
 	      incrementa.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
 	      {
 	    	  public void actionPerformed(ActionEvent e)
 	    	  {
-	    	    // display/center the jdialog when the button is pressed
-	    	    /*
-	    		  int d = animationDelay;
-	    		  if((d-100)<0){
-	      	    	d=0;
-	      	    }else{
-	    		  d=animationDelay -=100;
-	      	    }
-	    		  inc(d);
-	    	    vel.setText("Velocidad: "+animationDelay);
-	    	  */
 	    		controller.increaseBPM();  
 	    	  }
 	    	});
@@ -173,12 +153,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      {
 	    	  public void actionPerformed(ActionEvent e)
 	    	  {
-	    	    /*// display/center the jdialog when the button is pressed
-	    	   int d = animationDelay +=100;
-	    		dec(d);
-	    	    vel.setText("Velocidad: "+animationDelay);
-	    	  */
-	    		  
 	    	  controller.decreaseBPM();}
 	    	});
 	      
@@ -188,11 +162,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      {
 	    	  public void actionPerformed(ActionEvent e)
 	    	  {
-	    	    /*// display/center the jdialog when the button is pressed
-	    	   int d = animationDelay +=100;
-	    		dec(d);
-	    	    vel.setText("Velocidad: "+animationDelay);
-	    	  */
 	    	  controller.setBPM(Integer.parseInt(campo.getText()));}
 	    	});
 	      
@@ -218,29 +187,36 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      app.setJMenuBar(barraMenu);
 	      app.pack();
 	      app.setVisible(true);
-	 
-	      // The constants 10 and 30 are used below to size the
-	      // window 10 pixels wider than the animation and
-	      // 30 pixels taller than the animation. 
-	      //app.setSize( anim.getPreferredSize().width + 10, anim.getPreferredSize().height + 30 );
 	   }
 	
+	
+	
+	@Override
+	public void updateBeat() {
+		System.out.print("Se cumplieron:" + 1+ " m");
+	}
+
+	@Override
+	public void updateBPM() {
+		animationDelay = model.getSpeed();
+		vel.setText("Velocidad: "+animationDelay);
+	}
+
 	
 	   public void stopAnimation()
 	   {
 	      animationTimer.stop();
 	   }
 	 
+	   /**
+	    * Decrementa el retraso de la animacion (aumenta la frecuencia).
+	    * HACEN FALTA ESTOS METODOS????
+	    * **/
 	   public void dec(int d){
-		   /*int aux= animationDelay + 100;
-		   animationTimer.setDelay(aux);
-	       */
 		   animationTimer.setDelay(d);
 		   }
 
 	   public void inc(int d){
-		   
-		   //int aux= animationDelay - 100;
 		   animationTimer.setDelay(d);
 		   
 	   }
@@ -272,6 +248,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      repaint();
 	   }
 	 
+	   
+	   /**
+	    * Declara el timer a usar en la animacion, y lo arranca.
+	    * **/
 	   public void startAnimation()
 	   {
 	      if ( animationTimer == null ) {
