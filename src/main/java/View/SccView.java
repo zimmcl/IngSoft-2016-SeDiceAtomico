@@ -38,8 +38,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	protected int totalImages = 2,		//Cantidad de imagenes a usar en la animacion
 	              currentImage = 0,		//Indice de la imagen actual (inicia en 0 por defecto)
 	              animationDelay = 50; 	//Retraso entre cuadro y cuadro, en milisegundos
-	   protected Timer animationTimer;	//Timer que se encarga de alternar entre los cuadros de la animacion
-	
+	protected Timer animationTimer;	//Timer que se encarga de alternar entre los cuadros de la animacion
+	protected boolean corriendo;
 	/** 
 	 * Constructor de la clase. Al ejecutarse, registra a los observadores
 	 * 
@@ -57,7 +57,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    for ( int i = 0; i < 2; ++i ) 
 	         images[ i ] = new ImageIcon( "E:/tio" + i + ".jpg" );
 	    inicializa();
-	    startAnimation();
+	    //startAnimation();
 	}
 	
 /**
@@ -75,6 +75,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      JPanel velocidad = new JPanel();
 	      JMenuBar barraMenu = new JMenuBar();
 	      TextField campo= new TextField(5);
+	      corriendo=false;
 	      
 	      
 	      
@@ -120,6 +121,9 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.start();
+	    	    	    startAnimation();
+	    	    	    pausa.setEnabled(true);
+	    	    	    
 	    	    	  }
 	    	    	});
 	      
@@ -128,6 +132,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.stop();
+	    	    	    stopAnimation();
+	    	    	    pausa.setEnabled(false);
 	    	    	  }
 	    	    	});	      
 	      
@@ -143,9 +149,21 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	      {
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
-	    	    	    System.out.println("Pausau");
-	    	    		  //model.setPause();  
-	    	    	  }
+	    	    	    System.out.println("corriendo1="+corriendo);
+	    	    		  //model.setPause(); 
+	    	    	    if(corriendo)
+	    	    	    	{
+	    	    	    		stopAnimation();
+	    	    	    		corriendo=false;
+	    	    	    		pausa.setLabel("->");
+	    	    	    	}
+	    	    	    else{
+	    	    	    	startAnimation();
+	    	    	    	corriendo=true;
+	    	    	    	pausa.setLabel("||");
+	    	    	    }
+	    	    	    System.out.println("corriendo2="+corriendo);
+	    	    	    }
 	    	    	});
 	      
 	      
@@ -173,6 +191,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	            }
 	         }
 	      );
+	      
+	      pausa.setEnabled(false);
 	      
 	      botones.add(decrementa);
 	      botones.add(pausa);
@@ -206,6 +226,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	   public void stopAnimation()
 	   {
 	      animationTimer.stop();
+	      
 	   }
 	 
 	   /**
@@ -254,6 +275,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    * **/
 	   public void startAnimation()
 	   {
+
 	      if ( animationTimer == null ) {
 	         currentImage = 0;  
 	         animationTimer = new Timer( animationDelay, this );
@@ -262,6 +284,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      else  // continue from last image displayed
 	         if ( ! animationTimer.isRunning() )
 	            animationTimer.restart();
+		  
+	   
 	   }
 	
 	   public void enableStopMenuItem() {
