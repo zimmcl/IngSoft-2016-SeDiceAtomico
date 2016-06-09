@@ -158,7 +158,8 @@ public class PrincipalView extends JFrame implements ActionListener {
     }
     
     private void botonCintaMActionPerformed(java.awt.event.ActionEvent evt){
-    	
+    	SccModel modelo=new SccModel();
+    	SccController controlador=new SccController(modelo, 1);
     }
     
     private void boton3VistasActionPerformed(java.awt.event.ActionEvent evt){
