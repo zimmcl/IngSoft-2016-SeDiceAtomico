@@ -85,9 +85,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      on = new JMenuItem("On");
 	      off= new JMenuItem("Off");
 	      
-	      archivo.add(salir);
+
 	      archivo.add(on);
 	      archivo.add(off);
+	      archivo.add(salir);
 	      barraMenu.add(archivo);
 	      barraMenu.add(edicion);
 	      
