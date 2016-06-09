@@ -10,16 +10,27 @@ public class SccController implements ControllerInterface {
 	SccModelInterface model;
 	DJView djview;
 	SccView sccview;
+	boolean isPaused = false;
+	boolean ownView;
 
-	public SccController(SccModelInterface model){
+	public SccController(SccModelInterface model, boolean ownView){
 		
-		//IMPREMENTAR CONTROLADOR
+		this.ownView = ownView;
 		this.model = model;
-		djview = new DJView(this, new SccAdapter(model));
-        djview.createView();
-        djview.createControls();
-		djview.disableStopMenuItem();
-		djview.enableStartMenuItem();
+		if(!ownView){		
+			djview = new DJView(this, new SccAdapter(model));
+			djview.createView();
+	        djview.createControls();
+			djview.disableStopMenuItem();
+			djview.enableStartMenuItem();
+		}else{
+			sccview = new SccView(this, model);
+			sccview.disableStopMenuItem();
+			sccview.enableStartMenuItem();
+			sccview.disablePauseButtonItem();
+			
+		}
+        
 		model.initialize();
 	}
 	
@@ -41,10 +52,14 @@ public SccController(SccModelInterface model, int i){
 	public void start() {
 		// TODO Auto-generated method stub
 		model.on();
-		sccview.disableStartMenuItem();
-		sccview.enableStopMenuItem();
-		//djview.disableStartMenuItem();
-		//djview.enableStopMenuItem();
+		if(!ownView){
+			djview.disableStartMenuItem();
+			djview.enableStopMenuItem();
+		}else{
+			sccview.disableStartMenuItem();
+			sccview.enableStopMenuItem();
+			sccview.enablePauseButtonItem();
+		}
 
 	}
 
@@ -52,10 +67,14 @@ public SccController(SccModelInterface model, int i){
 	public void stop() {
 		// TODO Auto-generated method stub
 		model.off();
-		sccview.disableStopMenuItem();
-		sccview.enableStartMenuItem();
-		//djview.disableStopMenuItem();
-		//djview.enableStartMenuItem();
+			if(!ownView){
+			djview.disableStopMenuItem();
+			djview.enableStartMenuItem();
+		}else{
+			sccview.disableStopMenuItem();
+			sccview.enableStartMenuItem();
+			sccview.disablePauseButtonItem();
+		}
 	}
 
 	public void increaseBPM() {
@@ -71,5 +90,15 @@ public SccController(SccModelInterface model, int i){
  	public void setBPM(int bpm) {
 		model.setSpeed(bpm);
 	}
+ 	
+ 	public void setPause() {
+ 		if(!isPaused){
+ 			model.pause();
+ 		}else{
+ 			model.resume();
+ 		}
+ 			
+ 	}
+ 	
 
 }
