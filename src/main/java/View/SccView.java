@@ -7,8 +7,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import main.java.Controller.ControllerInterface;
-import main.java.Model.BeatModelInterface;
+import main.java.Controller.SccController;
 import main.java.Model.SccModelInterface;
+import main.java.Model.SccModel;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -22,9 +23,11 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	SccModelInterface model;
 	ControllerInterface controller;
 	JLabel vel;
+	JLabel metr;
     JPanel animacion;		//Panel de la animacion
     JPanel botones;			//Panel de los botones
     JPanel velocidad;		//Panel donde se muestra la velocidad
+    JPanel metros;			//Panel que muestra metros recorridos;
 	Button incrementa;
     Button decrementa;
     Button pausa;
@@ -37,7 +40,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	protected ImageIcon images[];		//Arreglo donde se almacenan las imagenes para la animacion
 	protected int totalImages = 2,		//Cantidad de imagenes a usar en la animacion
 	              currentImage = 0,		//Indice de la imagen actual (inicia en 0 por defecto)
-	              animationDelay = 50; 	//Retraso entre cuadro y cuadro, en milisegundos
+	              animationDelay = 1000; 	//Retraso entre cuadro y cuadro, en milisegundos
 	protected Timer animationTimer;	//Timer que se encarga de alternar entre los cuadros de la animacion
 	protected boolean corriendo;
 	/** 
@@ -55,7 +58,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    images = new ImageIcon[ totalImages ];
 	 
 	    for ( int i = 0; i < 2; ++i ) 
-	         images[ i ] = new ImageIcon( "E:/tio" + i + ".jpg" );
+	         images[ i ] = new ImageIcon( "C:/tio" + i + ".jpg" );
 	    inicializa();
 	    //startAnimation();
 	}
@@ -67,14 +70,15 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
  * **/
 	public void inicializa()
 	   {
-	      Button incrementa = new Button (">>");
-	      Button decrementa = new Button ("<<");
-	      Button pausa = new Button("||");
-	      JPanel animacion = new JPanel();//Panel de la animacion
-	      JPanel botones = new JPanel();		//Panel de los botones
-	      JPanel velocidad = new JPanel();
-	      JMenuBar barraMenu = new JMenuBar();
-	      TextField campo= new TextField(5);
+	      incrementa = new Button (">>");
+	      decrementa = new Button ("<<");
+	      pausa = new Button("||");
+	      animacion = new JPanel();//Panel de la animacion
+	      botones = new JPanel();		//Panel de los botones
+	      velocidad = new JPanel();
+	      metros = new JPanel();
+	      barraMenu = new JMenuBar();
+	      campo= new TextField(5);
 	      corriendo=false;
 	      
 	      
@@ -95,7 +99,13 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      
 	      vel= new JLabel ();
 	      velocidad.add(vel);
-	      vel.setText("Velocidad: "+this.animationDelay);
+	      vel.setText("Velocidad: "+ model.getSpeed());
+	      
+	      metr = new JLabel();
+	      metros.add(metr);
+	      metr.setText("Metros Recorridos: "+ ((SccModel) model).getMetros());
+	      
+	      
 	      
 	      
 	      JPanel container = new JPanel();									//Genera un contenedor que simplifica el agregado de multiples paneles
@@ -123,7 +133,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  {
 	    	    	    controller.start();
 	    	    	    startAnimation();
-	    	    	    pausa.setEnabled(true);
+	    	    	    //pausa.setEnabled(true);
 	    	    	    
 	    	    	  }
 	    	    	});
@@ -134,7 +144,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  {
 	    	    	    controller.stop();
 	    	    	    stopAnimation();
-	    	    	    pausa.setEnabled(false);
+	    	    	    //pausa.setEnabled(false);
 	    	    	  }
 	    	    	});	      
 	      
@@ -151,7 +161,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    System.out.println("corriendo1="+corriendo);
-	    	    		  //model.setPause(); 
+	    	    		  ((SccController) controller).setPause(); 
 	    	    	    if(corriendo)
 	    	    	    	{
 	    	    	    		stopAnimation();
@@ -202,6 +212,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      container.add(animacion);
 	      container.add(botones);
 	      container.add(velocidad);
+	      container.add(metros);
 	      container.add(campo);
 	      
 	      app.add(container);
@@ -214,13 +225,20 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	
 	@Override
 	public void updateBeat() {
-		System.out.print("Se cumplieron:" + 1+ " m");
+		metr.setText("Metros Recorridos: "+(int)((SccModel) model).getMetros());
 	}
 
 	@Override
 	public void updateBPM() {
-		animationDelay = model.getSpeed();
-		vel.setText("Velocidad: "+animationDelay);
+		double v =(double) model.getSpeed(); 		//Velocidad en metros por minuto
+		
+		v = 1/v;									//Tiempo en recorrer un metro, expresado en minutos;
+		v = v*60*100	;							//Tiempo en milisegundos
+		
+		animationDelay = (int) v;
+		
+		animationTimer.setDelay(animationDelay);
+		vel.setText("Velocidad: "+ model.getSpeed());
 	}
 
 	
@@ -233,7 +251,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	   /**
 	    * Decrementa el retraso de la animacion (aumenta la frecuencia).
 	    * HACEN FALTA ESTOS METODOS????
-	    * **/
+	    * *
 	   public void dec(int d){
 		   animationTimer.setDelay(d);
 		   }
@@ -242,6 +260,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		   animationTimer.setDelay(d);
 		   
 	   }
+	   */
 	   
 	   public Dimension getMinimumSize()
 	   { 
@@ -277,7 +296,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	   public void startAnimation()
 	   {
 
-	      if ( animationTimer == null ) {
+	      if ( animationTimer == null || animationTimer.getDelay()>1000) {
 	         currentImage = 0;  
 	         animationTimer = new Timer( animationDelay, this );
 	         animationTimer.start();

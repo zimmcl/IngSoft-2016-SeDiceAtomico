@@ -34,18 +34,6 @@ public class SccController implements ControllerInterface {
 		model.initialize();
 	}
 	
-public SccController(SccModelInterface model, int i){
-		
-		//IMPREMENTAR CONTROLADOR
-		this.model = model;
-		sccview = new SccView(this, model);
-        /*djview.createView();
-        djview.createControls();
-		djview.disableStopMenuItem();
-		djview.enableStartMenuItem();
-		*/
-		model.initialize();
-	}
 	
 	
 	@Override

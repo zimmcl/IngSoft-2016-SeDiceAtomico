@@ -88,10 +88,15 @@ public class SccModel implements SccModelInterface, Runnable {
 
 	@Override
 	public void setSpeed(int speed) {
-		targetSpeed = speed;	
-			
+		if(speed>0){
+			targetSpeed = speed;
 		}
+	}
+	
 	public void modifyCurrentSpeed(int n){
+		if(n<0 && (currentSpeed+n)<=0){
+			return;
+		}
 		currentSpeed = currentSpeed +n;
 	}
 	
