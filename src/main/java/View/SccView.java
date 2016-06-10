@@ -60,7 +60,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    for ( int i = 0; i < 2; ++i ) 
 	         images[ i ] = new ImageIcon( "C:/tio" + i + ".jpg" );
 	    inicializa();
-	    //startAnimation();
 	}
 	
 /**
@@ -79,7 +78,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      metros = new JPanel();
 	      barraMenu = new JMenuBar();
 	      campo= new TextField(5);
-	      corriendo=false;
+	      corriendo=true;
 	      
 	      
 	      
@@ -164,15 +163,12 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    		  ((SccController) controller).setPause(); 
 	    	    	    if(corriendo)
 	    	    	    	{
-	    	    	    		stopAnimation();
-	    	    	    		corriendo=false;
 	    	    	    		pausa.setLabel("->");
 	    	    	    	}
 	    	    	    else{
-	    	    	    	startAnimation();
-	    	    	    	corriendo=true;
 	    	    	    	pausa.setLabel("||");
 	    	    	    }
+	    	    	    corriendo = !corriendo;
 	    	    	    System.out.println("corriendo2="+corriendo);
 	    	    	    }
 	    	    	});
@@ -232,35 +228,25 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	public void updateBPM() {
 		double v =(double) model.getSpeed(); 		//Velocidad en metros por minuto
 		
+		if(v==0){
+			stopAnimation();
+		}else if(!animationTimer.isRunning())
+		{
+			animationTimer.restart();
+		}
+		
 		v = 1/v;									//Tiempo en recorrer un metro, expresado en minutos;
 		v = v*60*100	;							//Tiempo en milisegundos
-		
+				
 		animationDelay = (int) v;
-		
 		animationTimer.setDelay(animationDelay);
 		vel.setText("Velocidad: "+ model.getSpeed());
 	}
 
 	
-	   public void stopAnimation()
-	   {
-	      animationTimer.stop();
-	      
-	   }
 	 
-	   /**
-	    * Decrementa el retraso de la animacion (aumenta la frecuencia).
-	    * HACEN FALTA ESTOS METODOS????
-	    * *
-	   public void dec(int d){
-		   animationTimer.setDelay(d);
-		   }
-
-	   public void inc(int d){
-		   animationTimer.setDelay(d);
-		   
-	   }
-	   */
+	 
+	  
 	   
 	   public Dimension getMinimumSize()
 	   { 
@@ -300,12 +286,17 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	         currentImage = 0;  
 	         animationTimer = new Timer( animationDelay, this );
 	         animationTimer.start();
+	         corriendo = true;
 	      }
 	      else  // continue from last image displayed
 	         if ( ! animationTimer.isRunning() )
-	            animationTimer.restart();
-		  
+	            animationTimer.restart();	   
+	   }
 	   
+	   public void stopAnimation()
+	   {
+	      animationTimer.stop();
+	      
 	   }
 	
 	   public void enableStopMenuItem() {

@@ -28,6 +28,7 @@ public class SccController implements ControllerInterface {
 			sccview.disableStopMenuItem();
 			sccview.enableStartMenuItem();
 			sccview.disablePauseButtonItem();
+			isPaused = false;
 			
 		}
         
@@ -76,14 +77,19 @@ public class SccController implements ControllerInterface {
   	}
   
  	public void setBPM(int bpm) {
-		model.setSpeed(bpm);
+ 		if(!isPaused){
+ 			model.setSpeed(bpm);
+ 		}
+		
 	}
  	
  	public void setPause() {
  		if(!isPaused){
  			model.pause();
+ 			isPaused = true;
  		}else{
  			model.resume();
+ 			isPaused=false;
  		}
  			
  	}

@@ -14,7 +14,7 @@ public class Regulador implements Runnable {
 	
 	@Override
 	public void run(){
-		while(model.getSpeed()>=1){
+		while(model.getSpeed()>=0){
 			try {
 				Thread.sleep(100);
 				if(model.getSpeed()>model.getTargetSpeed())
