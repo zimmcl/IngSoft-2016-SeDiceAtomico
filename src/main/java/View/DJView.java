@@ -55,7 +55,21 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 		
         viewPanel = new JPanel(new GridLayout(1, 2));
         viewFrame = new JFrame("View");
-        viewFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        //viewFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        viewFrame.addWindowListener(				//Implementa la accion a realizar al apretar el boton "salir"
+   	         new WindowAdapter() {
+   	            public void windowClosing( WindowEvent e )
+   	            {
+   	               //System.exit( 0 );
+   	            	controller.stop();
+   	            	 viewFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+   	            	controlFrame.setVisible(false);
+   	            	controlFrame.dispose();
+   	            	viewFrame.dispose();
+   	            }
+   	         }
+   	      );
+        
         viewFrame.setSize(new Dimension(100, 80));
         bpmOutputLabel = new JLabel("offline", SwingConstants.CENTER);
 		beatBar = new BeatBar();
@@ -85,7 +99,20 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 		// Create all Swing components here
         JFrame.setDefaultLookAndFeelDecorated(true);
         controlFrame = new JFrame("Control");
-        controlFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        //controlFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        controlFrame.addWindowListener(				//Implementa la accion a realizar al apretar el boton "salir"
+      	         new WindowAdapter() {
+      	            public void windowClosing( WindowEvent e )
+      	            {
+      	               //System.exit( 0 );
+      	            	controller.stop();
+      	            	 controlFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+      	            	viewFrame.setVisible(false);
+      	            	controlFrame.dispose();
+       	            	viewFrame.dispose();
+      	            }
+      	         }
+      	      );
         controlFrame.setSize(new Dimension(100, 80));
 
         controlPanel = new JPanel(new GridLayout(1, 2));

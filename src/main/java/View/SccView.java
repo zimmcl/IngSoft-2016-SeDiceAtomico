@@ -122,6 +122,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	      {
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
+	    	    		  //app.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    	    	    System.exit(0);
 	    	    	  }
 	    	    	});
@@ -194,7 +195,9 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	         new WindowAdapter() {
 	            public void windowClosing( WindowEvent e )
 	            {
-	               System.exit( 0 );
+	               //System.exit( 0 );
+	            	 app.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	            	 controller.stop();
 	            }
 	         }
 	      );
