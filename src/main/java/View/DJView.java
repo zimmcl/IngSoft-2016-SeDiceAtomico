@@ -28,6 +28,11 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
     JMenu menu;
     JMenuItem startMenuItem;
     JMenuItem stopMenuItem;
+    JMenuBar strategy;
+    JMenu modelo;
+    JMenuItem beat;
+    JMenuItem heart;
+    JMenuItem scc;
 
     public DJView(ControllerInterface controller, BeatModelInterface model) {	
 		this.controller = controller;
@@ -42,6 +47,12 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 
 	public void createView() {
 		// Create all Swing components here
+		strategy = new JMenuBar();
+		modelo = new JMenu("Modelo");
+		beat = new JMenuItem("Beat");
+		heart= new JMenuItem("Heart");
+		scc = new JMenuItem("Scc");
+		
         viewPanel = new JPanel(new GridLayout(1, 2));
         viewFrame = new JFrame("View");
         viewFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -52,8 +63,19 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
         JPanel bpmPanel = new JPanel(new GridLayout(2, 1));
 		bpmPanel.add(beatBar);
         bpmPanel.add(bpmOutputLabel);
+        
+        viewFrame.setJMenuBar(strategy);
+       // viewFrame.add(strategy);
+        strategy.add(modelo);
+        modelo.add(beat);
+        modelo.add(heart);
+        modelo.add(scc);
+        
         viewPanel.add(bpmPanel);
         viewFrame.getContentPane().add(viewPanel, BorderLayout.CENTER);
+        
+        
+        
         viewFrame.pack();
         viewFrame.setVisible(true);
 	}
@@ -121,6 +143,8 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
         
         bpmLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         bpmOutputLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        
+        
 
         controlFrame.getRootPane().setDefaultButton(setBPMButton);
         controlFrame.getContentPane().add(controlPanel, BorderLayout.CENTER);
