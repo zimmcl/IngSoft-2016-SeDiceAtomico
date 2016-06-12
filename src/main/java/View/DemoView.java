@@ -86,13 +86,14 @@ public class DemoView implements ActionListener {
 		modeloScc=modelo;
     	SccController controlador=new SccController(modelo, true);
     	this.controladorScc=controlador;
+    	controlador.sccview.app.setVisible(false);
 		
 		
 		frmSdaTrabajo = new JFrame();
-		frmSdaTrabajo.setResizable(true);
+		frmSdaTrabajo.setResizable(false);
 		frmSdaTrabajo.setTitle("SDA - Trabajo Final Ingenieria de Software");
 		frmSdaTrabajo.setIconImage(Toolkit.getDefaultToolkit().getImage(DemoView.class.getResource("/imagenes/Se_dice_Atomico.jpg")));
-		frmSdaTrabajo.setBounds(100, 100, 850, 450);
+		frmSdaTrabajo.setBounds(150, 100, 1025, 550);
 		frmSdaTrabajo.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();

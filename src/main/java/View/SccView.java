@@ -41,7 +41,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     JTextField campoMetros;
     
 	protected ImageIcon images[];		//Arreglo donde se almacenan las imagenes para la animacion
-	protected int totalImages = 15,		//Cantidad de imagenes a usar en la animacion
+	protected int totalImages = 9,		//Cantidad de imagenes a usar en la animacion
 	              currentImage = 0,		//Indice de la imagen actual (inicia en 0 por defecto)
 	              animationDelay = 1000; 	//Retraso entre cuadro y cuadro, en milisegundos
 	protected Timer animationTimer;	//Timer que se encarga de alternar entre los cuadros de la animacion
@@ -61,8 +61,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		setSize( getPreferredSize() );
 	    images = new ImageIcon[ totalImages ];
 	    
-	    for ( int i = 0; i < 15; ++i ){ 
-	         images[ i ] = new ImageIcon( "src/imagenes/SoldadoCorriendo" + i + ".jpg" );}
+	    for ( int i = 0; i < 9; ++i ){ 
+	         images[ i ] = new ImageIcon( "src/imagenes/Mani/Mani" + i + ".jpg" );}
 	    inicializa();
 	}
 	
@@ -84,7 +84,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      campo= new TextField(5);
 	      corriendo=true;
 	      barra = new JProgressBar();
-	      campoMetros = new JTextField("Ingrese valor barra de progreso");
+	      campoMetros = new JTextField();
 	      
 	      
 	      JMenu archivo= new JMenu("Archivo");
@@ -222,6 +222,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      container.add(metros);
 	      container.add(campo);
 	      container.add(barra);
+	      container.add(new JLabel("Limite Barra"));
 	      container.add(campoMetros);
 	      barra.setMaximum(100);
 	      app.add(container);
@@ -279,7 +280,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	 
 	   public Dimension getPreferredSize()
 	   {
-	      return new Dimension( 100, 220 );		//Modifica la dimension de la imagen
+	      return new Dimension( 300, 300 );		//Modifica la dimension de la imagen
 	   }
 	
 	   
