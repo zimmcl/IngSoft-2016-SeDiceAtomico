@@ -159,7 +159,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	      {
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
-	    	    	    System.out.println("corriendo1="+corriendo);
 	    	    		  ((SccController) controller).setPause(); 
 	    	    	    if(corriendo)
 	    	    	    	{
@@ -169,7 +168,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	    	pausa.setLabel("||");
 	    	    	    }
 	    	    	    corriendo = !corriendo;
-	    	    	    System.out.println("corriendo2="+corriendo);
 	    	    	    }
 	    	    	});
 	      

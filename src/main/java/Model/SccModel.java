@@ -71,7 +71,9 @@ public class SccModel implements SccModelInterface, Runnable {
 	}
 	public void resume(){
 		dateInicial = new Date();
-		currentSpeed=1;
+		
+		if(currentSpeed==0)
+			currentSpeed=1;
 		
 		
 		thread = new Thread(this);
@@ -121,7 +123,6 @@ public class SccModel implements SccModelInterface, Runnable {
 				try {
 					if(getSpeed()>=1){
 						double time = (600/(double)currentSpeed);
-						//System.out.println(time+" "+n);
 						TimeUnit.MILLISECONDS.sleep(( (long) time ));
 						n++;
 						metros+=0.01;
@@ -164,8 +165,6 @@ public class SccModel implements SccModelInterface, Runnable {
 			BeatObserver observer = (BeatObserver)beatObservers.get(i);
 			observer.updateBeat();
 		}
-		///-----------------------------------------------
-		System.out.println("Sonido.");
 	}
 
 	@Override
@@ -200,17 +199,4 @@ public class SccModel implements SccModelInterface, Runnable {
 		n = n/100;
 		return n;
 	}
-	//public void increaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed+1);
-	//	}
-		
-	//}
-	
-	//public void decreaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed-1);
-	//	}
-		
-	//}
 }
