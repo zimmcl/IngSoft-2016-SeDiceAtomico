@@ -10,7 +10,7 @@ public class SccController implements ControllerInterface {
 	
 	SccModelInterface model;
 	DJView djview;
-	SccView sccview;
+	public SccView sccview;
 	boolean isPaused = false;
 	boolean ownView;
 
