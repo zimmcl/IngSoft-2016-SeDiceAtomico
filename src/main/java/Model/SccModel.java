@@ -22,6 +22,7 @@ public class SccModel implements SccModelInterface, Runnable {
 	Date dateInicial;
 	double metros;
 	double currentTime;
+	boolean stop;
 	Regulador regulador;
 	
 	public SccModel(){
@@ -34,16 +35,19 @@ public class SccModel implements SccModelInterface, Runnable {
 		metros = 0;
 		currentTime=0;
 		currentSpeed = 0;
+		stop=false;
 	}
 
 	@Override
 	public void on() {
+		initialize();
 		dateInicial = new Date();
 		currentSpeed=1;
 		thread = new Thread(this);
 		thread.start();
 		setSpeed(40);
 		regulador = new Regulador(this);
+		notifyBeatObservers();
 		
 		
 	}
@@ -51,7 +55,9 @@ public class SccModel implements SccModelInterface, Runnable {
 	@Override
 	public void off() {
 		setSpeed(0);
-		
+		Regulador.apagarRegulador();
+		stop=true;
+		//thread.interrupt();
 		currentTime += getTiempo(dateInicial);
 		System.out.println("Tiempo Total: " + currentTime +" ms. Metros Recorridos: "+ getMetros());
 		/*Guardar archivo en registro
@@ -76,8 +82,7 @@ public class SccModel implements SccModelInterface, Runnable {
 			currentSpeed=1;
 		
 		
-		thread = new Thread(this);
-		thread.start();
+		
 		
 		setSpeed(lastSpeed);
 		
@@ -117,9 +122,8 @@ public class SccModel implements SccModelInterface, Runnable {
 	@Override
 	public void run(){
 		int n=0;
-		boolean detener=false;
 		
-		while(!detener){			
+		while(!stop || getSpeed()!=0){			
 				try {
 					if(getSpeed()>=1){
 						double time = (600/(double)currentSpeed);
@@ -133,7 +137,7 @@ public class SccModel implements SccModelInterface, Runnable {
 						}						
 					}
 					else{
-						detener = true;
+						TimeUnit.MILLISECONDS.sleep(50);
 					}						
 				} catch (InterruptedException e) {
 					e.printStackTrace();

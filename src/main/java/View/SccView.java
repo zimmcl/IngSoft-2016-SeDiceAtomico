@@ -131,8 +131,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.start();
-	    	    	    startAnimation();
-	    	    	    //pausa.setEnabled(true);
 	    	    	    
 	    	    	  }
 	    	    	});
@@ -142,8 +140,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.stop();
-	    	    	    stopAnimation();
-	    	    	    //pausa.setEnabled(false);
+	    	    	    
 	    	    	  }
 	    	    	});	      
 	      
@@ -209,6 +206,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      container.add(metros);
 	      container.add(campo);
 	      
+	      startAnimation();
+	      
 	      app.add(container);
 	      app.setJMenuBar(barraMenu);
 	      app.pack();
@@ -234,7 +233,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		}
 		
 		v = 1/v;									//Tiempo en recorrer un metro, expresado en minutos;
-		v = v*60*100	;							//Tiempo en milisegundos
+		v = v*60*100	;							//Tiempo en milisegundos/10
 				
 		animationDelay = (int) v;
 		animationTimer.setDelay(animationDelay);
@@ -287,7 +286,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	         corriendo = true;
 	      }
 	      else  // continue from last image displayed
-	         if ( ! animationTimer.isRunning() )
+	         //if ( ! animationTimer.isRunning() )
 	            animationTimer.restart();	   
 	   }
 	   

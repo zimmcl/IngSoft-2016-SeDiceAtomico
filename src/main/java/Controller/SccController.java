@@ -40,16 +40,17 @@ public class SccController implements ControllerInterface {
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-		model.on();
-		if(!ownView){
-			djview.disableStartMenuItem();
-			djview.enableStopMenuItem();
-		}else{
-			sccview.disableStartMenuItem();
-			sccview.enableStopMenuItem();
-			sccview.enablePauseButtonItem();
+		if(model.getSpeed()==0){
+			model.on();
+			if(!ownView){
+				djview.disableStartMenuItem();
+				djview.enableStopMenuItem();
+			}else{
+				sccview.disableStartMenuItem();
+				sccview.enableStopMenuItem();
+				sccview.enablePauseButtonItem();
+			}
 		}
-
 	}
 
 	@Override

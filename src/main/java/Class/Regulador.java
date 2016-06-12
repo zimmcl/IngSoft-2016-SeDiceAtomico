@@ -5,26 +5,41 @@ import main.java.Model.SccModel;
 public class Regulador implements Runnable {
 	SccModel model;
 	Thread tr;
+	static boolean regular;
 	
 	public Regulador(SccModel model){
 		this.model = model;
+		regular= true;
 		tr = new Thread(this);
 		tr.start();		
 	}
 	
+	public static void apagarRegulador(){
+		regular = false;
+	}
 	@Override
 	public void run(){
-		while(model.getSpeed()>=0){
+		while(regular || model.getSpeed()!=0){
+			
+			
 			try {
 				Thread.sleep(100);
-				if(model.getSpeed()>model.getTargetSpeed())
+				if(model.getSpeed()>model.getTargetSpeed()){
 					model.modifyCurrentSpeed(-1);
-				else if(model.getSpeed()<model.getTargetSpeed())
+					model.notifyBPMObservers();
+				}
+					
+				else if(model.getSpeed()<model.getTargetSpeed()){
 					model.modifyCurrentSpeed(1);
-				model.notifyBPMObservers();
+					model.notifyBPMObservers();
+				}
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		
+		
+		
 		}
 	}
 }
