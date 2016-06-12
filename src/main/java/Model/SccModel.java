@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import main.java.Class.Persona;
 import main.java.Class.Regulador;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
@@ -23,6 +24,7 @@ public class SccModel implements SccModelInterface, Runnable {
 	double metros;
 	double currentTime;
 	Regulador regulador;
+	Persona p;
 	
 	public SccModel(){
 		initialize();		
@@ -34,6 +36,11 @@ public class SccModel implements SccModelInterface, Runnable {
 		metros = 0;
 		currentTime=0;
 		currentSpeed = 0;
+		p = new Persona("123","juan", 100, 15);
+	}
+	
+	public Persona getPersona(){
+		return p;
 	}
 
 	@Override

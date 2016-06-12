@@ -2,7 +2,10 @@ package main.java.Class;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.ObjectOutputStream;
 import java.util.UUID;
+import java.io.File;               
+import java.io.FileOutputStream;   
 
 public class Persona {
 
@@ -100,9 +103,32 @@ public class Persona {
         this.distancia = distancia;
     }
   
-    public void guardarEstado(String id, String nombre, double calorias, double tiempo, int distancia, double peso, int edad ) {
+    public void guardarEstado( String nombre) {
+    	File f = new File("juan.bin");
+        FileOutputStream fos = null;
+        ObjectOutputStream escribirObjeto = null;
         
+        try{
+            fos = new FileOutputStream( f );
+            escribirObjeto = new ObjectOutputStream( fos );
+            escribirObjeto.writeObject(this);
         }
+        catch( Exception e ){ 
+        	System.out.printf("E1");
+        	e.printStackTrace();
+        }
+        finally
+        {
+            try{
+                //Se cierra el archivo y listo.
+                if( escribirObjeto != null ) escribirObjeto.close();
+            }catch( Exception ex ){
+            	System.out.printf("E2");
+            	ex.printStackTrace();
+            }
+        }
+    }
+    	
        
     
     public static Persona cargaEstado(String archivo) {
