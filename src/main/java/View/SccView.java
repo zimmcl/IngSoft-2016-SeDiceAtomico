@@ -31,18 +31,22 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	Button incrementa;
     Button decrementa;
     Button pausa;
+    JDialog app;
+    JProgressBar barra;
 
     JMenuBar barraMenu;
 	JMenuItem on;
     JMenuItem off;
     TextField campo;
+    JTextField campoMetros;
     
 	protected ImageIcon images[];		//Arreglo donde se almacenan las imagenes para la animacion
-	protected int totalImages = 2,		//Cantidad de imagenes a usar en la animacion
+	protected int totalImages = 9,		//Cantidad de imagenes a usar en la animacion
 	              currentImage = 0,		//Indice de la imagen actual (inicia en 0 por defecto)
 	              animationDelay = 1000; 	//Retraso entre cuadro y cuadro, en milisegundos
 	protected Timer animationTimer;	//Timer que se encarga de alternar entre los cuadros de la animacion
 	protected boolean corriendo;
+	private int aux=0;
 	/** 
 	 * Constructor de la clase. Al ejecutarse, registra a los observadores
 	 * 
@@ -56,9 +60,9 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		
 		setSize( getPreferredSize() );
 	    images = new ImageIcon[ totalImages ];
-	 
-	    for ( int i = 0; i < 2; ++i ) 
-	         images[ i ] = new ImageIcon( "C:/tio" + i + ".jpg" );
+	    
+	    for ( int i = 0; i < 9; ++i ){ 
+	         images[ i ] = new ImageIcon( "src/imagenes/Mani/Mani" + i + ".jpg" );}
 	    inicializa();
 	}
 	
@@ -79,7 +83,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      barraMenu = new JMenuBar();
 	      campo= new TextField(5);
 	      corriendo=true;
-	      
+	      barra = new JProgressBar();
+	      campoMetros = new JTextField();
 	      
 	      
 	      JMenu archivo= new JMenu("Archivo");
@@ -102,7 +107,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      
 	      metr = new JLabel();
 	      metros.add(metr);
-	      metr.setText("Metros Recorridos: "+ ((SccModel) model).getMetros());
+	      metr.setText("Metros: "+ ((SccModel) model).getMetros());
 	      
 	      
 	      
@@ -112,7 +117,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      
 	      
 	      
-	      JFrame app = new JFrame( "Animator test" );
+	      app = new JDialog();
 	      animacion.add(this);
 	      app.getContentPane().add( animacion, BorderLayout.EAST );
 	      app.add(animacion,BorderLayout.EAST);
@@ -181,6 +186,12 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	  controller.decreaseBPM();}
 	    	});
 	      
+	      campoMetros.addActionListener(new ActionListener()					//Cambia el valor de completado de la barra de estado
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {
+	    	    	  barra.setMaximum(Integer.parseInt(campoMetros.getText()));}  
+	    	    	});
 	      
 	      
 	      campo.addActionListener(new ActionListener()					//Habilita la funcion del boton decrementar
@@ -210,7 +221,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      container.add(velocidad);
 	      container.add(metros);
 	      container.add(campo);
-	      
+	      container.add(barra);
+	      container.add(new JLabel("Limite Barra"));
+	      container.add(campoMetros);
+	      barra.setMaximum(100);
 	      app.add(container);
 	      app.setJMenuBar(barraMenu);
 	      app.pack();
@@ -221,8 +235,19 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	
 	@Override
 	public void updateBeat() {
-		metr.setText("Metros Recorridos: "+(int)((SccModel) model).getMetros());
+		
+		metr.setText("Metros: "+(int)((SccModel) model).getMetros());
+		aux++;
+		barra.setValue(aux);
+		if(barra.getValue()>=barra.getMaximum()){
+		barra.setValue(0);
+		barra.repaint();
+		aux=0;
+		}
+		
 	}
+	
+		
 
 	@Override
 	public void updateBPM() {
@@ -255,7 +280,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	 
 	   public Dimension getPreferredSize()
 	   {
-	      return new Dimension( 143, 238 );		//Modifica la dimension de la imagen
+	      return new Dimension( 300, 300 );		//Modifica la dimension de la imagen
 	   }
 	
 	   
