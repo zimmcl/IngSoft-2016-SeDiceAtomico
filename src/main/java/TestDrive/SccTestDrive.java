@@ -12,8 +12,5 @@ public class SccTestDrive {
         ControllerInterface model = new SccController(sccModel, true); 
 		
 	}
-		
-		
-		
-		
+				
 }

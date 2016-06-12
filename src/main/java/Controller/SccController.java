@@ -1,6 +1,7 @@
 package main.java.Controller;
 
 import main.java.Adapter.SccAdapter;
+import main.java.Model.SccModel;
 import main.java.Model.SccModelInterface;
 import main.java.View.DJView;
 import main.java.View.SccView;
@@ -9,7 +10,7 @@ public class SccController implements ControllerInterface {
 	
 	SccModelInterface model;
 	DJView djview;
-	SccView sccview;
+	public SccView sccview;
 	boolean isPaused = false;
 	boolean ownView;
 
@@ -35,7 +36,17 @@ public class SccController implements ControllerInterface {
 		model.initialize();
 	}
 	
-	
+	/**
+	 * Constructor creado para el uso de MultiplesView
+	 */
+	public SccController(SccModel model, DJView view) 
+    {
+        this.model = model;
+        this.djview = view;
+        this.djview.disableStopMenuItem();
+        this.djview.enableStartMenuItem();
+        this.model.initialize();  // ver inicializacion del modelo 
+    }
 	
 	@Override
 	public void start() {

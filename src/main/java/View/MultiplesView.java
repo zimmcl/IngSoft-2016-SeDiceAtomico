@@ -12,13 +12,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import main.java.Adapter.HeartAdapter;
+import main.java.Adapter.SccAdapter;
 import main.java.Class.BeatBar;
 import main.java.Controller.BeatController;
 import main.java.Controller.ControllerInterface;
 import main.java.Controller.HeartController;
+import main.java.Controller.SccController;
 import main.java.Model.BeatModel;
 import main.java.Model.BeatModelInterface;
 import main.java.Model.HeartModel;
+import main.java.Model.SccModel;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -63,13 +66,21 @@ public class MultiplesView extends DJView {
                     switch (e.getItem().toString())
                     {
                         case "HeartModel":
-                            
+                        	HeartController heartController = new HeartController(estaView);
+                            setController(heartController);
+                            setModel(new HeartAdapter(HeartModel.getInstancia()));
                             break;
                         case "BeatModel":
-                           
+                        	BeatModel beat = new BeatModel();
+                            BeatController beatController = new BeatController(beat, estaView);
+                            setController(beatController);
+                            setModel(beat);
                             break;
                         case "SccModel":
-                            
+                        	SccModel scc = new SccModel();
+                            SccController carController = new SccController(scc, estaView);
+                            setController(carController);
+                            setModel((new SccAdapter(scc)));
                             break;
                     }
                 }
