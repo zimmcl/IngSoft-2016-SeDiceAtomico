@@ -2,12 +2,15 @@ package main.java.Class;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.UUID;
-import java.io.File;               
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;   
 
-public class Persona {
+public class Persona implements Serializable {
 
     private String id;
     private String nombre = "nombre";
@@ -114,7 +117,6 @@ public class Persona {
             escribirObjeto.writeObject(this);
         }
         catch( Exception e ){ 
-        	System.out.printf("E1");
         	e.printStackTrace();
         }
         finally
@@ -131,9 +133,42 @@ public class Persona {
     	
        
     
-    public static Persona cargaEstado(String archivo) {
-		return null;
-    	
+    public Persona cargaEstado() {
+    	File f = new File("juan.bin");
+
+        //Esto siempre debe de ir el FileInputStream y ObjectInputStream
+        FileInputStream fis = null;
+        ObjectInputStream leerObjeto = null;
+
+        try{
+            /* Sabemos muy bien que en lugar de 'f' que es de tipo file
+             * puede tambien colocarse un variable tipo String o una cadena como tal
+             * Ejemplo: fis = new FileInputStream( "capsula.bin" );
+             * Ejemplo: String s = "capsula.bin";
+             *          fis = new FileInputStream( s );
+             */
+            fis = new FileInputStream( f );
+            leerObjeto = new ObjectInputStream( fis );
+
+            /* Se lee el archivo y lo que devuelve es el objeto guardado
+             * este por estar guardado como tipo Object hay que castearlo
+             * en nuestro caso es la clase Dato por lo tanto "CasaBulma casa_bulma = (CasaBulma)leerObjeto.readObject();"
+             * si fuese un JPanel seria
+             * Ejemplo: JPanel tablero = (JPanel)leerObjeto.readObject();
+             */
+            Persona casa_bulma = (Persona)leerObjeto.readObject();
+    	System.out.println("No. calorias: " + casa_bulma.calorias + ", " + "Nombre: " + casa_bulma.nombre);
+    	return casa_bulma;
+        }
+        catch( Exception e ){ }
+        finally
+        {
+            try{
+                //Se cierra el archivo y listo.
+                if( leerObjeto != null ) leerObjeto.close();
+            }catch( Exception ex ){}
+        }
+        return null;
     	
     }
 

@@ -166,6 +166,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	    //startAnimation();
 	    	    	    //pausa.setEnabled(true);
 	    	    	    System.out.printf("Cepo al dolar, flaco");
+	    	    	    model.getPersona().cargaEstado();
 	    	    	  }
 	    	    	});
 	      
