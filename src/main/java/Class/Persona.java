@@ -1,18 +1,15 @@
 package main.java.Class;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.UUID;
-
 import javax.swing.JOptionPane;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;   
 
+@SuppressWarnings("serial")
 public class Persona implements Serializable {
 
     private String id;
@@ -21,7 +18,8 @@ public class Persona implements Serializable {
     private double tiempo = 0.0;
     private int distancia = 0;
     private double peso=0.0;
-    private int edad=0;
+    @SuppressWarnings("unused")
+	private int edad=0;
 
     /**
      * Constructor, que crea una {@link Persona} con los siguiente parámetros.

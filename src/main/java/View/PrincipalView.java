@@ -19,6 +19,7 @@ import main.java.Model.HeartModelInterface;
 import main.java.Model.SccModel;
 import main.java.Model.SccModelInterface; 
 
+@SuppressWarnings("serial")
 public class PrincipalView extends JFrame implements ActionListener {
 	
 	private JLabel imagen;           	 

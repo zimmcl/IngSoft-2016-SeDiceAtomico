@@ -6,6 +6,7 @@ import main.java.Model.SccModel;
 
 public class SccTestDrive {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SccModel sccModel = new SccModel();

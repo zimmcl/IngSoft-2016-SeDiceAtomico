@@ -4,7 +4,6 @@ import main.java.Adapter.HeartAdapter;
 import main.java.Model.HeartModel;
 import main.java.Model.HeartModelInterface;
 import main.java.View.DJView;
-import main.java.View.MultiplesView;
 
 public class HeartController implements ControllerInterface {
 	HeartModelInterface model;

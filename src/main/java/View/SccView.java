@@ -13,6 +13,7 @@ import main.java.Model.SccModel;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
+@SuppressWarnings("serial")
 public class SccView extends JPanel implements BPMObserver, BeatObserver, ActionListener {
 	
 	/**
@@ -64,7 +65,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    images = new ImageIcon[ totalImages ];
 	    
 	    for ( int i = 0; i < 9; ++i ){ 
-	         images[ i ] = new ImageIcon( "src/imagenes/Mani/Mani" + i + ".jpg" );}
+	         images[ i ] = new ImageIcon(getClass().getResource("/imagenes/Mani/Mani" + i + ".jpg" ));}
 	    inicializa();
 	}
 	

@@ -4,10 +4,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,6 +27,7 @@ import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
 public class MultiplesView extends DJView {
+	@SuppressWarnings({ "rawtypes", "unused" })
 	private final JComboBox cmbEleccion = new JComboBox();
     private final MultiplesView estaView = this;
     JMenuBar strategy;
@@ -68,7 +65,7 @@ public class MultiplesView extends DJView {
         viewPanel = new JPanel(new GridLayout(1, 2));
         viewFrame = new JFrame("Vista");
         viewFrame.setJMenuBar(strategy);
-        viewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         viewFrame.setSize(new Dimension(100, 80));
         bpmOutputLabel = new JLabel("Apagado", SwingConstants.CENTER);
         beatBar = new BeatBar();
@@ -107,44 +104,6 @@ public class MultiplesView extends DJView {
                 setModel((new SccAdapter(scc)));
             }
         });
-        
-        
-        
-       /* cmbEleccion.setModel(new DefaultComboBoxModel(new String[]{"Seleccionar", "HeartModel", "BeatModel", "SccModel"}));
-        cmbEleccion.setSelectedIndex(0);
-        cmbEleccion.setToolTipText("");
-        cmbEleccion.addItemListener(new ItemListener()
-        {
-            public void itemStateChanged(ItemEvent e) 
-            {
-                if (e.getStateChange() == ItemEvent.SELECTED) 
-                {
-                    if (controller != null) 
-                            controller.stop();
-                    switch (e.getItem().toString())
-                    {
-                        case "HeartModel":
-                        	HeartController heartController = new HeartController(estaView);
-                            setController(heartController);
-                            setModel(new HeartAdapter(HeartModel.getInstancia()));
-                            break;
-                        case "BeatModel":
-                        	BeatModel beat = new BeatModel();
-                            BeatController beatController = new BeatController(beat, estaView);
-                            setController(beatController);
-                            setModel(beat);
-                            break;
-                        case "SccModel":
-                        	SccModel scc = new SccModel();
-                            SccController carController = new SccController(scc, estaView);
-                            setController(carController);
-                            setModel((new SccAdapter(scc)));
-                            break;
-                    }
-                }
-            }
-        });*/
-        //bpmPanel.add(cmbEleccion);
     }
 
     public void setModel(BeatModelInterface model) 
