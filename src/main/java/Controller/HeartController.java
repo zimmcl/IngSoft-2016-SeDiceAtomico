@@ -22,7 +22,7 @@ public class HeartController implements ControllerInterface {
 	/**
 	 * Constructor creado para el uso de MultiplesView
 	 */
-	public HeartController(MultiplesView view){
+	public HeartController(DJView view){
 		 
 		this.model = HeartModel.getInstancia();
  

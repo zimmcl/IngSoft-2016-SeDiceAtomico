@@ -2,9 +2,18 @@ package main.java.Class;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Persona {
+import javax.swing.JOptionPane;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;   
+
+public class Persona implements Serializable {
 
     private String id;
     private String nombre = "nombre";
@@ -100,14 +109,64 @@ public class Persona {
         this.distancia = distancia;
     }
   
-    public void guardarEstado(String id, String nombre, double calorias, double tiempo, int distancia, double peso, int edad ) {
+    public void guardarEstado( String nombre) {
+    	this.setNombre(nombre);
+    	File f = new File(nombre+".bin");
+        FileOutputStream fos = null;
+        ObjectOutputStream escribirObjeto = null;
         
+        try{
+            fos = new FileOutputStream( f );
+            escribirObjeto = new ObjectOutputStream( fos );
+            escribirObjeto.writeObject(this);
+            JOptionPane.showMessageDialog(null, "Archivo "+ nombre +".bin guardado con éxito", "Notificación.", JOptionPane.INFORMATION_MESSAGE);
         }
+        catch( Exception e ){ 
+        	e.printStackTrace();
+        }
+        finally
+        {
+            try{
+                //Se cierra el archivo y listo.
+                if( escribirObjeto != null ) escribirObjeto.close();
+            }catch( Exception ex ){
+            	System.out.printf("E2");
+            	ex.printStackTrace();
+            }
+        }
+    }
+    	
        
     
-    public static Persona cargaEstado(String archivo) {
-		return null;
+    public Persona cargaEstado() {
     	
+    	String inputValue = JOptionPane.showInputDialog("Ingrese el nombre del archivo a guardar");
+    	File f = new File(inputValue+".bin");
+
+        //Esto siempre debe de ir el FileInputStream y ObjectInputStream
+        FileInputStream fis = null;
+        ObjectInputStream leerObjeto = null;
+
+        try{
+           
+            fis = new FileInputStream( f );
+            leerObjeto = new ObjectInputStream( fis );
+
+            Persona cliente = (Persona)leerObjeto.readObject();
+            String mensaje= "Bienvendio nuevamente " +cliente.getNombre()+ ". Sus ultimas estadisticas son: \n*Peso: "+cliente.peso+"\n*Distancia: "+cliente.distancia+"\n*Calorias: "+cliente.calorias;
+            JOptionPane.showMessageDialog(null, mensaje , "Notificación.", JOptionPane.INFORMATION_MESSAGE);
+    	System.out.println("No. calorias: " + cliente.calorias + ", " + "Nombre: " + cliente.nombre);
+    	return cliente;
+        }
+        catch( Exception e ){ }
+        finally
+        {
+            try{
+                //Se cierra el archivo y listo.
+                if( leerObjeto != null ) leerObjeto.close();
+            }catch( Exception ex ){}
+        }
+        return null;
     	
     }
 

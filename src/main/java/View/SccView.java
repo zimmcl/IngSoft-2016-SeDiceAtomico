@@ -37,6 +37,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     JMenuBar barraMenu;
 	JMenuItem on;
     JMenuItem off;
+    JMenuItem importar;
+    JMenuItem exportar;
     TextField campo;
     JTextField campoMetros;
     
@@ -92,10 +94,14 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      JMenuItem salir = new JMenuItem("Salir");
 	      on = new JMenuItem("On");
 	      off= new JMenuItem("Off");
+	      importar = new JMenuItem("Importar");
+	      exportar = new JMenuItem("Exportar");
 	      
 
 	      archivo.add(on);
 	      archivo.add(off);
+	      archivo.add(importar);
+	      archivo.add(exportar);
 	      archivo.add(salir);
 	      barraMenu.add(archivo);
 	      barraMenu.add(edicion);
@@ -151,6 +157,34 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	    //pausa.setEnabled(false);
 	    	    	  }
 	    	    	});	      
+
+	      importar.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {
+	    	    	    //controller.start();
+	    	    	    //startAnimation();
+	    	    	    //pausa.setEnabled(true);
+	    	    	    System.out.printf("Cepo al dolar, flaco");
+	    	    	    model.getPersona().cargaEstado();
+	    	    	  }
+	    	    	});
+	      
+	      
+	      exportar.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {
+	    	    		  String inputValue = JOptionPane.showInputDialog("Ingrese el nombre del archivo a guardar");
+	    	    		  model.getPersona().guardarEstado(inputValue);
+	    	    	    //controller.start();
+	    	    	    //startAnimation();
+	    	    	    //pausa.setEnabled(true);
+	    	    	    
+	    	    	  }
+	    	    	});
+	      
+	      
 	      
 	      incrementa.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
 	      {
@@ -205,7 +239,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	         new WindowAdapter() {
 	            public void windowClosing( WindowEvent e )
 	            {
-	               System.exit( 0 );
+	            	app.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	            	 controller.stop();
 	            }
 	         }
 	      );

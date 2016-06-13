@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import main.java.Class.Persona;
 import main.java.Class.Regulador;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
@@ -24,6 +25,8 @@ public class SccModel implements SccModelInterface, Runnable {
 	double currentTime;
 	boolean stop;
 	Regulador regulador;
+	Persona p;
+	double factor;
 	
 	public SccModel(){
 		initialize();		
@@ -36,6 +39,12 @@ public class SccModel implements SccModelInterface, Runnable {
 		currentTime=0;
 		currentSpeed = 0;
 		stop=false;
+	p = new Persona("123",null, 100, 15);
+		factor = 0.25;
+	}
+	
+	public Persona getPersona(){
+		return p;
 	}
 
 	@Override
@@ -203,4 +212,20 @@ public class SccModel implements SccModelInterface, Runnable {
 		n = n/100;
 		return n;
 	}
+public double getCaloriasConsumidas(){
+		return metros*factor;
+	}
+	//public void increaseSpeed(){
+	//	if(currentSpeed==targetSpeed){
+	//		setSpeed(targetSpeed+1);
+	//	}
+		
+	//}
+	
+	//public void decreaseSpeed(){
+	//	if(currentSpeed==targetSpeed){
+	//		setSpeed(targetSpeed-1);
+	//	}
+		
+	//}
 }
