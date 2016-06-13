@@ -1,6 +1,7 @@
 package main.java.Controller;
 
 import main.java.Adapter.HeartAdapter;
+import main.java.Model.HeartModel;
 import main.java.Model.HeartModelInterface;
 import main.java.View.DJView;
 
@@ -17,11 +18,30 @@ public class HeartController implements ControllerInterface {
 		view.disableStartMenuItem();
 	}
   
+	/**
+	 * Constructor creado para el uso de MultiplesView
+	 */
+	public HeartController(DJView view){
+		 
+		this.model = HeartModel.getInstancia();
+ 
+		this.view = view;
+ 
+		this.view.disableStopMenuItem();
+ 
+		this.view.disableStartMenuItem();
+ 
+	}
+	
 	public void start() {}
  
 	public void stop() {}
     
-	public void increaseBPM() {}
+	//Incrementa en 1 los intentos de instanciación
+	public void increaseBPM() {
+	@SuppressWarnings("unused")
+	HeartModel HeartUnico = HeartModel.getInstancia();
+		}
     
 	public void decreaseBPM() {}
   

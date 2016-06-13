@@ -36,11 +36,15 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 		model.registerObserver((BPMObserver)this);
     }
     
-    public void createView() {
+    public DJView() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void createView() {
 		// Create all Swing components here
         viewPanel = new JPanel(new GridLayout(1, 2));
         viewFrame = new JFrame("View");
-        viewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        viewFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         viewFrame.setSize(new Dimension(100, 80));
         bpmOutputLabel = new JLabel("offline", SwingConstants.CENTER);
 		beatBar = new BeatBar();
@@ -59,7 +63,7 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 		// Create all Swing components here
         JFrame.setDefaultLookAndFeelDecorated(true);
         controlFrame = new JFrame("Control");
-        controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        controlFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         controlFrame.setSize(new Dimension(100, 80));
 
         controlPanel = new JPanel(new GridLayout(1, 2));

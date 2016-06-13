@@ -1,7 +1,9 @@
 package main.java.Controller;
 
+import main.java.Model.BeatModel;
 import main.java.Model.BeatModelInterface;
 import main.java.View.DJView;
+import main.java.View.MultiplesView;
 
 public class BeatController implements ControllerInterface {
 	BeatModelInterface model;
@@ -17,6 +19,23 @@ public class BeatController implements ControllerInterface {
 		model.initialize();
 	}
   
+	/**
+	 * Constructor creado para el uso de MultiplesView
+	 */
+	public BeatController(BeatModel model, MultiplesView view) {
+		 
+		this.view = view;
+ 
+		this.view.disableStopMenuItem();
+ 
+		this.view.enableStartMenuItem();
+ 
+		this.model = model;
+ 
+		this.model.initialize();
+ 
+	}
+	
 	public void start() {
 		model.on();
 		view.disableStartMenuItem();
