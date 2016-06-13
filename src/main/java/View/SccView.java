@@ -175,7 +175,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	      {
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
-	    	    		  model.getPersona().guardarEstado("juan");
+	    	    		  String inputValue = JOptionPane.showInputDialog("Ingrese el nombre del archivo a guardar");
+	    	    		  model.getPersona().guardarEstado(inputValue);
 	    	    	    //controller.start();
 	    	    	    //startAnimation();
 	    	    	    //pausa.setEnabled(true);

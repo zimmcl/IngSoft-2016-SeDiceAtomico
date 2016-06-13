@@ -6,6 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.UUID;
+
+import javax.swing.JOptionPane;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;   
@@ -107,7 +110,8 @@ public class Persona implements Serializable {
     }
   
     public void guardarEstado( String nombre) {
-    	File f = new File("juan.bin");
+    	this.setNombre(nombre);
+    	File f = new File(nombre+".bin");
         FileOutputStream fos = null;
         ObjectOutputStream escribirObjeto = null;
         
@@ -115,6 +119,7 @@ public class Persona implements Serializable {
             fos = new FileOutputStream( f );
             escribirObjeto = new ObjectOutputStream( fos );
             escribirObjeto.writeObject(this);
+            JOptionPane.showMessageDialog(null, "Archivo "+ nombre +".bin guardado con éxito", "Notificación.", JOptionPane.INFORMATION_MESSAGE);
         }
         catch( Exception e ){ 
         	e.printStackTrace();
@@ -134,31 +139,24 @@ public class Persona implements Serializable {
        
     
     public Persona cargaEstado() {
-    	File f = new File("juan.bin");
+    	
+    	String inputValue = JOptionPane.showInputDialog("Ingrese el nombre del archivo a guardar");
+    	File f = new File(inputValue+".bin");
 
         //Esto siempre debe de ir el FileInputStream y ObjectInputStream
         FileInputStream fis = null;
         ObjectInputStream leerObjeto = null;
 
         try{
-            /* Sabemos muy bien que en lugar de 'f' que es de tipo file
-             * puede tambien colocarse un variable tipo String o una cadena como tal
-             * Ejemplo: fis = new FileInputStream( "capsula.bin" );
-             * Ejemplo: String s = "capsula.bin";
-             *          fis = new FileInputStream( s );
-             */
+           
             fis = new FileInputStream( f );
             leerObjeto = new ObjectInputStream( fis );
 
-            /* Se lee el archivo y lo que devuelve es el objeto guardado
-             * este por estar guardado como tipo Object hay que castearlo
-             * en nuestro caso es la clase Dato por lo tanto "CasaBulma casa_bulma = (CasaBulma)leerObjeto.readObject();"
-             * si fuese un JPanel seria
-             * Ejemplo: JPanel tablero = (JPanel)leerObjeto.readObject();
-             */
-            Persona casa_bulma = (Persona)leerObjeto.readObject();
-    	System.out.println("No. calorias: " + casa_bulma.calorias + ", " + "Nombre: " + casa_bulma.nombre);
-    	return casa_bulma;
+            Persona cliente = (Persona)leerObjeto.readObject();
+            String mensaje= "Bienvendio nuevamente " +cliente.getNombre()+ ". Sus ultimas estadisticas son: \n*Peso: "+cliente.peso+"\n*Distancia: "+cliente.distancia+"\n*Calorias: "+cliente.calorias;
+            JOptionPane.showMessageDialog(null, mensaje , "Notificación.", JOptionPane.INFORMATION_MESSAGE);
+    	System.out.println("No. calorias: " + cliente.calorias + ", " + "Nombre: " + cliente.nombre);
+    	return cliente;
         }
         catch( Exception e ){ }
         finally

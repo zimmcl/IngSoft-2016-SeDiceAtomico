@@ -25,6 +25,7 @@ public class SccModel implements SccModelInterface, Runnable {
 	double currentTime;
 	Regulador regulador;
 	Persona p;
+	double factor;
 	
 	public SccModel(){
 		initialize();		
@@ -36,7 +37,8 @@ public class SccModel implements SccModelInterface, Runnable {
 		metros = 0;
 		currentTime=0;
 		currentSpeed = 0;
-		p = new Persona("123","juan", 100, 15);
+		p = new Persona("123",null, 100, 15);
+		factor = 0.25;
 	}
 	
 	public Persona getPersona(){
@@ -206,6 +208,10 @@ public class SccModel implements SccModelInterface, Runnable {
 		n = (int) n;
 		n = n/100;
 		return n;
+	}
+	
+	public double getCaloriasConsumidas(){
+		return metros*factor;
 	}
 	//public void increaseSpeed(){
 	//	if(currentSpeed==targetSpeed){
