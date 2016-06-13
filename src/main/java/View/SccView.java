@@ -136,7 +136,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.start();
-	    	    	    startAnimation();
+	    	    	    
 	    	    	    //pausa.setEnabled(true);
 	    	    	    
 	    	    	  }
@@ -147,7 +147,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.stop();
-	    	    	    stopAnimation();
+	    	    	    //stopAnimation();
 	    	    	    //pausa.setEnabled(false);
 	    	    	  }
 	    	    	});	      
@@ -227,6 +227,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      barra.setMaximum(100);
 	      app.add(container);
 	      app.setJMenuBar(barraMenu);
+	      
+	      startAnimation();
+	      updateBPM();
+	      
 	      app.pack();
 	      app.setVisible(true);
 	   }
