@@ -22,11 +22,11 @@ public class SccModel implements SccModelInterface, Runnable {
 	Date dateInicial;
 	double metros;
 	double currentTime;
+	boolean stop;
 	Regulador regulador;
 	
 	public SccModel(){
-		initialize();
-		
+		initialize();		
 	}
 	
 
@@ -35,16 +35,19 @@ public class SccModel implements SccModelInterface, Runnable {
 		metros = 0;
 		currentTime=0;
 		currentSpeed = 0;
+		stop=false;
 	}
 
 	@Override
 	public void on() {
+		initialize();
 		dateInicial = new Date();
 		currentSpeed=1;
 		thread = new Thread(this);
 		thread.start();
 		setSpeed(40);
 		regulador = new Regulador(this);
+		notifyBeatObservers();
 		
 		
 	}
@@ -52,7 +55,9 @@ public class SccModel implements SccModelInterface, Runnable {
 	@Override
 	public void off() {
 		setSpeed(0);
-		
+		Regulador.apagarRegulador();
+		stop=true;
+		//thread.interrupt();
 		currentTime += getTiempo(dateInicial);
 		System.out.println("Tiempo Total: " + currentTime +" ms. Metros Recorridos: "+ getMetros());
 		/*Guardar archivo en registro
@@ -66,33 +71,34 @@ public class SccModel implements SccModelInterface, Runnable {
 	public void pause() {
 		lastSpeed = targetSpeed;
 		setSpeed(0);
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		currentTime += getTiempo(dateInicial);
 		
 		
 	}
 	public void resume(){
 		dateInicial = new Date();
-		currentSpeed=1;
+		
+		if(currentSpeed==0)
+			currentSpeed=1;
 		
 		
-		//thread = new Thread(this);
-		thread.start();
-		regulador = new Regulador(this);
+		
+		
 		setSpeed(lastSpeed);
 		
 	}
 
 	@Override
 	public void setSpeed(int speed) {
-		targetSpeed = speed;	
-			
+		if(speed>=0){
+			targetSpeed = speed;
 		}
+	}
+	
 	public void modifyCurrentSpeed(int n){
+		if(n<0 && (currentSpeed+n)<0){
+			return;
+		}
 		currentSpeed = currentSpeed +n;
 	}
 	
@@ -116,23 +122,22 @@ public class SccModel implements SccModelInterface, Runnable {
 	@Override
 	public void run(){
 		int n=0;
-		boolean detener=false;
 		
-		while(!detener){			
+		while(!stop || getSpeed()!=0){			
 				try {
 					if(getSpeed()>=1){
-						int time = (6000/currentSpeed);						 
-						TimeUnit.MILLISECONDS.sleep(( time ));
+						double time = (600/(double)currentSpeed);
+						TimeUnit.MILLISECONDS.sleep(( (long) time ));
 						n++;
-						metros+=0.1;
-						if(n>=10){
+						metros+=0.01;
+						if(n>=100){
 							
 							notifyBeatObservers();
 							n=0;							
 						}						
 					}
 					else{
-						detener = true;
+						TimeUnit.MILLISECONDS.sleep(50);
 					}						
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -164,8 +169,6 @@ public class SccModel implements SccModelInterface, Runnable {
 			BeatObserver observer = (BeatObserver)beatObservers.get(i);
 			observer.updateBeat();
 		}
-		///-----------------------------------------------
-		System.out.println("Sonido.");
 	}
 
 	@Override
@@ -194,19 +197,10 @@ public class SccModel implements SccModelInterface, Runnable {
 	}
 	
 	public double getMetros(){
-		return metros;
+		
+		double n = 100*metros;
+		n = (int) n;
+		n = n/100;
+		return n;
 	}
-	//public void increaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed+1);
-	//	}
-		
-	//}
-	
-	//public void decreaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed-1);
-	//	}
-		
-	//}
 }
