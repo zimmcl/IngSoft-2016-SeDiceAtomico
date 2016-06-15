@@ -9,7 +9,7 @@ import main.java.View.SccView;
 public class SccController implements ControllerInterface {
 	
 	SccModelInterface model;
-	DJView djview;
+	public DJView djview;
 	public SccView sccview;
 	boolean isPaused = false;
 	boolean ownView;

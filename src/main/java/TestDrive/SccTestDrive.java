@@ -8,7 +8,7 @@ public class SccTestDrive {
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		SccModel sccModel = new SccModel();
         ControllerInterface model = new SccController(sccModel, true); 
 		

@@ -8,8 +8,8 @@ import javax.swing.*;
 
 import main.java.Controller.ControllerInterface;
 import main.java.Controller.SccController;
-import main.java.Model.SccModelInterface;
 import main.java.Model.SccModel;
+import main.java.Model.SccModelInterface;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -163,11 +163,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	      {
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
-	    	    	    //controller.start();
-	    	    	    //startAnimation();
-	    	    	    //pausa.setEnabled(true);
-	    	    	    System.out.printf("Cepo al dolar, flaco");
-	    	    	    model.getPersona().cargaEstado();
+	    	    	   
 	    	    	  }
 	    	    	});
 	      
@@ -176,11 +172,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	      {
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
-	    	    		  String inputValue = JOptionPane.showInputDialog("Ingrese el nombre del archivo a guardar");
-	    	    		  model.getPersona().guardarEstado(inputValue);
-	    	    	    //controller.start();
-	    	    	    //startAnimation();
-	    	    	    //pausa.setEnabled(true);
+	    	    		  
 	    	    	    
 	    	    	  }
 	    	    	});

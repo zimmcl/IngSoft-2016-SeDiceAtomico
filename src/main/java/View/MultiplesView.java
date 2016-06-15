@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -27,17 +27,13 @@ import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
 public class MultiplesView extends DJView {
-	@SuppressWarnings({ "rawtypes", "unused" })
-	private final JComboBox cmbEleccion = new JComboBox();
-    private final MultiplesView estaView = this;
+    public final MultiplesView estaView = this;
     JMenuBar strategy;
     JMenu modelo;
     JMenuItem beat;
     JMenuItem heart;
     JMenuItem scc;
     
-    
-
     public MultiplesView(ControllerInterface controller, BeatModelInterface model) {
         super(controller, model);
     }
@@ -53,17 +49,15 @@ public class MultiplesView extends DJView {
 		beat = new JMenuItem("Beat");
 		heart= new JMenuItem("Heart");
 		scc = new JMenuItem("Scc");
-		
-		
-	       // viewFrame.add(strategy);
+	
 	        strategy.add(modelo);
-	        modelo.add(beat);
 	        modelo.add(heart);
+	        modelo.add(beat);
 	        modelo.add(scc);
     	
     	
         viewPanel = new JPanel(new GridLayout(1, 2));
-        viewFrame = new JFrame("Vista");
+        viewFrame = new JDialog();
         viewFrame.setJMenuBar(strategy);
         viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         viewFrame.setSize(new Dimension(100, 80));

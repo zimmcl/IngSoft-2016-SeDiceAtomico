@@ -7,7 +7,7 @@ import main.java.View.DJView;
 
 public class HeartController implements ControllerInterface {
 	HeartModelInterface model;
-	DJView view;
+	public DJView view;
   
 	public HeartController(HeartModelInterface model) {
 		this.model = model;

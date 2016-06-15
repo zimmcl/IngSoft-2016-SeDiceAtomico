@@ -17,7 +17,7 @@ import main.java.Model.BeatModelInterface;
 import main.java.Model.HeartModel;
 import main.java.Model.HeartModelInterface;
 import main.java.Model.SccModel;
-import main.java.Model.SccModelInterface; 
+import main.java.Model.SccModelInterface;
 
 @SuppressWarnings("serial")
 public class PrincipalView extends JFrame implements ActionListener {

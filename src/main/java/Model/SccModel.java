@@ -39,12 +39,7 @@ public class SccModel implements SccModelInterface, Runnable {
 		currentTime=0;
 		currentSpeed = 0;
 		stop=false;
-	p = new Persona("123",null, 100, 15);
 		factor = 0.25;
-	}
-	
-	public Persona getPersona(){
-		return p;
 	}
 
 	@Override
@@ -55,10 +50,9 @@ public class SccModel implements SccModelInterface, Runnable {
 		thread = new Thread(this);
 		thread.start();
 		setSpeed(40);
-		regulador = new Regulador(this);
+		regulador=new Regulador(this);
 		notifyBeatObservers();
-		
-		
+			
 	}
 
 	@Override
@@ -66,14 +60,8 @@ public class SccModel implements SccModelInterface, Runnable {
 		setSpeed(0);
 		Regulador.apagarRegulador();
 		stop=true;
-		//thread.interrupt();
 		currentTime += getTiempo(dateInicial);
 		System.out.println("Tiempo Total: " + currentTime +" ms. Metros Recorridos: "+ getMetros());
-		/*Guardar archivo en registro
-		-
-		-
-		*/
-		
 		
 	}
 	
@@ -89,12 +77,7 @@ public class SccModel implements SccModelInterface, Runnable {
 		
 		if(currentSpeed==0)
 			currentSpeed=1;
-		
-		
-		
-		
-		setSpeed(lastSpeed);
-		
+		setSpeed(lastSpeed);		
 	}
 
 	@Override
@@ -118,13 +101,6 @@ public class SccModel implements SccModelInterface, Runnable {
 	}
 	public int getTargetSpeed(){
 		return targetSpeed;
-	}
-	
-	public String CaloriasConsumidas(){
-		
-		
-		return null;
-				
 	}
 
 
@@ -154,17 +130,11 @@ public class SccModel implements SccModelInterface, Runnable {
 			}			
 	}
 	
-	
-	
-	
-	
 	@Override
 	public void registerObserver(BeatObserver o) {
 		beatObservers.add(o);
 
 	}
-	
-
 	@Override
 	public void removeObserver(BeatObserver o) {
 		int i = beatObservers.indexOf(o);
@@ -212,20 +182,14 @@ public class SccModel implements SccModelInterface, Runnable {
 		n = n/100;
 		return n;
 	}
-public double getCaloriasConsumidas(){
-		return metros*factor;
+	public double getCaloriasConsumidas(){
+		return getMetros()*factor;
 	}
-	//public void increaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed+1);
-	//	}
-		
-	//}
 	
-	//public void decreaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed-1);
-	//	}
-		
-	//}
+	@Override
+	public Persona getPersona() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
