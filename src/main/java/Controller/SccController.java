@@ -106,5 +106,10 @@ public class SccController implements ControllerInterface {
  			
  	}
  	
+ 	public SccModelInterface getModel(){ return model;}
+ 	public SccView getSccView(){return sccview;}
+ 	public DJView getDJView(){return djview;}
+ 	
+ 	
 
 }

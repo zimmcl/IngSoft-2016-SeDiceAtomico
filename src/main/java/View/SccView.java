@@ -22,7 +22,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	
 	SccModelInterface model;
 	ControllerInterface controller;
-	JLabel vel;
+	public JLabel vel;
 	JLabel metr;
     JPanel animacion;		//Panel de la animacion
     JPanel botones;			//Panel de los botones
@@ -198,7 +198,15 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      {
 	    	  public void actionPerformed(ActionEvent e)
 	    	  {
-	    	  controller.setBPM(Integer.parseInt(campo.getText()));}
+	    		try{
+	  	    	  controller.setBPM(Integer.parseInt(campo.getText()));
+	  	    	 }catch(NumberFormatException ex){
+	  				JOptionPane.showMessageDialog(null, "No se puede reconocer el valor ingresado.","Error",0);
+	  	    	 }catch(IllegalArgumentException ex){
+		  			JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",0);
+
+	  	    	 }
+	    	  }
 	    	});
 	      
 	      app.addWindowListener(				//Implementa la accion a realizar al apretar el boton "salir"

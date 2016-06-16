@@ -37,9 +37,10 @@ public class Regulador implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		
-		
-		
 		}
+	}
+	
+	public boolean isRunning(){
+		return tr.isAlive();
 	}
 }
