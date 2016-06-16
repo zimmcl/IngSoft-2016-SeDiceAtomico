@@ -22,7 +22,8 @@ import main.java.Controller.SccController;
 import main.java.Model.BeatModel;
 import main.java.Model.BeatModelInterface;
 import main.java.Model.HeartModel;
-import main.java.Model.SccModel;
+import main.java.Model.TemplateMethod.Estandar;
+import main.java.Model.TemplateMethod.SccModel;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -92,7 +93,7 @@ public class MultiplesView extends DJView {
         
         scc.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-            	SccModel scc = new SccModel();
+            	SccModel scc = new Estandar();
                 SccController carController = new SccController(scc, estaView);
                 setController(carController);
                 setModel((new SccAdapter(scc)));

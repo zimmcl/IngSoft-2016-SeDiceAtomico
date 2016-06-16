@@ -2,14 +2,16 @@ package main.java.View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 import main.java.Controller.ControllerInterface;
 import main.java.Controller.SccController;
-import main.java.Model.SccModel;
+import main.java.Model.BeatModelInterface;
 import main.java.Model.SccModelInterface;
+import main.java.Model.TemplateMethod.SccModel;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -25,16 +27,17 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	ControllerInterface controller;
 	JLabel vel;
 	JLabel metr;
+	JLabel cal;
     JPanel animacion;		//Panel de la animacion
     JPanel botones;			//Panel de los botones
     JPanel velocidad;		//Panel donde se muestra la velocidad
     JPanel metros;			//Panel que muestra metros recorridos;
+    JPanel calorias;
 	Button incrementa;
     Button decrementa;
     Button pausa;
     JDialog app;
     JProgressBar barra;
-
     JMenuBar barraMenu;
 	JMenuItem on;
     JMenuItem off;
@@ -42,9 +45,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     JMenuItem exportar;
     TextField campo;
     JTextField campoMetros;
+    String sDirectorio;
     
 	protected ImageIcon images[];		//Arreglo donde se almacenan las imagenes para la animacion
-	protected int totalImages = 9,		//Cantidad de imagenes a usar en la animacion
+	protected int totalImages = 0,		//Cantidad de imagenes a usar en la animacion
 	              currentImage = 0,		//Indice de la imagen actual (inicia en 0 por defecto)
 	              animationDelay = 1000; 	//Retraso entre cuadro y cuadro, en milisegundos
 	protected Timer animationTimer;	//Timer que se encarga de alternar entre los cuadros de la animacion
@@ -56,6 +60,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	 * **/
 	
 	public SccView(ControllerInterface controller, SccModelInterface model){
+		sDirectorio = "src/imagenes/"+model.getClass().getSimpleName()+"/";
+		File f = new File(sDirectorio);
+		File[] archivos = f.listFiles();
+		totalImages=archivos.length;
 		this.controller = controller;
 		this.model = model;
 		model.registerObserver((BeatObserver)this);
@@ -64,8 +72,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		setSize( getPreferredSize() );
 	    images = new ImageIcon[ totalImages ];
 	    
-	    for ( int i = 0; i < 9; ++i ){ 
-	         images[ i ] = new ImageIcon(getClass().getResource("/imagenes/Mani/Mani" + i + ".jpg" ));}
+	    for ( int i = 0; i <archivos.length; ++i ){ 
+	         images[ i ] = new ImageIcon(getClass().getResource("/imagenes/"+model.getClass().getSimpleName()+"/"+model.getClass().getSimpleName() + i + ".jpg" ));}
 	    inicializa();
 	}
 	
@@ -109,12 +117,19 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      
 	      
 	      vel= new JLabel ();
+	      vel.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
 	      velocidad.add(vel);
-	      vel.setText("Velocidad: "+ model.getSpeed());
+	      vel.setText( model.getSpeed()+" m/s");
 	      
 	      metr = new JLabel();
+	      metr.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
 	      metros.add(metr);
-	      metr.setText("Metros: "+ ((SccModel) model).getMetros());
+	      metr.setText(((SccModel) model).getMetros()+" metros");
+	      
+	     /* cal = new JLabel();
+	      cal.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
+	      calorias.add(cal);
+	      cal.setText(((SccModel)model).getCaloriasConsumidas()+" calorias");*/
 	      
 	      
 	      
@@ -248,6 +263,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      container.add(botones);
 	      container.add(velocidad);
 	      container.add(metros);
+	     // container.add(calorias);
 	      container.add(campo);
 	      container.add(barra);
 	      container.add(new JLabel("Limite Barra"));
@@ -268,7 +284,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	@Override
 	public void updateBeat() {
 		
-		metr.setText("Metros: "+(int)((SccModel) model).getMetros());
+		metr.setText((int)((SccModel) model).getMetros()+" metros");
 		aux++;
 		barra.setValue(aux);
 		if(barra.getValue()>=barra.getMaximum()){
@@ -297,7 +313,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 				
 		animationDelay = (int) v;
 		animationTimer.setDelay(animationDelay);
-		vel.setText("Velocidad: "+ model.getSpeed());
+		vel.setText(model.getSpeed()+" mtr/min");
 	}
 
 	
@@ -379,6 +395,18 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		public void enablePauseButtonItem() {
 	    	pausa.setEnabled(true);
 		}
-		
+		//-------------------------------------------------
+		public void setModel(SccModel model) 
+	    {
+	        this.model = model;
+	        model.registerObserver((BeatObserver) this);
+	        model.registerObserver((BPMObserver) this);
+	        
+	    }
+
+	    public void setController(ControllerInterface controller) 
+	    {
+	        this.controller = controller;
+	    }
 		
 }

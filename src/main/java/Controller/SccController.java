@@ -1,8 +1,8 @@
 package main.java.Controller;
 
 import main.java.Adapter.SccAdapter;
-import main.java.Model.SccModel;
 import main.java.Model.SccModelInterface;
+import main.java.Model.TemplateMethod.SccModel;
 import main.java.View.DJView;
 import main.java.View.SccView;
 

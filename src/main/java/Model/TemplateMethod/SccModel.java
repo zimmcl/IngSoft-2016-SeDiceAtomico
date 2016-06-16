@@ -1,15 +1,15 @@
-package main.java.Model;
+package main.java.Model.TemplateMethod;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import main.java.Class.Persona;
 import main.java.Class.Regulador;
+import main.java.Model.SccModelInterface;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
-public class SccModel implements SccModelInterface, Runnable {
+public abstract class SccModel implements SccModelInterface, Runnable {
 	
 	//IMPLEMENTAR MODELO
 	ArrayList<BeatObserver> beatObservers = new ArrayList<BeatObserver>();
@@ -25,8 +25,6 @@ public class SccModel implements SccModelInterface, Runnable {
 	double currentTime;
 	boolean stop;
 	Regulador regulador;
-	Persona p;
-	double factor;
 	
 	public SccModel(){
 		initialize();		
@@ -39,7 +37,6 @@ public class SccModel implements SccModelInterface, Runnable {
 		currentTime=0;
 		currentSpeed = 0;
 		stop=false;
-		factor = 0.25;
 	}
 
 	@Override
@@ -50,7 +47,7 @@ public class SccModel implements SccModelInterface, Runnable {
 		thread = new Thread(this);
 		thread.start();
 		setSpeed(40);
-		regulador=new Regulador(this);
+		crearRegulador();
 		notifyBeatObservers();
 			
 	}
@@ -182,14 +179,9 @@ public class SccModel implements SccModelInterface, Runnable {
 		n = n/100;
 		return n;
 	}
-	public double getCaloriasConsumidas(){
-		return getMetros()*factor;
-	}
 	
-	@Override
-	public Persona getPersona() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract double getCaloriasConsumidas();
+	
+	protected abstract void crearRegulador();
 	
 }

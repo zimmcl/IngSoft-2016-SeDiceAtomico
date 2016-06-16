@@ -22,7 +22,9 @@ import main.java.Controller.HeartController;
 import main.java.Controller.SccController;
 import main.java.Model.BeatModel;
 import main.java.Model.HeartModel;
-import main.java.Model.SccModel;
+import main.java.Model.TemplateMethod.Estandar;
+import main.java.Model.TemplateMethod.Mani;
+import main.java.Model.TemplateMethod.SccModel;
 import main.java.View.SecundariaView.CargarPersona;
 import main.java.View.SecundariaView.NuevaPersona;
 
@@ -46,6 +48,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import javax.swing.JPasswordField;
 
 @SuppressWarnings("unused")
 public class OficialView {
@@ -97,10 +100,13 @@ public class OficialView {
 	private JMenuItem mntmApagar;
 	private JSeparator separator_3;
 	private JMenu mnCintamatrixSkin;
-	private JMenuItem mntmSkinA;
-	private JMenuItem mntmSkinB;
-	private JMenuItem mntmSkinC;
-	private JMenuItem mntmSkinD;
+	private JMenuItem mntmSkinMani;
+	private JMenuItem mntmSkinSoldado;
+	private JMenuItem mntmSkinGhostBusters;
+	private JMenuItem mntmSkinDelivery;
+	private JMenuItem mntmAbuelo;
+	private JMenuItem mntmCazador;
+	private JPasswordField passwordField;
 	
 
 	/**
@@ -131,7 +137,7 @@ public class OficialView {
 	 */
 	private void initialize() {		
 		
-		SccModel modelo=new SccModel();
+		SccModel modelo=new Estandar();
 		modeloCintaM=modelo;
     	controladorCinta=new SccController(modelo, true);
     	controladorCinta.sccview.app.dispose();
@@ -243,21 +249,37 @@ public class OficialView {
 		mnCintamatrixSkin.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 15));
 		mnModelos.add(mnCintamatrixSkin);
 		
-		mntmSkinA = new JMenuItem("Skin A");
-		mntmSkinA.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
-		mnCintamatrixSkin.add(mntmSkinA);
+		mntmSkinMani = new JMenuItem("Mani Skin");
+		mntmSkinMani.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
+		mntmSkinMani.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt){
+        		CambiarManiActionPerformed(evt);
+        	}
+        });
+		mnCintamatrixSkin.add(mntmSkinMani);
 		
-		mntmSkinB = new JMenuItem("Skin B");
-		mntmSkinB.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
-		mnCintamatrixSkin.add(mntmSkinB);
+		mntmSkinSoldado = new JMenuItem("Soldado Skin");
+		mntmSkinSoldado.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
+		mnCintamatrixSkin.add(mntmSkinSoldado);
 		
-		mntmSkinC = new JMenuItem("Skin C");
-		mntmSkinC.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
-		mnCintamatrixSkin.add(mntmSkinC);
+		mntmSkinGhostBusters = new JMenuItem("GhostBusters Skin");
+		mntmSkinGhostBusters.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
+		mnCintamatrixSkin.add(mntmSkinGhostBusters);
 		
-		mntmSkinD = new JMenuItem("Skin D");
-		mntmSkinD.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
-		mnCintamatrixSkin.add(mntmSkinD);
+		mntmSkinDelivery = new JMenuItem("Delivery Boy Skin");
+		mntmSkinDelivery.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
+		mnCintamatrixSkin.add(mntmSkinDelivery);
+		
+		mntmCazador = new JMenuItem("Cazador Skin");
+		mntmCazador.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
+		mnCintamatrixSkin.add(mntmCazador);
+		
+		mntmAbuelo = new JMenuItem("Abuelo Skin");
+		mntmAbuelo.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 14));
+		mnCintamatrixSkin.add(mntmAbuelo);
+		
+		passwordField = new JPasswordField();
+		mnCintamatrixSkin.add(passwordField);
 		//------
 		JMenu mnMsica = new JMenu("M\u00FAsica");
 		mnMsica.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 17));
@@ -770,7 +792,7 @@ public class OficialView {
 					internalFrameScc.getContentPane().setVisible(true);
 					controladorScc.djview.menu.setVisible(true);
 				}else{
-			modeloScc = new SccModel();
+			modeloScc = new Estandar();
 			controladorScc = new SccController(modeloScc,false);
 			internalFrameScc.setJMenuBar(controladorScc.djview.menuBar);;
 			internalFrameScc.getContentPane().add(controladorScc.djview.viewFrame.getContentPane());
@@ -872,6 +894,17 @@ public class OficialView {
 			if(Persona.getPersona().getEstado()){
 				frmSdatrabajoFinalIngenieria.repaint();
 			}
+		}
+		//------------------------------------------------------------------------
+		private void CambiarManiActionPerformed(ActionEvent evt){
+			modeloCintaM= new Mani();
+			controladorCinta.sccview.setModel(modeloCintaM);
+			//controladorCinta=new SccController(modeloCintaM, true);
+			controladorCinta.sccview.setController(new SccController(modeloCintaM,true));
+	    	
+			this.initialize();
+			controladorCinta.sccview.app.dispose();
+			
 		}
 		//------------------------------------------------------------------------
 		private void btnIniciarActionPerformed(ActionEvent evt){
