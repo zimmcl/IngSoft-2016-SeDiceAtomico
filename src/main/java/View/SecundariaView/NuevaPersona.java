@@ -176,7 +176,7 @@ public class NuevaPersona {
 			lblError.setVisible(true);
 		}else{
 		Persona.crearPersona(textFieldNombre.getText(),Double.parseDouble(textFieldPeso.getText()),Integer.parseInt(textFieldEdad.getText()));
-		File archivo = new File("C:\\Users\\Ezequiel\\Desktop\\",textFieldNombre.getText()+".txt");
+		File archivo = new File("E:",textFieldNombre.getText()+".txt");
 		try {
 			archivo.createNewFile();
 			fichero = new FileWriter(archivo);

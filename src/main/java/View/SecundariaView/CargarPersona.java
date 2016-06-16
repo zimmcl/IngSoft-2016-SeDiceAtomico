@@ -156,7 +156,7 @@ public class CargarPersona {
 	//----------------------------------------------------------------------------------
 	@SuppressWarnings("resource")
 	private void botonCargarActionPerformed(ActionEvent evt) throws IOException{
-		File archivo = new File("C:\\Users\\Ezequiel\\Desktop\\",textFieldNombre.getText()+".txt");
+		File archivo = new File("E:",textFieldNombre.getText()+".txt");
 		if(textFieldNombre.getText().equals("")||(!archivo.exists())){
 			lblError.setVisible(true);
 		}else{

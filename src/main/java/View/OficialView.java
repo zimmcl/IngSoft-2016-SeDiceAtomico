@@ -901,8 +901,9 @@ public class OficialView {
 			controladorCinta.sccview.setModel(modeloCintaM);
 			//controladorCinta=new SccController(modeloCintaM, true);
 			controladorCinta.sccview.setController(new SccController(modeloCintaM,true));
+			controladorCinta.sccview.cargar();
 	    	
-			this.initialize();
+			//this.initialize();
 			controladorCinta.sccview.app.dispose();
 			
 		}

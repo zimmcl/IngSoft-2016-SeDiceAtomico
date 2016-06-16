@@ -3,6 +3,7 @@ package main.java.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -46,8 +47,9 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     TextField campo;
     JTextField campoMetros;
     String sDirectorio;
+    File[] archivos;
     
-	protected ImageIcon images[];		//Arreglo donde se almacenan las imagenes para la animacion
+	protected ArrayList<ImageIcon> images;		//Arreglo donde se almacenan las imagenes para la animacion
 	protected int totalImages = 0,		//Cantidad de imagenes a usar en la animacion
 	              currentImage = 0,		//Indice de la imagen actual (inicia en 0 por defecto)
 	              animationDelay = 1000; 	//Retraso entre cuadro y cuadro, en milisegundos
@@ -62,19 +64,35 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	public SccView(ControllerInterface controller, SccModelInterface model){
 		sDirectorio = "src/imagenes/"+model.getClass().getSimpleName()+"/";
 		File f = new File(sDirectorio);
-		File[] archivos = f.listFiles();
-		totalImages=archivos.length;
+		archivos = f.listFiles();
+		//totalImages=archivos.length;
 		this.controller = controller;
 		this.model = model;
 		model.registerObserver((BeatObserver)this);
 		model.registerObserver((BPMObserver)this);
 		
 		setSize( getPreferredSize() );
-	    images = new ImageIcon[ totalImages ];
-	    
-	    for ( int i = 0; i <archivos.length; ++i ){ 
-	         images[ i ] = new ImageIcon(getClass().getResource("/imagenes/"+model.getClass().getSimpleName()+"/"+model.getClass().getSimpleName() + i + ".jpg" ));}
+	    //images = new ImageIcon[ totalImages ];
+		images = new ArrayList<ImageIcon>();
+	    cargar();
 	    inicializa();
+	}
+	
+	public void cargar(){
+		sDirectorio = "src/imagenes/"+model.getClass().getSimpleName()+"/";
+		File f = new File(sDirectorio);
+		archivos = f.listFiles();
+		totalImages=archivos.length;
+		images.clear();
+		//if(images!=null){
+			
+		//}
+		//images = new ImageIcon[ totalImages ];
+		
+		for ( int i = 0; i <archivos.length; ++i ){ 
+	         images.add(new ImageIcon(getClass().getResource("/imagenes/"+model.getClass().getSimpleName()+"/"+model.getClass().getSimpleName() + i + ".jpg" )));
+			}
+		if (this.app!=null){this.app.dispose();}
 	}
 	
 /**
@@ -336,9 +354,9 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	   {
 	      super.paintComponent( g );
 	 
-	      if ( images[ currentImage ].getImageLoadStatus() ==
+	      if ( images.get(currentImage).getImageLoadStatus() ==
 	           MediaTracker.COMPLETE ) {
-	         images[ currentImage ].paintIcon( this, g, 0, 0 );
+	         images.get(currentImage).paintIcon( this, g, 0, 0 );
 	         currentImage = ( currentImage + 1 ) % totalImages;
 	      }
 	   }
