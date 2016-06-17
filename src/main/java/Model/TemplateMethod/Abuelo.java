@@ -7,7 +7,7 @@ import main.java.Class.Regulador;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
-public class Mani extends SccModel {
+public class Abuelo extends SccModel {
 	//IMPLEMENTAR MODELO
 		ArrayList<BeatObserver> beatObservers = new ArrayList<BeatObserver>();
 		ArrayList<BPMObserver> bpmObservers = new ArrayList<BPMObserver>();
@@ -22,9 +22,9 @@ public class Mani extends SccModel {
 		double currentTime;
 		boolean stop;
 		Regulador regulador;
-		double factor=0.25;
+		double factor=10;
 		
-		public Mani(){
+		public Abuelo(){
 			initialize();		
 		}
 		
@@ -35,5 +35,6 @@ public class Mani extends SccModel {
 		public double getCaloriasConsumidas(){
 			return getMetros()*factor;
 		}
+
 
 	}

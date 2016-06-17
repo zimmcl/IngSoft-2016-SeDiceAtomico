@@ -22,7 +22,7 @@ public class Soldado extends SccModel {
 		double currentTime;
 		boolean stop;
 		Regulador regulador;
-		double factor=1.2;
+		double factor=1.50;
 		
 		public Soldado(){
 			initialize();		
@@ -35,6 +35,5 @@ public class Soldado extends SccModel {
 		public double getCaloriasConsumidas(){
 			return getMetros()*factor;
 		}
-
-
+		
 	}

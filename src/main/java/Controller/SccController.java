@@ -75,6 +75,7 @@ public class SccController implements ControllerInterface {
 			sccview.disableStopMenuItem();
 			sccview.enableStartMenuItem();
 			sccview.disablePauseButtonItem();
+			
 		}
 	}
 

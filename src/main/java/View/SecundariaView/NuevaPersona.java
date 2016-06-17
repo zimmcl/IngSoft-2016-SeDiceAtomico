@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +19,11 @@ import java.io.PrintWriter;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import main.java.Class.Persona;
+import main.java.View.OficialView;
+
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.Color;
 
 
@@ -175,33 +181,43 @@ public class NuevaPersona {
 		if(textFieldNombre.getText().equals("") || textFieldEdad.getText().equals("") || textFieldPeso.getText().equals("")){
 			lblError.setVisible(true);
 		}else{
+			
+			 try
+			 {
+			  String nombre="";
+			  JFileChooser file=new JFileChooser();
+			  file.showSaveDialog(null);
+			  File guarda =file.getSelectedFile();
+			 
+			  if(guarda !=null)
+			  {
+			    FileWriter  save=new FileWriter(guarda+".txt");
+			    PrintWriter pw = new PrintWriter(save);
+		        pw.println(textFieldNombre.getText());
+	            pw.println(textFieldEdad.getText());
+	            pw.println(textFieldPeso.getText());
+			    save.close();
+			    JOptionPane.showMessageDialog(null,
+			         "Guardado exitoso",
+			             "Información",JOptionPane.INFORMATION_MESSAGE);
+			    }
+			 }
+			  catch(IOException ex)
+			  {
+			   JOptionPane.showMessageDialog(null,
+			        "Su archivo no se ha guardado",
+			           "Advertencia",JOptionPane.WARNING_MESSAGE);
+			  }
+			 }	
 		Persona.crearPersona(textFieldNombre.getText(),Double.parseDouble(textFieldPeso.getText()),Integer.parseInt(textFieldEdad.getText()));
-		File archivo = new File("E:",textFieldNombre.getText()+".txt");
-		try {
-			archivo.createNewFile();
-			fichero = new FileWriter(archivo);
-	        PrintWriter pw = new PrintWriter(fichero);
-	        pw.println(textFieldNombre.getText());
-            pw.println(textFieldEdad.getText());
-            pw.println(textFieldPeso.getText());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} finally {
-           try {
-           if (null != fichero)
-              fichero.close();
-           } catch (Exception e2) {
-              e2.printStackTrace();
-           }
-        }
 		lblError.setVisible(false);
 		lblExito.setVisible(true);
 		textFieldNombre.setText("");
 		textFieldEdad.setText("");
 		textFieldPeso.setText("");
+		OficialView.refrescar();
 		}
-	}
+	
 	//---------------------------------------------------------------
 	private void botonCancelarActionPerformed(ActionEvent evt){
 		frmNuevoUsuario.dispose(); 

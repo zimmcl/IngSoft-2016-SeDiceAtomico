@@ -6,9 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import main.java.Class.Persona;
 import main.java.View.OficialView;
@@ -156,7 +159,8 @@ public class CargarPersona {
 	//----------------------------------------------------------------------------------
 	@SuppressWarnings("resource")
 	private void botonCargarActionPerformed(ActionEvent evt) throws IOException{
-		File archivo = new File("E:",textFieldNombre.getText()+".txt");
+		  
+		File archivo = new File("C:\\Users\\Ezequiel\\Desktop",textFieldNombre.getText()+".txt");
 		if(textFieldNombre.getText().equals("")||(!archivo.exists())){
 			lblError.setVisible(true);
 		}else{

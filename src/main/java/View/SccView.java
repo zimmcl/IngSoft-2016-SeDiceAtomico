@@ -3,6 +3,7 @@ package main.java.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,9 +11,10 @@ import javax.swing.*;
 
 import main.java.Controller.ControllerInterface;
 import main.java.Controller.SccController;
-import main.java.Model.BeatModelInterface;
 import main.java.Model.SccModelInterface;
+import main.java.Model.TemplateMethod.Mani;
 import main.java.Model.TemplateMethod.SccModel;
+import main.java.Model.TemplateMethod.Soldado;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -33,6 +35,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     JPanel botones;			//Panel de los botones
     JPanel velocidad;		//Panel donde se muestra la velocidad
     JPanel metros;			//Panel que muestra metros recorridos;
+    JPanel valores;
+    JPanel barras;
     JPanel calorias;
 	Button incrementa;
     Button decrementa;
@@ -40,14 +44,18 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     JDialog app;
     JProgressBar barra;
     JMenuBar barraMenu;
-	JMenuItem on;
-    JMenuItem off;
-    JMenuItem importar;
-    JMenuItem exportar;
+	JButton on;
+    JButton off;
+    JMenuItem manisito;
+    JMenuItem soldadito;
     TextField campo;
-    JTextField campoMetros;
-    String sDirectorio;
+    TextField campoMetros;
+    URL sDirectorio;
     File[] archivos;
+    Soldado soldado;
+    Mani mani;
+    JMenu skin;
+    String nombreClase;
     
 	protected ArrayList<ImageIcon> images;		//Arreglo donde se almacenan las imagenes para la animacion
 	protected int totalImages = 0,		//Cantidad de imagenes a usar en la animacion
@@ -62,37 +70,46 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	 * **/
 	
 	public SccView(ControllerInterface controller, SccModelInterface model){
-		sDirectorio = "src/imagenes/"+model.getClass().getSimpleName()+"/";
-		File f = new File(sDirectorio);
-		archivos = f.listFiles();
-		//totalImages=archivos.length;
 		this.controller = controller;
 		this.model = model;
 		model.registerObserver((BeatObserver)this);
 		model.registerObserver((BPMObserver)this);
 		
 		setSize( getPreferredSize() );
-	    //images = new ImageIcon[ totalImages ];
 		images = new ArrayList<ImageIcon>();
 	    cargar();
 	    inicializa();
 	}
 	
 	public void cargar(){
-		sDirectorio = "src/imagenes/"+model.getClass().getSimpleName()+"/";
-		File f = new File(sDirectorio);
-		archivos = f.listFiles();
-		totalImages=archivos.length;
-		images.clear();
-		//if(images!=null){
-			
-		//}
-		//images = new ImageIcon[ totalImages ];
+		nombreClase=model.getClass().getSimpleName();
+		if(nombreClase.equals("Abuelo")){
+			totalImages=16;
+		}if(nombreClase.equals("Cazador")){
+			totalImages=8;
+		}if(nombreClase.equals("Duo")){
+			totalImages=13;
+		}if(nombreClase.equals("Estandar")){
+			totalImages=16;
+		}if(nombreClase.equals("Fantasma")){
+			totalImages=7;
+		}if(nombreClase.equals("Mani")){
+			totalImages=10;
+		}if(nombreClase.equals("Soldado")){
+			totalImages=16;
+		}
 		
-		for ( int i = 0; i <archivos.length; ++i ){ 
-	         images.add(new ImageIcon(getClass().getResource("/imagenes/"+model.getClass().getSimpleName()+"/"+model.getClass().getSimpleName() + i + ".jpg" )));
+		images.clear();	
+		/*sDirectorio = getClass().getResource("/imagenes/"+nombreClase+"/");
+		File f = new File(sDirectorio.toString());
+		archivos = f.listFiles();
+		totalImages=archivos.length;*/
+			
+		for ( int i = 0; i <totalImages; ++i ){ 
+	         images.add(new ImageIcon(getClass().getResource("/imagenes/"+nombreClase+"/"+nombreClase+ i + ".jpg" )));
 			}
 		if (this.app!=null){this.app.dispose();}
+		
 	}
 	
 /**
@@ -102,52 +119,55 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
  * **/
 	public void inicializa()
 	   {
-	      incrementa = new Button (">>");
-	      decrementa = new Button ("<<");
+	      incrementa = new Button (">>>");
+	      decrementa = new Button ("<<<");
 	      pausa = new Button("||");
 	      animacion = new JPanel();//Panel de la animacion
 	      botones = new JPanel();		//Panel de los botones
-	      velocidad = new JPanel();
-	      metros = new JPanel();
+	      valores = new JPanel();
+	      barras = new JPanel();
+	      //velocidad = new JPanel();
+	      //metros = new JPanel();
 	      barraMenu = new JMenuBar();
-	      campo= new TextField(5);
+	      campo= new TextField(15);
 	      corriendo=true;
 	      barra = new JProgressBar();
-	      campoMetros = new JTextField();
-	      
+	      campoMetros = new TextField(15);
+	      campo.setText("Campo de velocidad");
+	      campoMetros.setText("Campo ProgresBar");
 	      
 	      JMenu archivo= new JMenu("Archivo");
-	      JMenu edicion = new JMenu("Edicion");
+	      skin = new JMenu("SKIN");
 	      JMenuItem salir = new JMenuItem("Salir");
-	      on = new JMenuItem("On");
-	      off= new JMenuItem("Off");
-	      importar = new JMenuItem("Importar");
-	      exportar = new JMenuItem("Exportar");
+	      on = new JButton("On");
+	      off= new JButton("Off");
+	      manisito = new JMenuItem("Mani");
+	      soldadito = new JMenuItem("Soldado");
 	      
 
-	      archivo.add(on);
-	      archivo.add(off);
-	      archivo.add(importar);
-	      archivo.add(exportar);
-	      archivo.add(salir);
-	      barraMenu.add(archivo);
-	      barraMenu.add(edicion);
+	      //archivo.add(on);
+	      //archivo.add(off);
+	     // skin.add(manisito);
+	     // skin.add(soldadito);
+	      //archivo.add(salir);
+	      //barraMenu.add(archivo);
+	      //barraMenu.add(skin);
 	      
 	      
 	      vel= new JLabel ();
 	      vel.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
-	      velocidad.add(vel);
+	      //velocidad.add(vel);
 	      vel.setText( model.getSpeed()+" m/s");
 	      
 	      metr = new JLabel();
 	      metr.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
-	      metros.add(metr);
+	     // metros.add(metr);
 	      metr.setText(((SccModel) model).getMetros()+" metros");
 	      
-	     /* cal = new JLabel();
+	      cal = new JLabel();
 	      cal.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
-	      calorias.add(cal);
-	      cal.setText(((SccModel)model).getCaloriasConsumidas()+" calorias");*/
+	      //calorias.add(cal);
+	      cal.setText(((SccModel)model).getCaloriasConsumidas()+" cal");
 	      
 	      
 	      
@@ -176,7 +196,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.start();
-	    	    	    
+	    	    	    skin.setEnabled(false);
 	    	    	    //pausa.setEnabled(true);
 	    	    	    
 	    	    	  }
@@ -187,26 +207,37 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.stop();
+	    	    	    //controller=null;
 	    	    	    //stopAnimation();
 	    	    	    //pausa.setEnabled(false);
 	    	    	  }
 	    	    	});	      
 
-	      importar.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
-	    	      {
-	    	    	  public void actionPerformed(ActionEvent e)
-	    	    	  {
-	    	    	   
-	    	    	  }
-	    	    	});
-	      
-	      
-	      exportar.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
+	      manisito.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
 	    	      {
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    		  
-	    	    	    
+	    	    		  model = new Mani();
+	    	    		  //controller = new SccController(model,true);
+	    	    		  set(model);
+	    	    		  //inicializa();
+	    	    		  //cargar();
+	    	    		  //controlador.sccview.app.dispose();
+	    	    		  
+	    	    	  }
+	    	    	});
+	      
+	      
+	      soldadito.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {  
+	    	    		model = new Soldado();
+	    	    	    //SccController controlador = new SccController(model,true);
+	    	    	    //controlador.sccview.app.dispose();
+	    	    	    set(model);
+	    	    	    //controlador.sccview.app.dispose();
 	    	    	  }
 	    	    	});
 	      
@@ -276,19 +307,29 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      botones.add(decrementa);
 	      botones.add(pausa);
 	      botones.add(incrementa);
-	      
+	      botones.add(on);
+	      botones.add(off);
+	      //botones.add(campo);
+	      //botones.add(campoMetros);
+	      valores.add(vel);
+	      valores.add(metr);
+	      valores.add(cal);
+	      barras.add(campo);
+	      barras.add(campoMetros);
 	      container.add(animacion);
 	      container.add(botones);
-	      container.add(velocidad);
-	      container.add(metros);
+	      container.add(valores);
+	      container.add(barras);
+	      //container.add(velocidad);
+	      //container.add(metros);
 	     // container.add(calorias);
-	      container.add(campo);
+	     // container.add(campo);
 	      container.add(barra);
-	      container.add(new JLabel("Limite Barra"));
-	      container.add(campoMetros);
+	      container.add(new JLabel("Barra de progreso"));
+	      //container.add(campoMetros);
 	      barra.setMaximum(100);
 	      app.add(container);
-	      app.setJMenuBar(barraMenu);
+	      //app.setJMenuBar(barraMenu);
 	      
 	      startAnimation();
 	      updateBPM();
@@ -301,7 +342,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	
 	@Override
 	public void updateBeat() {
-		
+		cal.setText((double)((SccModel)model).getCaloriasConsumidas()+" cal");
 		metr.setText((int)((SccModel) model).getMetros()+" metros");
 		aux++;
 		barra.setValue(aux);
@@ -313,8 +354,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		
 	}
 	
-		
-
 	@Override
 	public void updateBPM() {
 		double v =(double) model.getSpeed(); 		//Velocidad en metros por minuto
@@ -334,10 +373,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		vel.setText(model.getSpeed()+" mtr/min");
 	}
 
-	
-	 
-	 
-	  
 	   
 	   public Dimension getMinimumSize()
 	   { 
@@ -414,17 +449,15 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	pausa.setEnabled(true);
 		}
 		//-------------------------------------------------
-		public void setModel(SccModel model) 
-	    {
-	        this.model = model;
-	        model.registerObserver((BeatObserver) this);
+		public void set(SccModelInterface model) {
+			cargar();
+			model.registerObserver((BeatObserver) this);
 	        model.registerObserver((BPMObserver) this);
-	        
-	    }
+		}
+		
+		public void setSkin(boolean valor){
+			skin.setEnabled(valor);
+		}
 
-	    public void setController(ControllerInterface controller) 
-	    {
-	        this.controller = controller;
-	    }
 		
 }
