@@ -57,8 +57,6 @@ public class SccModel implements SccModelInterface, Runnable {
 		setSpeed(40);
 		regulador = new Regulador(this);
 		notifyBeatObservers();
-		
-		
 	}
 
 	@Override
@@ -101,6 +99,9 @@ public class SccModel implements SccModelInterface, Runnable {
 	public void setSpeed(int speed) {
 		if(speed>=0){
 			targetSpeed = speed;
+		}else{
+			
+			throw new IllegalArgumentException("No se puede ingresar valores negativos.");
 		}
 	}
 	
@@ -135,8 +136,8 @@ public class SccModel implements SccModelInterface, Runnable {
 		while(!stop || getSpeed()!=0){			
 				try {
 					if(getSpeed()>=1){
-						double time = (600/(double)currentSpeed);
-						TimeUnit.MILLISECONDS.sleep(( (long) time ));
+						double time = (600000/(double)currentSpeed);
+						TimeUnit.MICROSECONDS.sleep(( (long) time ));
 						n++;
 						metros+=0.01;
 						if(n>=100){
@@ -215,17 +216,7 @@ public class SccModel implements SccModelInterface, Runnable {
 public double getCaloriasConsumidas(){
 		return metros*factor;
 	}
-	//public void increaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed+1);
-	//	}
-		
-	//}
 	
-	//public void decreaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed-1);
-	//	}
-		
-	//}
+
+	public Regulador getRegulador(){ return regulador;}
 }
