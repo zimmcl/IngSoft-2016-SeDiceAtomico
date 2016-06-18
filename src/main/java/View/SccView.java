@@ -38,6 +38,9 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     JPanel valores;			//Panel para mostrar informacion de varios valores (velocidad, metros, calorias, etc)
     JPanel barras;
     JPanel calorias;
+    JPanel progreso;
+    JPanel velocidadMax;
+    JPanel tamanioVuelta;
 	Button incrementa;		//Boton para incrementar la velocidad
     Button decrementa;		//Boton para decrementar la velocidad
     Button pausa;			//Boton para pausar el modelo
@@ -118,22 +121,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 			default: break;
 		}
 			
-		/*if(nombreClase.equals("Abuelo")){
-			totalImages=16;
-		}if(nombreClase.equals("Cazador")){
-			totalImages=8;
-		}if(nombreClase.equals("Duo")){
-			totalImages=13;
-		}if(nombreClase.equals("Estandar")){
-			totalImages=16;
-		}if(nombreClase.equals("Fantasma")){
-			totalImages=7;
-		}if(nombreClase.equals("Mani")){
-			totalImages=10;
-		}if(nombreClase.equals("Soldado")){
-			totalImages=16;
-		}*/
-		
 		images.clear();									//Limpia la lista antes de cargarla
 					
 		for ( int i = 0; i <totalImages; ++i ){ 		//Carga la lista con la animacion
@@ -165,16 +152,21 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      barraMenu = new JMenuBar();
 	      campo= new TextField(15);
 	      campoMetros = new TextField(15);
-	      campo.setText("Campo de velocidad");
-	      campoMetros.setText("Campo ProgresBar");
+	      
+	      tamanioVuelta = new JPanel();
+	      velocidadMax = new JPanel();
+	      
+	      
+	      tamanioVuelta.add(new JLabel("Tamaño vuelta:"));
+	      tamanioVuelta.add(campoMetros);
+	      velocidadMax.add(new JLabel("Velocidad maxima"));
+	      velocidadMax.add(campo);
 	      
 	      corriendo=true;
-	      barra = new JProgressBar();
-
+	      barra = new JProgressBar(0, 100);
+	      barra.setStringPainted(true);
 	      
-	      //JMenu archivo= new JMenu("Archivo");
 	      salir = new JMenuItem("Salir");
-	      //skin = new JMenu("SKIN");
 	      manisito = new JMenuItem("Mani");
 	      soldadito = new JMenuItem("Soldado");
 	      
@@ -203,6 +195,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      creaActionListeners();											//Define todos los action listeners
 	      
 	      pausa.setEnabled(false);											//Se inicia con el boton "pausa" deshabilitado
+	      progreso= new JPanel();
+	      progreso.add(new JLabel("Progreso:"));
+	      progreso.add(barra);
+	      
 	      
 	      botones.add(decrementa);											//Se agregan los componentes al panel de botones
 	      botones.add(pausa);
@@ -214,17 +210,14 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      valores.add(metr);
 	      valores.add(cal);
 	      
-	      barras.add(campo);												//Se agregan los componentes al panel de barras
-	      barras.add(campoMetros);
-	      
 	      container.add(animacion);											//Se agregan los componentes al contenedor
 	      container.add(botones);
 	      container.add(valores);
 	      container.add(barras);
-	      container.add(barra);
-	      container.add(new JLabel("Barra de progreso"));
-	      
-	      barra.setMaximum(100);											//Se estableze el valor maximo de metros que mostrara la barra 
+	      container.add(tamanioVuelta);
+	      container.add(velocidadMax);
+	      container.add(progreso);
+										//Se estableze el valor maximo de metros que mostrara la barra 
 	      app.add(container);												
 	      
 	      startAnimation();
