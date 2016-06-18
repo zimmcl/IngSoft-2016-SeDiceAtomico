@@ -18,6 +18,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
+import main.java.Class.Archivador;
 import main.java.Class.Persona;
 import main.java.Controller.BeatController;
 import main.java.Controller.HeartController;
@@ -407,7 +408,6 @@ public class OficialView {
         		try {
 					VisitarSitioActionPerformed(evt);
 				} catch (IOException | URISyntaxException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
         	}
@@ -798,12 +798,22 @@ public class OficialView {
 		}
 		//------------------------------------------------------------------------
 		private void guardarPersonaActionPerformed(ActionEvent evt){
+			
+			/**
+			Archivador archivador = new Archivador (Persona.getPersona(), controller, modeloScc);
+			archivador.guardar();
+			**/
+			
+		
+			
 			try
 			 {
 			  String nombre="";
 			  JFileChooser file=new JFileChooser();
 			  file.showSaveDialog(null);
+			  
 			  File guarda =file.getSelectedFile();
+			  //String directorio = getClass().getResource(guarda.getPath().toString());
 			 
 			  if(guarda !=null)
 			  {
