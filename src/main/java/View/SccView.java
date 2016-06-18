@@ -3,10 +3,13 @@ package main.java.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import main.java.Controller.ControllerInterface;
@@ -41,9 +44,9 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     JPanel progreso;
     JPanel velocidadMax;
     JPanel tamanioVuelta;
-	Button incrementa;		//Boton para incrementar la velocidad
-    Button decrementa;		//Boton para decrementar la velocidad
-    Button pausa;			//Boton para pausar el modelo
+	JButton incrementa;		//Boton para incrementar la velocidad
+    JButton decrementa;		//Boton para decrementar la velocidad
+    JButton pausa;			//Boton para pausar el modelo
     JDialog app;			//Contenedor de la animacion
     JProgressBar barra;
     JMenuBar barraMenu;
@@ -58,6 +61,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
     File[] archivos;		//NO SE BORRA?
     Soldado soldado;		//NO SE BORRA?
     Mani mani;				//NO SE BORRA?
+    Image incre;
+    Image decre;
+    Image pau;
+    Image play;
     JMenu skin;
     String nombreClase;
     
@@ -137,9 +144,41 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
  * **/
 	public void inicializa()
 	   {
-	      incrementa = new Button (">>>");
-	      decrementa = new Button ("<<<");
-	      pausa = new Button("||");
+	      incrementa = new JButton ();														//Crea boton "incrementa"
+	      incrementa.setPreferredSize(new Dimension(22,22));
+	      try{incre= ImageIO.read(getClass().getResource("/botones/incrementa.jpg"));
+	      incrementa.setIcon(new ImageIcon(incre));
+	      }
+	      catch (IOException p){
+	    	  p.printStackTrace();
+	      }
+	      
+	      decrementa = new JButton ();														//Crea boton "decrementa"
+	      decrementa.setPreferredSize(new Dimension(22,22));
+	      try{decre= ImageIO.read(getClass().getResource("/botones/decrementa.jpg"));
+	      decrementa.setIcon(new ImageIcon(decre));
+	      }
+	      catch (IOException p){
+	    	  p.printStackTrace();
+	      }
+	      
+	      pausa = new JButton();														//Crea boton "pausa"
+	      pausa.setPreferredSize(new Dimension(22,22));
+	      try{pau= ImageIO.read(getClass().getResource("/botones/pausa.jpg"));
+	      pausa.setIcon(new ImageIcon(pau));
+	      }
+	      catch (IOException p){
+	    	  p.printStackTrace();
+	      }
+	      
+	      try{play= ImageIO.read(getClass().getResource("/botones/play.jpg"));		//Crea el icono para el boton "play"
+	      }
+	      catch (IOException p){
+	    	  p.printStackTrace();
+	      }
+	      
+	      
+	      
 	      on = new JButton("On");
 	      off= new JButton("Off");
 	      
@@ -147,24 +186,24 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      animacion = new JPanel();		//Panel de la animacion
 	      botones = new JPanel();		//Panel de los botones
 	      valores = new JPanel();
-	      barras = new JPanel();
+	      //barras = new JPanel();
 	      
-	      barraMenu = new JMenuBar();
-	      campo= new TextField(15);
+	      barraMenu = new JMenuBar();	
+	      campo= new TextField(15);			//Crea las cajas de texto para la velocidad maxima y el tamaño de vuelta
 	      campoMetros = new TextField(15);
 	      
-	      tamanioVuelta = new JPanel();
+	      tamanioVuelta = new JPanel();		//Crea paneles donde se agregaran las cajas de texto
 	      velocidadMax = new JPanel();
 	      
 	      
-	      tamanioVuelta.add(new JLabel("Tamaño vuelta:"));
-	      tamanioVuelta.add(campoMetros);
-	      velocidadMax.add(new JLabel("Velocidad maxima"));
-	      velocidadMax.add(campo);
+	      tamanioVuelta.add(new JLabel("Tamaño vuelta:"));	//Agrega las cajas de texto en los paneles, para luego agregar
+	      tamanioVuelta.add(campoMetros);					//dichos paneles al contenedor
+	      velocidadMax.add(new JLabel("Velocidad maxima"));	//De esta forma, se tiene mejor control sobre la distribucion de
+	      velocidadMax.add(campo);							//los elementos
 	      
 	      corriendo=true;
-	      barra = new JProgressBar(0, 100);
-	      barra.setStringPainted(true);
+	      barra = new JProgressBar(0, 100);					//Crea la barra de progreso, y estableze que se muestre un
+	      barra.setStringPainted(true);						//texto de progreso
 	      
 	      salir = new JMenuItem("Salir");
 	      manisito = new JMenuItem("Mani");
@@ -213,7 +252,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      container.add(animacion);											//Se agregan los componentes al contenedor
 	      container.add(botones);
 	      container.add(valores);
-	      container.add(barras);
+	      //container.add(barras);
 	      container.add(tamanioVuelta);
 	      container.add(velocidadMax);
 	      container.add(progreso);
@@ -330,10 +369,10 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    		  ((SccController) controller).setPause(); 
 	    	    	    if(corriendo)
 	    	    	    	{
-	    	    	    		pausa.setLabel("->");
+	    	    	    	pausa.setIcon(new ImageIcon(play));
 	    	    	    	}
 	    	    	    else{
-	    	    	    		pausa.setLabel("||");
+	    	    	    	pausa.setIcon(new ImageIcon(pau));
 	    	    	    }
 	    	    	    corriendo = !corriendo;
 	    	    	    }
