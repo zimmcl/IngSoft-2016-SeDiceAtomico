@@ -20,6 +20,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import main.java.Class.Archivador;
 import main.java.Class.Persona;
+import main.java.Class.Reproductor;
 import main.java.Controller.BeatController;
 import main.java.Controller.HeartController;
 import main.java.Controller.SccController;
@@ -126,6 +127,7 @@ public class OficialView {
 	private JPasswordField passwordField;
 	private JMenuItem mntmDuo;
 	private Archivador archivador;
+	private Reproductor jukebox;
 	
 
 	/**
@@ -156,7 +158,8 @@ public class OficialView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {		
-			
+		jukebox = new Reproductor();	
+		
 		frmSdatrabajoFinalIngenieria = new JFrame();
 		frmSdatrabajoFinalIngenieria.setIconImage(Toolkit.getDefaultToolkit().getImage(OficialView.class.getResource("/imagenes/Se_dice_Atomico.jpg")));
 		frmSdatrabajoFinalIngenieria.setTitle("SDA-Trabajo Final Ingenieria de Software");
@@ -757,52 +760,6 @@ public class OficialView {
 			String aux[] = archivador.cargar();
 			Persona.crearPersona(aux[0], Double.parseDouble(aux[2]), Integer.parseInt(aux[1]));
 			OficialView.refrescar();
-			
-			
-			//persona = cargar();
-			/*String aux="";   
-			String texto="";
-			  try
-			  {
-			   /**Llamamos el metodo que permite cargar la ventana
-			   JFileChooser file=new JFileChooser();
-			   file.setCurrentDirectory(new File("C:\\"));
-			   file.showOpenDialog(null);
-			   /**Abrimos el archivo seleccionado
-			   File abre=file.getSelectedFile();
-			 
-			   /**Recorremos el archivo, lo leemos para plasmarlo
-			   *en el area de texto
-			   if(abre!=null)
-			   {     
-				   boolean fin = false;
-					int i=0;
-					String linea;
-					String[] cadena = new String[3];
-					FileReader fichero=new FileReader(abre);
-					BufferedReader buffer = new BufferedReader(fichero);
-					StringBuffer sbf = new StringBuffer();
-			      while(fin == false){
-						linea = buffer.readLine();
-						if(linea != null){
-							cadena[i]=linea;
-							sbf.append(linea + "\n");
-							i++;
-						}else{
-							fin = true;
-							Persona.crearPersona(cadena[0], Double.parseDouble(cadena[2]), Integer.parseInt(cadena[1]));
-							OficialView.refrescar();
-									}
-							}
-			         buffer.close();
-			    }    
-			   }
-			   catch(IOException ex)
-			   {
-			     JOptionPane.showMessageDialog(null,ex+"" +
-			           "\nNo se ha encontrado el archivo",
-			                 "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
-			    }*/
 		}
 		//------------------------------------------------------------------------
 		private void guardarPersonaActionPerformed(ActionEvent evt){
@@ -811,54 +768,28 @@ public class OficialView {
 			archivador = new Archivador (Persona.getPersona(), controller, modeloScc);
 			archivador.guardar();
 			
-			/*
-		
-			
-			try
-			 {
-			  String nombre="";
-			  JFileChooser file=new JFileChooser();
-			  file.showSaveDialog(null);
-			  
-			  File guarda =file.getSelectedFile();
-			  //String directorio = getClass().getResource(guarda.getPath().toString());
-			 
-			  if(guarda !=null)
-			  {
-			    FileWriter  save=new FileWriter(guarda+".txt");
-			    PrintWriter pw = new PrintWriter(save);
-		        pw.println(Persona.getPersona().getNombre());
-	            pw.println(Persona.getPersona().getEdad());
-	            pw.println(Persona.getPersona().getPeso());
-	            pw.println(controller.sccview.metr.getText());
-	            pw.println(controller.sccview.cal.getText());
-			    save.close();
-			    JOptionPane.showMessageDialog(null,
-			         "Guardado exitoso",
-			             "Información",JOptionPane.INFORMATION_MESSAGE);
-			    }
-			 }
-			  catch(IOException ex)
-			  {
-			   JOptionPane.showMessageDialog(null,
-			        "Su archivo no se ha guardado",
-			           "Advertencia",JOptionPane.WARNING_MESSAGE);
-			  }*/
 		}	
 		//------------------------------------------------------------------------
 		@SuppressWarnings("static-access")
 		private void mntmEncenderActionPerformed(ActionEvent evt){
-			sonido.start();
+			jukebox.play();
+			/*sonido.start();
 			sonido.loop(sonido.LOOP_CONTINUOUSLY);
+			*/
 		}
 		//------------------------------------------------------------------------
 		private void mntmPausarActionPerformed(ActionEvent evt){
-			sonido.stop();
+			jukebox.pause();
+			/*sonido.stop();
+			 *
+			 */
 		}
 		//------------------------------------------------------------------------
 		private void mntmApagarActionPerformed(ActionEvent evt){
-			sonido.close();
+			jukebox.turnOff();
+			/*sonido.close();
 			cargamusica();
+			*/
 		}
 		//------------------------------------------------------------------------
 		private void SalirActionPerformed(ActionEvent evt){
@@ -1011,12 +942,15 @@ public class OficialView {
 		}
 		//---------------------------------------------------------------------------
 		private void cargamusica(){
-			try{
+			
+			jukebox.carga();
+			
+			/*try{
 				sonido = AudioSystem.getClip();
 				AudioInputStream iS = AudioSystem.getAudioInputStream(getClass().getResource("/musica/MusicaElevador.wav"));
 		    	sonido.open(iS);
 			}catch(UnsupportedAudioFileException | LineUnavailableException | IOException e){System.out.println(e);
-			}
+			}*/
 		}
 		//------------------------------------------------------------
 		public static void refrescar(){
