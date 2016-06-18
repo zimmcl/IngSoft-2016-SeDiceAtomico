@@ -73,17 +73,37 @@ public class Persona implements Serializable {
         return this.distancia;
     }
     
+    /**
+     * Recupera la edad.
+     * @return edad
+     */
+    
     public int getEdad(){
     	return edad;
     }
+    
+    /**
+     * Recupera el peso.
+     * @return peso
+     */
     
     public double getPeso(){
     	return peso;
     }
     
+    /**
+     * Recupera la velocidad.
+     * @return velocidad
+     */
+    
     public int getVelocidad(){
     	return velocidad;
     }
+    
+    /**
+     * Establece la velocidad.
+     * @param velocidad
+     */
 
     public void setVelocidad(int velo){
     	velocidad=velo;
@@ -124,12 +144,22 @@ public class Persona implements Serializable {
     	return personacargada;
     }
        
+    /**
+     * Crea una nueva persona.
+     * @param nombre, peso, edad
+     */
     public static Persona crearPersona(String nombre, double peso,int edad){
     	if(persona==null){
     		persona = new Persona(nombre,peso,edad);
     	}
     		return persona;
     	}
+    
+    /**
+     * Recupera la persona.
+     * @return persona
+     */
+    
     public static Persona getPersona(){
     	return persona;
     }

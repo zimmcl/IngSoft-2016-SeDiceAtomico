@@ -125,6 +125,7 @@ public class OficialView {
 	private JMenuItem mntmCazador;
 	private JPasswordField passwordField;
 	private JMenuItem mntmDuo;
+	private Archivador archivador;
 	
 
 	/**
@@ -752,19 +753,26 @@ public class OficialView {
 		//------------------------------------------------------------------------
 		private void cargarPersonaActionPerformed(ActionEvent evt){
 			
-			String aux="";   
+			archivador = new Archivador();
+			String aux[] = archivador.cargar();
+			Persona.crearPersona(aux[0], Double.parseDouble(aux[2]), Integer.parseInt(aux[1]));
+			OficialView.refrescar();
+			
+			
+			//persona = cargar();
+			/*String aux="";   
 			String texto="";
 			  try
 			  {
-			   /**Llamamos el metodo que permite cargar la ventana*/
+			   /**Llamamos el metodo que permite cargar la ventana
 			   JFileChooser file=new JFileChooser();
 			   file.setCurrentDirectory(new File("C:\\"));
 			   file.showOpenDialog(null);
-			   /**Abrimos el archivo seleccionado*/
+			   /**Abrimos el archivo seleccionado
 			   File abre=file.getSelectedFile();
 			 
 			   /**Recorremos el archivo, lo leemos para plasmarlo
-			   *en el area de texto*/
+			   *en el area de texto
 			   if(abre!=null)
 			   {     
 				   boolean fin = false;
@@ -794,16 +802,16 @@ public class OficialView {
 			     JOptionPane.showMessageDialog(null,ex+"" +
 			           "\nNo se ha encontrado el archivo",
 			                 "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
-			    }
+			    }*/
 		}
 		//------------------------------------------------------------------------
 		private void guardarPersonaActionPerformed(ActionEvent evt){
 			
-			/**
-			Archivador archivador = new Archivador (Persona.getPersona(), controller, modeloScc);
-			archivador.guardar();
-			**/
 			
+			archivador = new Archivador (Persona.getPersona(), controller, modeloScc);
+			archivador.guardar();
+			
+			/*
 		
 			
 			try
@@ -835,7 +843,7 @@ public class OficialView {
 			   JOptionPane.showMessageDialog(null,
 			        "Su archivo no se ha guardado",
 			           "Advertencia",JOptionPane.WARNING_MESSAGE);
-			  }
+			  }*/
 		}	
 		//------------------------------------------------------------------------
 		@SuppressWarnings("static-access")

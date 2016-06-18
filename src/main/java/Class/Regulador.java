@@ -8,6 +8,12 @@ public class Regulador implements Runnable {
 	static boolean regular;
 	double factor;
 	
+	/**
+	 * Constructor del regulador de velocidad.
+	 * @param SccModel
+	 * @param double
+	 * **/
+	
 	public Regulador(SccModel model,double factor){
 		this.model = model;
 		this.factor=factor;
