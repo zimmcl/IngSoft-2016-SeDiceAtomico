@@ -42,114 +42,12 @@ public class Archivador implements Serializable {
 	
 	
 	public void guardar(){
-		
-		/*try
-		 {
-		  JFileChooser file=new JFileChooser();
-		  file.showSaveDialog(null);
-		  
-		  File guarda =file.getSelectedFile();
-		 
-		  if(guarda !=null)
-		  {
-		    FileWriter  save=new FileWriter(guarda+".txt");
-		    PrintWriter pw = new PrintWriter(save);
-	        pw.println(Persona.getPersona().getNombre());
-           pw.println(Persona.getPersona().getEdad());
-           pw.println(Persona.getPersona().getPeso());
-           
-           pw.println(controller.sccview.metr.getText());
-           pw.println(controller.sccview.cal.getText());
-           
-           //pw.println(modelo.getMetros());
-           //pw.println(modelo.getCaloriasConsumidas());
-          // double m = modelo.getMetros();
-           //System.out.print(m);
-           //System.out.print(modelo.getMetros());
-           //pw.println(controller.sccview.metr.getText());
-           //pw.println(controller.sccview.cal.getText());
-		    save.close();
-		    JOptionPane.showMessageDialog(null,
-		         "Guardado exitoso",
-		             "Información",JOptionPane.INFORMATION_MESSAGE);
-		    }
-		 }
-		  catch(IOException ex)
-		  {
-		   JOptionPane.showMessageDialog(null,
-		        "Su archivo no se ha guardado",
-		           "Advertencia",JOptionPane.WARNING_MESSAGE);
-		  }
-		
-*/
-		/**JFileChooser file=new JFileChooser();
-		file.showSaveDialog(null);
-		File guarda =file.getSelectedFile();
-		String directorio = guarda.getAbsolutePath();
-		
-		
-		
-		FileOutputStream fos = null;
-	    ObjectOutputStream escribirObjeto = null;
-		
-		
-	    try{
-		       
-	        fos = new FileOutputStream( guarda );
-	        escribirObjeto = new ObjectOutputStream( fos );
-
-	        //Se escribe la instancia de la clase CasaBulma
-	        escribirObjeto.writeObject( p );
-	    }
-	    catch( Exception e ){ 
-	    	e.printStackTrace();
-	    }
-	    finally
-	    {
-	        try{
-	            //Se cierra el archivo y listo.
-	            if( escribirObjeto != null ) escribirObjeto.close();
-	        }catch( Exception ex ){
-	        	ex.printStackTrace();
-	        }
-	    }**/
-		
-		
-		
-		
-		
-	 /*   File f = new File(directorio+".bin");
-
-	    //Esto siempre debe de ir el FileOutputStream y ObjectOutputStream
-	    FileOutputStream fos = null;
-	    ObjectOutputStream escribirObjeto = null;
-
-	    try{
-	       
-	        fos = new FileOutputStream( f );
-	        escribirObjeto = new ObjectOutputStream( fos );
-
-	        //Se escribe la instancia de la clase CasaBulma
-	        escribirObjeto.writeObject( objetivo );
-	    }
-	    catch( Exception e ){ 
-	    	e.printStackTrace();
-	    }
-	    finally
-	    {
-	        try{
-	            //Se cierra el archivo y listo.
-	            if( escribirObjeto != null ) escribirObjeto.close();
-	        }catch( Exception ex ){
-	        	ex.printStackTrace();
-	        }
-	    }*/
 	}
 	
 	public String[] cargar(){
 		
-		String aux="";   
-		String texto="";
+		//String aux="";   
+		//String texto="";
 		String[] cadena = new String[3];
 		  try
 		  {

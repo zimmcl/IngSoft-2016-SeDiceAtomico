@@ -767,12 +767,21 @@ public class OficialView {
 			
 			try
 			 {
+				boolean existe = false;
 			  JFileChooser file=new JFileChooser();
 			  file.showSaveDialog(null);
 			  
 			  File guarda =file.getSelectedFile();
-			 
-			  if(guarda !=null)
+			  
+			  File aux = new File(guarda+".txt");
+			 if (aux.exists()){
+				 JOptionPane.showMessageDialog(null,
+				         "Advertencia. Ya existe un archivo con ese nombre",
+				             "Información",JOptionPane.INFORMATION_MESSAGE);
+				 existe=true;
+			 }
+			  
+			  if((guarda !=null)&&(!existe))
 			  {
 			    FileWriter  save=new FileWriter(guarda+".txt");
 			    PrintWriter pw = new PrintWriter(save);
@@ -782,14 +791,6 @@ public class OficialView {
 	           
 	           pw.println(controller.sccview.metr.getText());
 	           pw.println(controller.sccview.cal.getText());
-	           
-	           //pw.println(modelo.getMetros());
-	           //pw.println(modelo.getCaloriasConsumidas());
-	          // double m = modelo.getMetros();
-	           //System.out.print(m);
-	           //System.out.print(modelo.getMetros());
-	           //pw.println(controller.sccview.metr.getText());
-	           //pw.println(controller.sccview.cal.getText());
 			    save.close();
 			    JOptionPane.showMessageDialog(null,
 			         "Guardado exitoso",
@@ -801,11 +802,7 @@ public class OficialView {
 			   JOptionPane.showMessageDialog(null,
 			        "Su archivo no se ha guardado",
 			           "Advertencia",JOptionPane.WARNING_MESSAGE);
-			  }
-			
-			//archivador = new Archivador (Persona.getPersona(), controller, modeloScc);
-			//archivador.guardar();
-			
+			  }			
 		}	
 		//------------------------------------------------------------------------
 		@SuppressWarnings("static-access")
