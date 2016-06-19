@@ -4,11 +4,10 @@ import main.java.Adapter.HeartAdapter;
 import main.java.Model.HeartModel;
 import main.java.Model.HeartModelInterface;
 import main.java.View.DJView;
-import main.java.View.MultiplesView;
 
 public class HeartController implements ControllerInterface {
 	HeartModelInterface model;
-	DJView view;
+	public DJView view;
   
 	public HeartController(HeartModelInterface model) {
 		this.model = model;
@@ -22,7 +21,7 @@ public class HeartController implements ControllerInterface {
 	/**
 	 * Constructor creado para el uso de MultiplesView
 	 */
-	public HeartController(MultiplesView view){
+	public HeartController(DJView view){
 		 
 		this.model = HeartModel.getInstancia();
  

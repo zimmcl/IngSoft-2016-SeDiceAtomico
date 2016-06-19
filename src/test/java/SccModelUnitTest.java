@@ -8,7 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import main.java.Class.Regulador;
-import main.java.Model.SccModel;
+import main.java.Model.TemplateMethod.Estandar;
+import main.java.Model.TemplateMethod.SccModel;
 
 public class SccModelUnitTest {
 	
@@ -16,7 +17,7 @@ public class SccModelUnitTest {
 
 	@Before
 	public void setUp() throws Exception {
-		model = new SccModel();
+		model = new Estandar();
 	}
 
 	@After
@@ -101,7 +102,6 @@ public class SccModelUnitTest {
 			assertTrue(model.getSpeed()>=19);
 			assertTrue(model.getSpeed()<=20);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -143,10 +143,6 @@ public class SccModelUnitTest {
 		
 	}
 	
-	@Test
-	public void testFallido(){
-		assertEquals(1,0);
-	}
 
 	@Test
 	public void testGetRegulador() {

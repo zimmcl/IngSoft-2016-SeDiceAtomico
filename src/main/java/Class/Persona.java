@@ -1,10 +1,10 @@
 package main.java.Class;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.UUID;
+import java.io.Serializable;
 
-public class Persona {
+
+@SuppressWarnings("serial")
+public class Persona implements Serializable {
 
     private String id;
     private String nombre = "nombre";
@@ -12,7 +12,10 @@ public class Persona {
     private double tiempo = 0.0;
     private int distancia = 0;
     private double peso=0.0;
-    private int edad=0;
+    private int velocidad=0;
+	private int edad=0;
+    private static Persona persona;
+    private boolean personacargada=false;
 
     /**
      * Constructor, que crea una {@link Persona} con los siguiente parámetros.
@@ -21,11 +24,13 @@ public class Persona {
      * @param peso   el peso de la {@link Persona}
      * @param edad   la edad de la {@link Persona}
      */
-    public Persona(String id, String nombre, double peso, int edad) {
-        this.id = id;
+    private Persona(String nombre, double peso, int edad) {
         this.nombre=nombre;
         this.edad=edad;
         this.peso=peso;
+        calorias=0.0;
+        tiempo=0;
+        personacargada=true;
     }
     
     /**
@@ -41,7 +46,7 @@ public class Persona {
      * @return nombre
      */
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     /**
@@ -49,7 +54,7 @@ public class Persona {
      * @return calorias
      */
     public double getCalorias() {
-        return this.calorias;
+        return calorias;
     }
 
     /**
@@ -67,7 +72,42 @@ public class Persona {
     public int getDistancia() {
         return this.distancia;
     }
+    
+    /**
+     * Recupera la edad.
+     * @return edad
+     */
+    
+    public int getEdad(){
+    	return edad;
+    }
+    
+    /**
+     * Recupera el peso.
+     * @return peso
+     */
+    
+    public double getPeso(){
+    	return peso;
+    }
+    
+    /**
+     * Recupera la velocidad.
+     * @return velocidad
+     */
+    
+    public int getVelocidad(){
+    	return velocidad;
+    }
+    
+    /**
+     * Establece la velocidad.
+     * @param velocidad
+     */
 
+    public void setVelocidad(int velo){
+    	velocidad=velo;
+    }
     /**
      * Editar nombre.
      * @param nombre
@@ -99,16 +139,29 @@ public class Persona {
     public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
-  
-    public void guardarEstado(String id, String nombre, double calorias, double tiempo, int distancia, double peso, int edad ) {
-        
-        }
+    	
+    public boolean getEstado(){
+    	return personacargada;
+    }
        
+    /**
+     * Crea una nueva persona.
+     * @param nombre, peso, edad
+     */
+    public static Persona crearPersona(String nombre, double peso,int edad){
+    	if(persona==null){
+    		persona = new Persona(nombre,peso,edad);
+    	}
+    		return persona;
+    	}
     
-    public static Persona cargaEstado(String archivo) {
-		return null;
-    	
-    	
+    /**
+     * Recupera la persona.
+     * @return persona
+     */
+    
+    public static Persona getPersona(){
+    	return persona;
     }
 
 }

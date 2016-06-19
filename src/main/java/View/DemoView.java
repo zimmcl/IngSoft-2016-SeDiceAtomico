@@ -20,23 +20,22 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JSeparator;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
-
 import main.java.Controller.BeatController;
-import main.java.Controller.ControllerInterface;
 import main.java.Controller.HeartController;
 import main.java.Controller.SccController;
 import main.java.Model.BeatModel;
 import main.java.Model.BeatModelInterface;
 import main.java.Model.HeartModel;
 import main.java.Model.HeartModelInterface;
-import main.java.Model.SccModel;
 import main.java.Model.SccModelInterface;
+import main.java.Model.TemplateMethod.Estandar;
+import main.java.Model.TemplateMethod.SccModel;
+
 import javax.swing.JProgressBar;
 
 
@@ -82,7 +81,7 @@ public class DemoView implements ActionListener {
 	 */
 	private void initialize() {
 		
-		SccModel modelo=new SccModel();
+		SccModel modelo=new Estandar();
 		modeloScc=modelo;
     	SccController controlador=new SccController(modelo, true);
     	this.controladorScc=controlador;
@@ -103,6 +102,7 @@ public class DemoView implements ActionListener {
 		JMenu mnNewMenu = new JMenu("Inicio");
 		mnNewMenu.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
 		menuBar.add(mnNewMenu);
+		mnNewMenu.setEnabled(false);
 		
 		JMenuItem mntmNuevaPersona = new JMenuItem("Nueva Persona");
 		mntmNuevaPersona.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 15));
@@ -273,7 +273,7 @@ public class DemoView implements ActionListener {
 		txtDemo.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
 		txtDemo.setEditable(false);
 		txtDemo.setBackground(SystemColor.inactiveCaption);
-		txtDemo.setText("Versi\u00F3n Demo");
+		txtDemo.setText("Versión BETA");
 		panelInferior.setBackground(new Color(144, 238, 144));
 		frmSdaTrabajo.getContentPane().add(panelInferior);
 		
@@ -320,10 +320,7 @@ public class DemoView implements ActionListener {
         		botonSccActionPerformed(evt);
         	}
         });
-		btnVistacomb.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		
 		btnVistacomb.setForeground(Color.WHITE);
 		btnVistacomb.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 15));
 		btnVistacomb.setBackground(new Color(30, 144, 255));
@@ -345,6 +342,10 @@ public class DemoView implements ActionListener {
 		button.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 15));
 		button.setBackground(new Color(30, 144, 255));
 		panelInferior.add(button);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				boton3VistasActionPerformed(evt);}
+		});
 		
 		//progressBar = new JProgressBar();
 		springLayout.putConstraint(SpringLayout.NORTH, controlador.sccview.barra, -153, SpringLayout.NORTH, panelInferior);
@@ -369,7 +370,7 @@ public class DemoView implements ActionListener {
 		btnCintamatrix.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 15));
 		btnCintamatrix.setBackground(new Color(30, 144, 255));
 		}		
-	
+		//------------------------------------------------------------------------
 		
 		private void botonHeartActionPerformed(java.awt.event.ActionEvent evt) {
             
@@ -383,19 +384,18 @@ public class DemoView implements ActionListener {
 		  }
 		    
 		private void botonSccActionPerformed(java.awt.event.ActionEvent evt){
-		modeloScc = new SccModel();
+		modeloScc = new Estandar();
 		controladorScc = new SccController(modeloScc, false);	
 		  }
 		    
 		private void botonCintaMActionPerformed(java.awt.event.ActionEvent evt){
-			controladorScc.sccview.app.setVisible(true);
 		
 		 }
 		    
 		private void boton3VistasActionPerformed(java.awt.event.ActionEvent evt){
-		MultiplesView vista = new MultiplesView();
-		vista.createView();
-	    vista.createControls();
+			MultiplesView vista = new MultiplesView();
+		    vista.createView();
+		    vista.createControls();
 		  }
 		
 		private void VisitarSitioActionPerformed(java.awt.event.ActionEvent evt) throws IOException, URISyntaxException{
