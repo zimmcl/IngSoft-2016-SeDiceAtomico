@@ -383,23 +383,36 @@ public class OficialView {
 		mnAyuda.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 17));
 		menuBar.add(mnAyuda);
 		
-		JMenuItem mntmAyuda = new JMenuItem("Ayuda");
+		JMenuItem mntmAyuda = new JMenuItem("Contenido de Ayuda");
 		mntmAyuda.setIcon(new ImageIcon(OficialView.class.getResource("/imagenes/system_help.png")));
+		mntmAyuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt){
+        		try {
+					ContenidoAyudaActionPerformed(evt);
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+        	}
+        });
 		mntmAyuda.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 15));
 		mnAyuda.add(mntmAyuda);
 		
 		JSeparator separator_1 = new JSeparator();
 		mnAyuda.add(separator_1);
 		
-		JMenuItem mntmAdquirirVersinPro = new JMenuItem("Adquirir Versi\u00F3n PRO");
-		mntmAdquirirVersinPro.setIcon(new ImageIcon(OficialView.class.getResource("/imagenes/balloon_yellow.gif")));
-		mntmAdquirirVersinPro.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 15));
-		mnAyuda.add(mntmAdquirirVersinPro);
-		
-		JMenuItem mntmIngresarLicencia = new JMenuItem("Ingresar Licencia");
-		mntmIngresarLicencia.setIcon(new ImageIcon(OficialView.class.getResource("/imagenes/icon-key-orange.gif")));
-		mntmIngresarLicencia.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 15));
-		mnAyuda.add(mntmIngresarLicencia);
+		JMenuItem mntmLicenciaGNU = new JMenuItem("Licencia P\u00FAblica General GNU");
+		mntmLicenciaGNU.setIcon(new ImageIcon(OficialView.class.getResource("/imagenes/gnu.png")));
+		mntmLicenciaGNU.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt){
+        		try {
+					LicenciaGNUActionPerformed(evt);
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+        	}
+        });
+		mntmLicenciaGNU.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 15));
+		mnAyuda.add(mntmLicenciaGNU);
 		
 		JSeparator separator_2 = new JSeparator();
 		mnAyuda.add(separator_2);
@@ -427,13 +440,6 @@ public class OficialView {
         	}
         });
 		mnAyuda.add(mntmAcercaDe);
-		//---------
-		JLabel lblActivado = new JLabel("PRO");
-		lblActivado.setForeground(new Color(255, 204, 0));
-		lblActivado.setFont(new Font("Sitka Text", Font.BOLD, 17));
-		lblActivado.setVisible(false);
-		lblActivado.setHorizontalAlignment(SwingConstants.TRAILING);
-		menuBar.add(lblActivado);
 		
 		//-----------------------------------------------------------------------------
 		
@@ -834,6 +840,20 @@ public class OficialView {
 			if(Desktop.isDesktopSupported())
 			{
 			  Desktop.getDesktop().browse(new URI("http://zimmcl.github.io/IngSoft-2016-SeDiceAtomico"));
+			}
+		}
+		//------------------------------------------------------------------------
+		private void LicenciaGNUActionPerformed(java.awt.event.ActionEvent evt) throws IOException, URISyntaxException{
+			if(Desktop.isDesktopSupported())
+			{
+			  Desktop.getDesktop().browse(new URI("http://www.gnu.org/licenses/gpl.html"));
+			}
+		}
+		//------------------------------------------------------------------------
+		private void ContenidoAyudaActionPerformed(java.awt.event.ActionEvent evt) throws IOException, URISyntaxException{
+			if(Desktop.isDesktopSupported())
+			{
+			  Desktop.getDesktop().browse(new URI("https://github.com/zimmcl/IngSoft-2016-SeDiceAtomico/wiki/Manual-de-Usuario"));
 			}
 		}
 		//------------------------------------------------------------------------

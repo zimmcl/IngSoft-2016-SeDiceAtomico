@@ -146,7 +146,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	   {
 	      incrementa = new JButton ();														//Crea boton "incrementa"
 	      incrementa.setPreferredSize(new Dimension(22,22));
-	      try{incre= ImageIO.read(getClass().getResource("/botones/incrementa.jpg"));
+	      try{incre= ImageIO.read(getClass().getResource("/imagenes/botones/incrementa.jpg"));
 	      incrementa.setIcon(new ImageIcon(incre));
 	      }
 	      catch (IOException p){
@@ -155,7 +155,7 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      
 	      decrementa = new JButton ();														//Crea boton "decrementa"
 	      decrementa.setPreferredSize(new Dimension(22,22));
-	      try{decre= ImageIO.read(getClass().getResource("/botones/decrementa.jpg"));
+	      try{decre= ImageIO.read(getClass().getResource("/imagenes/botones/decrementa.jpg"));
 	      decrementa.setIcon(new ImageIcon(decre));
 	      }
 	      catch (IOException p){
@@ -164,14 +164,14 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      
 	      pausa = new JButton();														//Crea boton "pausa"
 	      pausa.setPreferredSize(new Dimension(22,22));
-	      try{pau= ImageIO.read(getClass().getResource("/botones/pausa.jpg"));
+	      try{pau= ImageIO.read(getClass().getResource("/imagenes/botones/pausa.jpg"));
 	      pausa.setIcon(new ImageIcon(pau));
 	      }
 	      catch (IOException p){
 	    	  p.printStackTrace();
 	      }
 	      
-	      try{play= ImageIO.read(getClass().getResource("/botones/play.jpg"));		//Crea el icono para el boton "play"
+	      try{play= ImageIO.read(getClass().getResource("/imagenes/botones/play.jpg"));		//Crea el icono para el boton "play"
 	      }
 	      catch (IOException p){
 	    	  p.printStackTrace();
