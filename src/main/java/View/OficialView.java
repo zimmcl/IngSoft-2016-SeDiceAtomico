@@ -773,16 +773,11 @@ public class OficialView {
 		@SuppressWarnings("static-access")
 		private void mntmEncenderActionPerformed(ActionEvent evt){
 			jukebox.play();
-			/*sonido.start();
-			sonido.loop(sonido.LOOP_CONTINUOUSLY);
-			*/
 		}
 		//------------------------------------------------------------------------
 		private void mntmPausarActionPerformed(ActionEvent evt){
 			jukebox.pause();
-			/*sonido.stop();
-			 *
-			 */
+
 		}
 		//------------------------------------------------------------------------
 		private void mntmApagarActionPerformed(ActionEvent evt){
@@ -944,13 +939,6 @@ public class OficialView {
 		private void cargamusica(){
 			
 			jukebox.carga();
-			
-			/*try{
-				sonido = AudioSystem.getClip();
-				AudioInputStream iS = AudioSystem.getAudioInputStream(getClass().getResource("/musica/MusicaElevador.wav"));
-		    	sonido.open(iS);
-			}catch(UnsupportedAudioFileException | LineUnavailableException | IOException e){System.out.println(e);
-			}*/
 		}
 		//------------------------------------------------------------
 		public static void refrescar(){

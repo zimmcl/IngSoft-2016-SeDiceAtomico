@@ -186,7 +186,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      animacion = new JPanel();		//Panel de la animacion
 	      botones = new JPanel();		//Panel de los botones
 	      valores = new JPanel();
-	      //barras = new JPanel();
 	      
 	      barraMenu = new JMenuBar();	
 	      campo= new TextField(15);			//Crea las cajas de texto para la velocidad maxima y el tamaño de vuelta
@@ -252,7 +251,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      container.add(animacion);											//Se agregan los componentes al contenedor
 	      container.add(botones);
 	      container.add(valores);
-	      //container.add(barras);
 	      container.add(tamanioVuelta);
 	      container.add(velocidadMax);
 	      container.add(progreso);
@@ -320,7 +318,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	    	    	  public void actionPerformed(ActionEvent e)
 	    	    	  {
 	    	    	    controller.start();
-	    	    	    //skin.setEnabled(false);
 	    	    	  }
 	    	    	});
 	      

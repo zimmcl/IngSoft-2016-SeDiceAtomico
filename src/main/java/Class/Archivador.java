@@ -57,8 +57,11 @@ public class Archivador implements Serializable {
 	        pw.println(Persona.getPersona().getNombre());
            pw.println(Persona.getPersona().getEdad());
            pw.println(Persona.getPersona().getPeso());
-           pw.println(modelo.getMetros());
-           pw.println(modelo.getCaloriasConsumidas());
+           //pw.println(modelo.getMetros());
+           //pw.println(modelo.getCaloriasConsumidas());
+           double m = modelo.getMetros();
+           //System.out.print(m);
+           //System.out.print(modelo.getMetros());
            //pw.println(controller.sccview.metr.getText());
            //pw.println(controller.sccview.cal.getText());
 		    save.close();
