@@ -765,8 +765,46 @@ public class OficialView {
 		private void guardarPersonaActionPerformed(ActionEvent evt){
 			
 			
-			archivador = new Archivador (Persona.getPersona(), controller, modeloScc);
-			archivador.guardar();
+			try
+			 {
+			  JFileChooser file=new JFileChooser();
+			  file.showSaveDialog(null);
+			  
+			  File guarda =file.getSelectedFile();
+			 
+			  if(guarda !=null)
+			  {
+			    FileWriter  save=new FileWriter(guarda+".txt");
+			    PrintWriter pw = new PrintWriter(save);
+		        pw.println(Persona.getPersona().getNombre());
+	           pw.println(Persona.getPersona().getEdad());
+	           pw.println(Persona.getPersona().getPeso());
+	           
+	           pw.println(controller.sccview.metr.getText());
+	           pw.println(controller.sccview.cal.getText());
+	           
+	           //pw.println(modelo.getMetros());
+	           //pw.println(modelo.getCaloriasConsumidas());
+	          // double m = modelo.getMetros();
+	           //System.out.print(m);
+	           //System.out.print(modelo.getMetros());
+	           //pw.println(controller.sccview.metr.getText());
+	           //pw.println(controller.sccview.cal.getText());
+			    save.close();
+			    JOptionPane.showMessageDialog(null,
+			         "Guardado exitoso",
+			             "Información",JOptionPane.INFORMATION_MESSAGE);
+			    }
+			 }
+			  catch(IOException ex)
+			  {
+			   JOptionPane.showMessageDialog(null,
+			        "Su archivo no se ha guardado",
+			           "Advertencia",JOptionPane.WARNING_MESSAGE);
+			  }
+			
+			//archivador = new Archivador (Persona.getPersona(), controller, modeloScc);
+			//archivador.guardar();
 			
 		}	
 		//------------------------------------------------------------------------
