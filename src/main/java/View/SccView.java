@@ -2,14 +2,22 @@ package main.java.View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import main.java.Controller.ControllerInterface;
 import main.java.Controller.SccController;
 import main.java.Model.SccModelInterface;
-import main.java.Model.SccModel;
+import main.java.Model.TemplateMethod.Mani;
+import main.java.Model.TemplateMethod.SccModel;
+import main.java.Model.TemplateMethod.Soldado;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -23,36 +31,53 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	
 	SccModelInterface model;
 	ControllerInterface controller;
-	public JLabel vel;
-	JLabel metr;
+	JLabel vel;				//Label para mostrar la velocidad acutal
+	JLabel metr;			//Label para mostrar los metros recorridos
+	JLabel cal;				//Label para mostrar las calorias consumidas
     JPanel animacion;		//Panel de la animacion
     JPanel botones;			//Panel de los botones
     JPanel velocidad;		//Panel donde se muestra la velocidad
     JPanel metros;			//Panel que muestra metros recorridos;
-	Button incrementa;
-    Button decrementa;
-    Button pausa;
-    JDialog app;
+    JPanel valores;			//Panel para mostrar informacion de varios valores (velocidad, metros, calorias, etc)
+    JPanel barras;
+    JPanel calorias;
+    JPanel progreso;
+    JPanel velocidadMax;
+    JPanel tamanioVuelta;
+	JButton incrementa;		//Boton para incrementar la velocidad
+    JButton decrementa;		//Boton para decrementar la velocidad
+    JButton pausa;			//Boton para pausar el modelo
+    JDialog app;			//Contenedor de la animacion
     JProgressBar barra;
-
     JMenuBar barraMenu;
-	JMenuItem on;
-    JMenuItem off;
-    JMenuItem importar;
-    JMenuItem exportar;
+	JButton on;				//Boton para encender el modelo
+    JButton off;			//Boton para apagar el modelo
+    JMenuItem manisito;		//NO SE BORRA?	
+    JMenuItem soldadito;	//NO SE BORRA?
+    JMenuItem salir;		//NO SE BORRA?
     TextField campo;
-    JTextField campoMetros;
+    TextField campoMetros;
+    URL sDirectorio;
+    File[] archivos;		//NO SE BORRA?
+    Soldado soldado;		//NO SE BORRA?
+    Mani mani;				//NO SE BORRA?
+    Image incre;
+    Image decre;
+    Image pau;
+    Image play;
+    JMenu skin;
+    String nombreClase;
     
-	protected ImageIcon images[];		//Arreglo donde se almacenan las imagenes para la animacion
-	protected int totalImages = 9,		//Cantidad de imagenes a usar en la animacion
-	              currentImage = 0,		//Indice de la imagen actual (inicia en 0 por defecto)
-	              animationDelay = 1000; 	//Retraso entre cuadro y cuadro, en milisegundos
-	protected Timer animationTimer;	//Timer que se encarga de alternar entre los cuadros de la animacion
-	protected boolean corriendo;
+	protected ArrayList<ImageIcon> images;		//Lista donde se almacenan las imagenes para la animacion
+	protected int totalImages = 0,				//Cantidad de imagenes a usar en la animacion
+	              currentImage = 0,				//Indice de la imagen actual (inicia en 0 por defecto)
+	              animationDelay = 1000; 		//Retraso entre cuadro y cuadro, en milisegundos
+	protected Timer animationTimer;				//Timer que se encarga de alternar entre los cuadros de la animacion
+	protected boolean corriendo;				//TRUE: La animacion esta en funcionamiento. FALSE: La animacion esta pausada
 	private int aux=0;
+	
 	/** 
-	 * Constructor de la clase. Al ejecutarse, registra a los observadores
-	 * 
+	 * Constructor de la clase. Al ejecutarse, registra a los observadores 
 	 * **/
 	
 	public SccView(ControllerInterface controller, SccModelInterface model){
@@ -61,12 +86,55 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		model.registerObserver((BeatObserver)this);
 		model.registerObserver((BPMObserver)this);
 		
-		setSize( getPreferredSize() );
-	    images = new ImageIcon[ totalImages ];
-	    
-	    for ( int i = 0; i < 9; ++i ){ 
-	         images[ i ] = new ImageIcon(getClass().getResource("/imagenes/Mani/Mani" + i + ".jpg" ));}
-	    inicializa();
+		setSize( getPreferredSize() );			//Dimensiona el tamaño de la ventana
+		images = new ArrayList<ImageIcon>();	
+	    cargar();								//Carga las imagenes de la animacion a la lista
+	    inicializa();							//Realiza todas las instrucciones necesarias para crear la vista
+	}
+	
+	/*--------------------------------------------------------------------------------------------------------------*/
+	/*----------------METODOS DE CLASE-----------------*/
+	/*--------------------------------------------------------------------------------------------------------------*/
+	
+	/**
+	 * Carga al arreglo "images" con las imagenes correspondientes a cada caso.Primero estableze la cantidad de cuadros 
+	 * para cada animacion.
+	 * **/
+	
+	public void cargar(){
+		nombreClase=model.getClass().getSimpleName();
+		switch (nombreClase){
+		case "Abuelo":
+			totalImages=16;
+			break;
+		case "Cazador":
+			totalImages=8;
+			break;
+		case "Duo":
+			totalImages=13;
+			break;
+		case "Estandar":
+			totalImages=16;
+			break;
+		case "Fantasma":
+			totalImages=7;
+			break;
+		case "Mani":
+			totalImages=10;
+			break;
+		case "Soldado":
+			totalImages=16;
+			break;
+			default: break;
+		}
+			
+		images.clear();									//Limpia la lista antes de cargarla
+					
+		for ( int i = 0; i <totalImages; ++i ){ 		//Carga la lista con la animacion
+	         images.add(new ImageIcon(getClass().getResource("/imagenes/"+nombreClase+"/"+nombreClase+ i + ".jpg" )));
+			}
+		if (this.app!=null){this.app.dispose();}		//Si ya existia una instancia de "app", la elimina
+		
 	}
 	
 /**
@@ -76,53 +144,85 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
  * **/
 	public void inicializa()
 	   {
-	      incrementa = new Button (">>");
-	      decrementa = new Button ("<<");
-	      pausa = new Button("||");
-	      animacion = new JPanel();//Panel de la animacion
+	      incrementa = new JButton ();														//Crea boton "incrementa"
+	      incrementa.setPreferredSize(new Dimension(22,22));
+	      try{incre= ImageIO.read(getClass().getResource("/botones/incrementa.jpg"));
+	      incrementa.setIcon(new ImageIcon(incre));
+	      }
+	      catch (IOException p){
+	    	  p.printStackTrace();
+	      }
+	      
+	      decrementa = new JButton ();														//Crea boton "decrementa"
+	      decrementa.setPreferredSize(new Dimension(22,22));
+	      try{decre= ImageIO.read(getClass().getResource("/botones/decrementa.jpg"));
+	      decrementa.setIcon(new ImageIcon(decre));
+	      }
+	      catch (IOException p){
+	    	  p.printStackTrace();
+	      }
+	      
+	      pausa = new JButton();														//Crea boton "pausa"
+	      pausa.setPreferredSize(new Dimension(22,22));
+	      try{pau= ImageIO.read(getClass().getResource("/botones/pausa.jpg"));
+	      pausa.setIcon(new ImageIcon(pau));
+	      }
+	      catch (IOException p){
+	    	  p.printStackTrace();
+	      }
+	      
+	      try{play= ImageIO.read(getClass().getResource("/botones/play.jpg"));		//Crea el icono para el boton "play"
+	      }
+	      catch (IOException p){
+	    	  p.printStackTrace();
+	      }
+	      
+	      
+	      
+	      on = new JButton("On");
+	      off= new JButton("Off");
+	      
+	      
+	      animacion = new JPanel();		//Panel de la animacion
 	      botones = new JPanel();		//Panel de los botones
-	      velocidad = new JPanel();
-	      metros = new JPanel();
-	      barraMenu = new JMenuBar();
-	      campo= new TextField(5);
+	      valores = new JPanel();
+	      
+	      barraMenu = new JMenuBar();	
+	      campo= new TextField(15);			//Crea las cajas de texto para la velocidad maxima y el tamaño de vuelta
+	      campoMetros = new TextField(15);
+	      
+	      tamanioVuelta = new JPanel();		//Crea paneles donde se agregaran las cajas de texto
+	      velocidadMax = new JPanel();
+	      
+	      
+	      tamanioVuelta.add(new JLabel("Tamaño vuelta:"));	//Agrega las cajas de texto en los paneles, para luego agregar
+	      tamanioVuelta.add(campoMetros);					//dichos paneles al contenedor
+	      velocidadMax.add(new JLabel("Velocidad maxima"));	//De esta forma, se tiene mejor control sobre la distribucion de
+	      velocidadMax.add(campo);							//los elementos
+	      
 	      corriendo=true;
-	      barra = new JProgressBar();
-	      campoMetros = new JTextField();
+	      barra = new JProgressBar(0, 100);					//Crea la barra de progreso, y estableze que se muestre un
+	      barra.setStringPainted(true);						//texto de progreso
+	      
+	      salir = new JMenuItem("Salir");
+	      manisito = new JMenuItem("Mani");
+	      soldadito = new JMenuItem("Soldado");
 	      
 	      
-	      JMenu archivo= new JMenu("Archivo");
-	      JMenu edicion = new JMenu("Edicion");
-	      JMenuItem salir = new JMenuItem("Salir");
-	      on = new JMenuItem("On");
-	      off= new JMenuItem("Off");
-	      importar = new JMenuItem("Importar");
-	      exportar = new JMenuItem("Exportar");
-	      
-
-	      archivo.add(on);
-	      archivo.add(off);
-	      archivo.add(importar);
-	      archivo.add(exportar);
-	      archivo.add(salir);
-	      barraMenu.add(archivo);
-	      barraMenu.add(edicion);
-	      
-	      
-	      vel= new JLabel ();
-	      velocidad.add(vel);
-	      vel.setText("Velocidad: "+ model.getSpeed());
+	      vel= new JLabel ();											
+	      vel.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
+	      vel.setText( model.getSpeed()+" m/s");
 	      
 	      metr = new JLabel();
-	      metros.add(metr);
-	      metr.setText("Metros: "+ ((SccModel) model).getMetros());
+	      metr.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
+	      metr.setText(((SccModel) model).getMetros()+" metros");
 	      
-	      
-	      
+	      cal = new JLabel();
+	      cal.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
+	      cal.setText(((SccModel)model).getCaloriasConsumidas()+" cal");
 	      
 	      JPanel container = new JPanel();									//Genera un contenedor que simplifica el agregado de multiples paneles
 	      container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));	//Cada panel se agrega sobre el contenedor. Luego, se formatea el contenedor
-	      
-	      
 	      
 	      app = new JDialog();
 	      animacion.add(this);
@@ -130,147 +230,32 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      app.add(animacion,BorderLayout.EAST);
 	      
 	      
-	      salir.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
-	    	      {
-	    	    	  public void actionPerformed(ActionEvent e)
-	    	    	  {
-	    	    	    System.exit(0);
-	    	    	  }
-	    	    	});
+	      creaActionListeners();											//Define todos los action listeners
 	      
-	      on.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
-	    	      {
-	    	    	  public void actionPerformed(ActionEvent e)
-	    	    	  {
-	    	    	    controller.start();
-	    	    	    
-	    	    	    //pausa.setEnabled(true);
-	    	    	    
-	    	    	  }
-	    	    	});
-	      
-	      off.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
-	    	      {
-	    	    	  public void actionPerformed(ActionEvent e)
-	    	    	  {
-	    	    	    controller.stop();
-	    	    	    //stopAnimation();
-	    	    	    //pausa.setEnabled(false);
-	    	    	  }
-	    	    	});	      
-
-	      importar.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
-	    	      {
-	    	    	  public void actionPerformed(ActionEvent e)
-	    	    	  {
-	    	    	    //controller.start();
-	    	    	    //startAnimation();
-	    	    	    //pausa.setEnabled(true);
-	    	    	    System.out.printf("Cepo al dolar, flaco");
-	    	    	    model.getPersona().cargaEstado();
-	    	    	  }
-	    	    	});
+	      pausa.setEnabled(false);											//Se inicia con el boton "pausa" deshabilitado
+	      progreso= new JPanel();
+	      progreso.add(new JLabel("Progreso:"));
+	      progreso.add(barra);
 	      
 	      
-	      exportar.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
-	    	      {
-	    	    	  public void actionPerformed(ActionEvent e)
-	    	    	  {
-	    	    		  String inputValue = JOptionPane.showInputDialog("Ingrese el nombre del archivo a guardar");
-	    	    		  model.getPersona().guardarEstado(inputValue);
-	    	    	    //controller.start();
-	    	    	    //startAnimation();
-	    	    	    //pausa.setEnabled(true);
-	    	    	    
-	    	    	  }
-	    	    	});
-	      
-	      
-	      
-	      incrementa.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
-	      {
-	    	  public void actionPerformed(ActionEvent e)
-	    	  {
-	    		controller.increaseBPM();  
-	    	  }
-	    	});
-	      
-	      pausa.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
-	    	      {
-	    	    	  public void actionPerformed(ActionEvent e)
-	    	    	  {
-	    	    	    System.out.println("corriendo1="+corriendo);
-	    	    		  ((SccController) controller).setPause(); 
-	    	    	    if(corriendo)
-	    	    	    	{
-	    	    	    		pausa.setLabel("->");
-	    	    	    	}
-	    	    	    else{
-	    	    	    	pausa.setLabel("||");
-	    	    	    }
-	    	    	    corriendo = !corriendo;
-	    	    	    System.out.println("corriendo2="+corriendo);
-	    	    	    }
-	    	    	});
-	      
-	      
-	      decrementa.addActionListener(new ActionListener()					//Habilita la funcion del boton decrementar
-	      {
-	    	  public void actionPerformed(ActionEvent e)
-	    	  {
-	    	  controller.decreaseBPM();}
-	    	});
-	      
-	      campoMetros.addActionListener(new ActionListener()					//Cambia el valor de completado de la barra de estado
-	    	      {
-	    	    	  public void actionPerformed(ActionEvent e)
-	    	    	  {
-	    	    	  barra.setMaximum(Integer.parseInt(campoMetros.getText()));}  
-	    	    	});
-	      
-	      
-	      campo.addActionListener(new ActionListener()					//Habilita la funcion del boton decrementar
-	      {
-	    	  public void actionPerformed(ActionEvent e)
-	    	  {
-	    		try{
-	  	    	  controller.setBPM(Integer.parseInt(campo.getText()));
-	  	    	 }catch(NumberFormatException ex){
-	  				JOptionPane.showMessageDialog(null, "No se puede reconocer el valor ingresado.","Error",0);
-	  	    	 }catch(IllegalArgumentException ex){
-		  			JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",0);
-
-	  	    	 }
-	    	  }
-	    	});
-	      
-	      app.addWindowListener(				//Implementa la accion a realizar al apretar el boton "salir"
-	         new WindowAdapter() {
-	            public void windowClosing( WindowEvent e )
-	            {
-	            	app.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-	            	 controller.stop();
-	            }
-	         }
-	      );
-	      
-	      pausa.setEnabled(false);
-	      
-	      botones.add(decrementa);
+	      botones.add(decrementa);											//Se agregan los componentes al panel de botones
 	      botones.add(pausa);
 	      botones.add(incrementa);
+	      botones.add(on);
+	      botones.add(off);
 	      
-	      container.add(animacion);
+	      valores.add(vel);													//Se agregan los componentes al panel de valores
+	      valores.add(metr);
+	      valores.add(cal);
+	      
+	      container.add(animacion);											//Se agregan los componentes al contenedor
 	      container.add(botones);
-	      container.add(velocidad);
-	      container.add(metros);
-	      container.add(campo);
-	      container.add(barra);
-	      container.add(new JLabel("Limite Barra"));
-	      container.add(campoMetros);
-	      barra.setMaximum(100);
-	      app.add(container);
-	      app.setJMenuBar(barraMenu);
+	      container.add(valores);
+	      container.add(tamanioVuelta);
+	      container.add(velocidadMax);
+	      container.add(progreso);
+										//Se estableze el valor maximo de metros que mostrara la barra 
+	      app.add(container);												
 	      
 	      startAnimation();
 	      updateBPM();
@@ -283,8 +268,8 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	
 	@Override
 	public void updateBeat() {
-		
-		metr.setText("Metros: "+(int)((SccModel) model).getMetros());
+		cal.setText((double)((SccModel)model).getCaloriasConsumidas()+" cal");
+		metr.setText((int)((SccModel) model).getMetros()+" metros");
 		aux++;
 		barra.setValue(aux);
 		if(barra.getValue()>=barra.getMaximum()){
@@ -295,8 +280,6 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 		
 	}
 	
-		
-
 	@Override
 	public void updateBPM() {
 		double v =(double) model.getSpeed(); 		//Velocidad en metros por minuto
@@ -313,14 +296,123 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 				
 		animationDelay = (int) v;
 		animationTimer.setDelay(animationDelay);
-		vel.setText("Velocidad: "+ model.getSpeed());
+		vel.setText(model.getSpeed()+" mtr/min");
 	}
 
 	
-	 
-	 
-	  
-	   
+	/**
+	 * Declara las acciones a realizar por todos los action listeners
+	 * **/
+	
+	public void creaActionListeners(){
+		salir.addActionListener(new ActionListener()					//Al salir se cierra la aplicacion
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {
+	    	    	    System.exit(0);
+	    	    	  }
+	    	    	});
+	      
+	      on.addActionListener(new ActionListener()						//Inicia el controlador. 
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {
+	    	    	    controller.start();
+	    	    	  }
+	    	    	});
+	      
+	      off.addActionListener(new ActionListener()					//Apaga el controlador
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {
+	    	    	    controller.stop();
+	    	    	  }
+	    	    	});	      
+
+	      manisito.addActionListener(new ActionListener()					//
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {
+	    	    		  
+	    	    		  model = new Mani();
+	    	    		  set(model);
+	    	    	  }
+	    	    	});
+	      
+	      
+	      soldadito.addActionListener(new ActionListener()					//Habilita la funcion del boton incrementar
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {  
+	    	    		model = new Soldado();
+	    	    	    set(model);
+	    	    	  }
+	    	    	});
+	      
+	      
+	      
+	      incrementa.addActionListener(new ActionListener()					//Define funcion del boton "incrementa"
+	      {
+	    	  public void actionPerformed(ActionEvent e)
+	    	  {
+	    		controller.increaseBPM();  
+	    	  }
+	    	});
+	      
+	      pausa.addActionListener(new ActionListener()						//Define el comportamiento del boton pausa
+	    	      {															//Si la animacion esta corriendo, debe mostrar la doble barra vertical paralela 
+	    	    	  public void actionPerformed(ActionEvent e)			//(simbolo de pausa). Si esta pausada, debe mostrar una flecha (simbolo de play).
+	    	    	  {
+	    	    		  ((SccController) controller).setPause(); 
+	    	    	    if(corriendo)
+	    	    	    	{
+	    	    	    	pausa.setIcon(new ImageIcon(play));
+	    	    	    	}
+	    	    	    else{
+	    	    	    	pausa.setIcon(new ImageIcon(pau));
+	    	    	    }
+	    	    	    corriendo = !corriendo;
+	    	    	    }
+	    	    	});
+	      
+	      
+	      decrementa.addActionListener(new ActionListener()					//Define el comportamiento del boton decrementar
+	      {
+	    	  public void actionPerformed(ActionEvent e)
+	    	  {
+	    	  controller.decreaseBPM();}
+	    	});
+	      
+	      campoMetros.addActionListener(new ActionListener()				//Cambia el valor de completado de la barra de estado
+	    	      {
+	    	    	  public void actionPerformed(ActionEvent e)
+	    	    	  {
+	    	    	  barra.setMaximum(Integer.parseInt(campoMetros.getText()));}  
+	    	    	});
+	      
+	      
+	      campo.addActionListener(new ActionListener()						//Cambia el valor de velocidad maxima
+	      {
+	    	  public void actionPerformed(ActionEvent e)
+	    	  {
+	    	  controller.setBPM(Integer.parseInt(campo.getText()));}
+	    	});
+	      
+	      app.addWindowListener(											//Implementa la accion a realizar al apretar el boton "salir"
+	         new WindowAdapter() {
+	            public void windowClosing( WindowEvent e )
+	            {
+	            	app.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	            	 controller.stop();
+	            }
+	         }
+	      );
+	}
+	
+	
+	   /**
+	    * Devuelve las dimensiones del componente
+	    * **/
 	   public Dimension getMinimumSize()
 	   { 
 	      return getPreferredSize(); 
@@ -336,9 +428,9 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	   {
 	      super.paintComponent( g );
 	 
-	      if ( images[ currentImage ].getImageLoadStatus() ==
+	      if ( images.get(currentImage).getImageLoadStatus() ==
 	           MediaTracker.COMPLETE ) {
-	         images[ currentImage ].paintIcon( this, g, 0, 0 );
+	         images.get(currentImage).paintIcon( this, g, 0, 0 );
 	         currentImage = ( currentImage + 1 ) % totalImages;
 	      }
 	   }
@@ -361,10 +453,14 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	         animationTimer.start();
 	         corriendo = true;
 	      }
-	      else  // continue from last image displayed
+	      else  									// continua desde la ultima imagen mostrada
 	         if ( ! animationTimer.isRunning() )
 	            animationTimer.restart();	   
 	   }
+	   
+	   /**
+	    * Detiene al temporizador de la animacion, previniendo que la animacion continue.
+	    * **/
 	   
 	   public void stopAnimation()
 	   {
@@ -372,29 +468,71 @@ public class SccView extends JPanel implements BPMObserver, BeatObserver, Action
 	      
 	   }
 	
+	   /**
+	    * Habilita al boton "off"
+	    * **/
+	   
 	   public void enableStopMenuItem() {
 	    	off.setEnabled(true);
 		}
 
+	   /**
+	    * Deshabilita al boton "off"
+	    * **/
+	   
 		public void disableStopMenuItem() {
 	    	off.setEnabled(false);
 		}
+		
+		   /**
+		    * Habilita al boton "on"
+		    * **/
 
 		public void enableStartMenuItem() {
 	    	on.setEnabled(true);
 		}
 
+		   /**
+		    * Deshabilita al boton "off"
+		    * **/
+		
 		public void disableStartMenuItem() {
 	    	on.setEnabled(false);
 		}
-
-		public void disablePauseButtonItem() {
-	    	pausa.setEnabled(false);
-		}
 		
+		   /**
+		    * Habilita al boton "pausa"
+		    * **/
+
 		public void enablePauseButtonItem() {
 	    	pausa.setEnabled(true);
 		}
 		
+		   /**
+		    * DeshHabilita al boton "pausa"
+		    * **/
+		
+		public void disablePauseButtonItem() {
+	    	pausa.setEnabled(false);
+		}
+		
+		
+		/**
+		    * Setea el modelo a utilizar, y carga su animacion correspondiente
+		    * **/
+		public void set(SccModelInterface model) {
+			cargar();
+			model.registerObserver((BeatObserver) this);
+	        model.registerObserver((BPMObserver) this);
+		}
+		
+		/**
+		 *¿ESTO NO HAY QUE BORRARLO???
+		 * **/
+		
+		public void setSkin(boolean valor){
+			skin.setEnabled(valor);
+		}
+
 		
 }

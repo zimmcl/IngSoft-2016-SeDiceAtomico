@@ -1,6 +1,5 @@
 package main.java.Model;
 
-import main.java.Class.Persona;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
@@ -16,7 +15,6 @@ public interface SccModelInterface {
   
 	void setSpeed(int speed);
   	int getSpeed();
-  	Persona getPersona();
 	
 	//void increaseSpeed();
 	

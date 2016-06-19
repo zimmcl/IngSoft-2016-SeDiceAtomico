@@ -1,15 +1,15 @@
 package main.java.Controller;
 
 import main.java.Adapter.SccAdapter;
-import main.java.Model.SccModel;
 import main.java.Model.SccModelInterface;
+import main.java.Model.TemplateMethod.SccModel;
 import main.java.View.DJView;
 import main.java.View.SccView;
 
 public class SccController implements ControllerInterface {
 	
 	SccModelInterface model;
-	DJView djview;
+	public DJView djview;
 	public SccView sccview;
 	boolean isPaused = false;
 	boolean ownView;
@@ -75,6 +75,7 @@ public class SccController implements ControllerInterface {
 			sccview.disableStopMenuItem();
 			sccview.enableStartMenuItem();
 			sccview.disablePauseButtonItem();
+			
 		}
 	}
 

@@ -7,7 +7,7 @@ import main.java.View.MultiplesView;
 
 public class BeatController implements ControllerInterface {
 	BeatModelInterface model;
-	DJView view;
+	public DJView view;
    
 	public BeatController(BeatModelInterface model) {
 		this.model = model;

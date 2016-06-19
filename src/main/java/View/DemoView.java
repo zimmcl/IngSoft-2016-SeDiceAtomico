@@ -20,13 +20,11 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JSeparator;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
-
 import main.java.Controller.BeatController;
 import main.java.Controller.HeartController;
 import main.java.Controller.SccController;
@@ -34,8 +32,10 @@ import main.java.Model.BeatModel;
 import main.java.Model.BeatModelInterface;
 import main.java.Model.HeartModel;
 import main.java.Model.HeartModelInterface;
-import main.java.Model.SccModel;
 import main.java.Model.SccModelInterface;
+import main.java.Model.TemplateMethod.Estandar;
+import main.java.Model.TemplateMethod.SccModel;
+
 import javax.swing.JProgressBar;
 
 
@@ -81,7 +81,7 @@ public class DemoView implements ActionListener {
 	 */
 	private void initialize() {
 		
-		SccModel modelo=new SccModel();
+		SccModel modelo=new Estandar();
 		modeloScc=modelo;
     	SccController controlador=new SccController(modelo, true);
     	this.controladorScc=controlador;
@@ -384,7 +384,7 @@ public class DemoView implements ActionListener {
 		  }
 		    
 		private void botonSccActionPerformed(java.awt.event.ActionEvent evt){
-		modeloScc = new SccModel();
+		modeloScc = new Estandar();
 		controladorScc = new SccController(modeloScc, false);	
 		  }
 		    
