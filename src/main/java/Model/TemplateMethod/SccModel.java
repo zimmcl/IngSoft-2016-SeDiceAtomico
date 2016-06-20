@@ -81,6 +81,9 @@ public abstract class SccModel implements SccModelInterface, Runnable {
 	public void setSpeed(int speed) {
 		if(speed>=0){
 			targetSpeed = speed;
+		}else{
+			
+			throw new IllegalArgumentException("No se puede ingresar valores negativos.");
 		}
 	}
 	
@@ -180,6 +183,7 @@ public abstract class SccModel implements SccModelInterface, Runnable {
 		return n;
 	}
 	
+	public Regulador getRegulador(){ return regulador;}
 	public abstract double getCaloriasConsumidas();
 	
 	protected abstract void crearRegulador();

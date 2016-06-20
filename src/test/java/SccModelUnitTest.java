@@ -5,10 +5,12 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import main.java.Class.Regulador;
-import main.java.Model.SccModel;
+import main.java.Model.TemplateMethod.Estandar;
+import main.java.Model.TemplateMethod.SccModel;
 
 public class SccModelUnitTest {
 	
@@ -82,6 +84,7 @@ public class SccModelUnitTest {
 		}
 	}
 
+	
 	@Test
 	public void testSetSpeed() {
 		model.on();
@@ -101,11 +104,11 @@ public class SccModelUnitTest {
 			assertTrue(model.getSpeed()>=19);
 			assertTrue(model.getSpeed()<=20);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	
 	@Test
 	public void testGetSpeed() {
 		model.on();
@@ -143,10 +146,6 @@ public class SccModelUnitTest {
 		
 	}
 	
-	@Test
-	public void testFallido(){
-		assertEquals(1,0);
-	}
 
 	@Test
 	public void testGetRegulador() {
