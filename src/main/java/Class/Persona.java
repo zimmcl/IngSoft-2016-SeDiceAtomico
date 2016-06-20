@@ -1,13 +1,7 @@
 package main.java.Class;
 
-
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import javax.swing.JOptionPane;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;   
+
 
 @SuppressWarnings("serial")
 public class Persona implements Serializable {
@@ -18,8 +12,10 @@ public class Persona implements Serializable {
     private double tiempo = 0.0;
     private int distancia = 0;
     private double peso=0.0;
-    @SuppressWarnings("unused")
+    private int velocidad=0;
 	private int edad=0;
+    private static Persona persona;
+    private boolean personacargada=false;
 
     /**
      * Constructor, que crea una {@link Persona} con los siguiente parámetros.
@@ -28,11 +24,13 @@ public class Persona implements Serializable {
      * @param peso   el peso de la {@link Persona}
      * @param edad   la edad de la {@link Persona}
      */
-    public Persona(String id, String nombre, double peso, int edad) {
-        this.id = id;
+    private Persona(String nombre, double peso, int edad) {
         this.nombre=nombre;
         this.edad=edad;
         this.peso=peso;
+        calorias=0.0;
+        tiempo=0;
+        personacargada=true;
     }
     
     /**
@@ -48,7 +46,7 @@ public class Persona implements Serializable {
      * @return nombre
      */
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     /**
@@ -56,7 +54,7 @@ public class Persona implements Serializable {
      * @return calorias
      */
     public double getCalorias() {
-        return this.calorias;
+        return calorias;
     }
 
     /**
@@ -74,7 +72,42 @@ public class Persona implements Serializable {
     public int getDistancia() {
         return this.distancia;
     }
+    
+    /**
+     * Recupera la edad.
+     * @return edad
+     */
+    
+    public int getEdad(){
+    	return edad;
+    }
+    
+    /**
+     * Recupera el peso.
+     * @return peso
+     */
+    
+    public double getPeso(){
+    	return peso;
+    }
+    
+    /**
+     * Recupera la velocidad.
+     * @return velocidad
+     */
+    
+    public int getVelocidad(){
+    	return velocidad;
+    }
+    
+    /**
+     * Establece la velocidad.
+     * @param velocidad
+     */
 
+    public void setVelocidad(int velo){
+    	velocidad=velo;
+    }
     /**
      * Editar nombre.
      * @param nombre
@@ -106,66 +139,29 @@ public class Persona implements Serializable {
     public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
-  
-    public void guardarEstado( String nombre) {
-    	this.setNombre(nombre);
-    	File f = new File(nombre+".bin");
-        FileOutputStream fos = null;
-        ObjectOutputStream escribirObjeto = null;
-        
-        try{
-            fos = new FileOutputStream( f );
-            escribirObjeto = new ObjectOutputStream( fos );
-            escribirObjeto.writeObject(this);
-            JOptionPane.showMessageDialog(null, "Archivo "+ nombre +".bin guardado con éxito", "Notificación.", JOptionPane.INFORMATION_MESSAGE);
-        }
-        catch( Exception e ){ 
-        	e.printStackTrace();
-        }
-        finally
-        {
-            try{
-                //Se cierra el archivo y listo.
-                if( escribirObjeto != null ) escribirObjeto.close();
-            }catch( Exception ex ){
-            	System.out.printf("E2");
-            	ex.printStackTrace();
-            }
-        }
+    	
+    public boolean getEstado(){
+    	return personacargada;
     }
-    	
        
+    /**
+     * Crea una nueva persona.
+     * @param nombre, peso, edad
+     */
+    public static Persona crearPersona(String nombre, double peso,int edad){
+    	if(persona==null){
+    		persona = new Persona(nombre,peso,edad);
+    	}
+    		return persona;
+    	}
     
-    public Persona cargaEstado() {
-    	
-    	String inputValue = JOptionPane.showInputDialog("Ingrese el nombre del archivo a guardar");
-    	File f = new File(inputValue+".bin");
-
-        //Esto siempre debe de ir el FileInputStream y ObjectInputStream
-        FileInputStream fis = null;
-        ObjectInputStream leerObjeto = null;
-
-        try{
-           
-            fis = new FileInputStream( f );
-            leerObjeto = new ObjectInputStream( fis );
-
-            Persona cliente = (Persona)leerObjeto.readObject();
-            String mensaje= "Bienvendio nuevamente " +cliente.getNombre()+ ". Sus ultimas estadisticas son: \n*Peso: "+cliente.peso+"\n*Distancia: "+cliente.distancia+"\n*Calorias: "+cliente.calorias;
-            JOptionPane.showMessageDialog(null, mensaje , "Notificación.", JOptionPane.INFORMATION_MESSAGE);
-    	System.out.println("No. calorias: " + cliente.calorias + ", " + "Nombre: " + cliente.nombre);
-    	return cliente;
-        }
-        catch( Exception e ){ }
-        finally
-        {
-            try{
-                //Se cierra el archivo y listo.
-                if( leerObjeto != null ) leerObjeto.close();
-            }catch( Exception ex ){}
-        }
-        return null;
-    	
+    /**
+     * Recupera la persona.
+     * @return persona
+     */
+    
+    public static Persona getPersona(){
+    	return persona;
     }
 
 }

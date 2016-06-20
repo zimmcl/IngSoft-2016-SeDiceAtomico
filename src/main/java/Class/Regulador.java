@@ -1,14 +1,22 @@
 package main.java.Class;
 
-import main.java.Model.SccModel;
+import main.java.Model.TemplateMethod.SccModel;
 
 public class Regulador implements Runnable {
 	SccModel model;
 	Thread tr;
 	static boolean regular;
+	double factor;
 	
-	public Regulador(SccModel model){
+	/**
+	 * Constructor del regulador de velocidad.
+	 * @param SccModel
+	 * @param double
+	 * **/
+	
+	public Regulador(SccModel model,double factor){
 		this.model = model;
+		this.factor=factor;
 		regular= true;
 		tr = new Thread(this);
 		tr.start();		
@@ -23,7 +31,7 @@ public class Regulador implements Runnable {
 			
 			
 			try {
-				Thread.sleep(100);
+				Thread.sleep((long) (100*factor));
 				if(model.getSpeed()>model.getTargetSpeed()){
 					model.modifyCurrentSpeed(-1);
 					model.notifyBPMObservers();
@@ -37,9 +45,10 @@ public class Regulador implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		
-		
-		
 		}
+	}
+	
+	public boolean isRunning(){
+		return tr.isAlive();
 	}
 }

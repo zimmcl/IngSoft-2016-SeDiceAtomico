@@ -13,11 +13,11 @@ import main.java.Observer.BeatObserver;
 public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 	BeatModelInterface model;
 	ControllerInterface controller;
-    JFrame viewFrame;
+    JDialog viewFrame;
     JPanel viewPanel;
 	BeatBar beatBar;
 	JLabel bpmOutputLabel;
-    JFrame controlFrame;
+    JDialog controlFrame;
     JPanel controlPanel;
     JLabel bpmLabel;
     JTextField bpmTextField;
@@ -43,7 +43,7 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
 	public void createView() {
 		// Create all Swing components here
         viewPanel = new JPanel(new GridLayout(1, 2));
-        viewFrame = new JFrame("View");
+        viewFrame = new JDialog();
         viewFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         viewFrame.setSize(new Dimension(100, 80));
         bpmOutputLabel = new JLabel("offline", SwingConstants.CENTER);
@@ -62,7 +62,7 @@ public class DJView implements ActionListener,  BeatObserver, BPMObserver {
     public void createControls() {
 		// Create all Swing components here
         JFrame.setDefaultLookAndFeelDecorated(true);
-        controlFrame = new JFrame("Control");
+        controlFrame = new JDialog();
         controlFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         controlFrame.setSize(new Dimension(100, 80));
 

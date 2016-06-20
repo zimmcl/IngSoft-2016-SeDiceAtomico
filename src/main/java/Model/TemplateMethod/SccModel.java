@@ -1,15 +1,15 @@
-package main.java.Model;
+package main.java.Model.TemplateMethod;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import main.java.Class.Persona;
 import main.java.Class.Regulador;
+import main.java.Model.SccModelInterface;
 import main.java.Observer.BPMObserver;
 import main.java.Observer.BeatObserver;
 
-public class SccModel implements SccModelInterface, Runnable {
+public abstract class SccModel implements SccModelInterface, Runnable {
 	
 	//IMPLEMENTAR MODELO
 	ArrayList<BeatObserver> beatObservers = new ArrayList<BeatObserver>();
@@ -25,8 +25,6 @@ public class SccModel implements SccModelInterface, Runnable {
 	double currentTime;
 	boolean stop;
 	Regulador regulador;
-	Persona p;
-	double factor;
 	
 	public SccModel(){
 		initialize();		
@@ -39,12 +37,6 @@ public class SccModel implements SccModelInterface, Runnable {
 		currentTime=0;
 		currentSpeed = 0;
 		stop=false;
-	p = new Persona("123",null, 100, 15);
-		factor = 0.25;
-	}
-	
-	public Persona getPersona(){
-		return p;
 	}
 
 	@Override
@@ -55,10 +47,9 @@ public class SccModel implements SccModelInterface, Runnable {
 		thread = new Thread(this);
 		thread.start();
 		setSpeed(40);
-		regulador = new Regulador(this);
+		crearRegulador();
 		notifyBeatObservers();
-		
-		
+			
 	}
 
 	@Override
@@ -66,14 +57,8 @@ public class SccModel implements SccModelInterface, Runnable {
 		setSpeed(0);
 		Regulador.apagarRegulador();
 		stop=true;
-		//thread.interrupt();
 		currentTime += getTiempo(dateInicial);
 		System.out.println("Tiempo Total: " + currentTime +" ms. Metros Recorridos: "+ getMetros());
-		/*Guardar archivo en registro
-		-
-		-
-		*/
-		
 		
 	}
 	
@@ -89,18 +74,16 @@ public class SccModel implements SccModelInterface, Runnable {
 		
 		if(currentSpeed==0)
 			currentSpeed=1;
-		
-		
-		
-		
-		setSpeed(lastSpeed);
-		
+		setSpeed(lastSpeed);		
 	}
 
 	@Override
 	public void setSpeed(int speed) {
 		if(speed>=0){
 			targetSpeed = speed;
+		}else{
+			
+			throw new IllegalArgumentException("No se puede ingresar valores negativos.");
 		}
 	}
 	
@@ -119,13 +102,6 @@ public class SccModel implements SccModelInterface, Runnable {
 	public int getTargetSpeed(){
 		return targetSpeed;
 	}
-	
-	public String CaloriasConsumidas(){
-		
-		
-		return null;
-				
-	}
 
 
 	@Override
@@ -135,8 +111,8 @@ public class SccModel implements SccModelInterface, Runnable {
 		while(!stop || getSpeed()!=0){			
 				try {
 					if(getSpeed()>=1){
-						double time = (600/(double)currentSpeed);
-						TimeUnit.MILLISECONDS.sleep(( (long) time ));
+						double time = (600000/(double)currentSpeed);
+						TimeUnit.MICROSECONDS.sleep(( (long) time ));
 						n++;
 						metros+=0.01;
 						if(n>=100){
@@ -154,17 +130,11 @@ public class SccModel implements SccModelInterface, Runnable {
 			}			
 	}
 	
-	
-	
-	
-	
 	@Override
 	public void registerObserver(BeatObserver o) {
 		beatObservers.add(o);
 
 	}
-	
-
 	@Override
 	public void removeObserver(BeatObserver o) {
 		int i = beatObservers.indexOf(o);
@@ -212,20 +182,10 @@ public class SccModel implements SccModelInterface, Runnable {
 		n = n/100;
 		return n;
 	}
-public double getCaloriasConsumidas(){
-		return metros*factor;
-	}
-	//public void increaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed+1);
-	//	}
-		
-	//}
 	
-	//public void decreaseSpeed(){
-	//	if(currentSpeed==targetSpeed){
-	//		setSpeed(targetSpeed-1);
-	//	}
-		
-	//}
+	public Regulador getRegulador(){ return regulador;}
+	public abstract double getCaloriasConsumidas();
+	
+	protected abstract void crearRegulador();
+	
 }
