@@ -6,7 +6,7 @@
 <p align="center">Documento informativo del contenido del trabajo y enlaces de acceso.</p>
 <p>Acceda a nuestra WIKI desde <a href="https://github.com/zimmcl/IngSoft-2016-SeDiceAtomico/wiki">AQUÍ</a>.
 Acceda a nuestra WEB desde <a href="http://zimmcl.github.io/IngSoft-2016-SeDiceAtomico/">AQUÍ</a>.
-Descarga de archivo .jar desde <a href="http://zimmcl.github.io/IngSoft-2016-SeDiceAtomico/">AQUÍ</a></p>
+Descarga de archivo .jar desde <a href="https://mega.nz/#!F5RCBAqZ!s1Rn-H1_ufdan8Y2ivL5EHMxr10xDb3k_KFn2iPTtFU">AQUÍ</a></p>
 
 |Contenido del Trabajo|
 |:--|
