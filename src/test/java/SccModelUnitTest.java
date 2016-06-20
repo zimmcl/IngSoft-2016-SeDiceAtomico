@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import main.java.Class.Regulador;
@@ -83,6 +84,7 @@ public class SccModelUnitTest {
 		}
 	}
 
+	
 	@Test
 	public void testSetSpeed() {
 		model.on();
@@ -106,6 +108,7 @@ public class SccModelUnitTest {
 		}
 	}
 
+	
 	@Test
 	public void testGetSpeed() {
 		model.on();
