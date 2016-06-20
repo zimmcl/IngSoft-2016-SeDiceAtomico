@@ -10,5 +10,5 @@
 |     NOMBRE       |    DNI    | CONTACTO |
 | :--------------: | :-------: |:--------:| 
 | Armando, Gaspar  | 38333248  | gasparmando@hotmail.com  |
-| Ceballo, Matías  |           |          |
+| Ceballo, Matías  | 35557211  | m.lionel.tkd@gmail.com   |
 | Zimmel, Ezequiel | 33382573  | ezequielzimmel@gmail.com |
