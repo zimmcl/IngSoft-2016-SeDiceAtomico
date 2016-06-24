@@ -41,6 +41,7 @@ public class HeartController implements ControllerInterface {
 	public void increaseBPM() {
 	@SuppressWarnings("unused")
 	HeartModel HeartUnico = HeartModel.getInstancia();
+	HeartUnico.notifyBPMObservers();
 		}
     
 	public void decreaseBPM() {}
